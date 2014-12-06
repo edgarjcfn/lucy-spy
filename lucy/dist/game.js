@@ -241,6 +241,7 @@ var KodingSpy;
             }
             this.placeTileAt(0, rows - 1, 'tileWALL_CORNER');
             this.placeTileAt(columns, rows - 1, 'tileWALL_CORNER').scale.x = -1;
+            this.placeTileAt(8, 1, 'tileWALL_DOOR');
         };
         Gameplay.prototype.placeTileAt = function (x, y, tile) {
             var position = KodingSpy.Utils.getWorldPosition(x, y);

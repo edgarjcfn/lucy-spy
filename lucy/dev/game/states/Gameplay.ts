@@ -50,6 +50,9 @@ module KodingSpy {
             // this.game.add.sprite(position.x, position.y, 'tileWALL_SIDE');
             // var position = KodingSpy.Utils.getWorldPosition(columns-1, rows-1);
             // this.game.add.sprite(position.x, position.y, 'tileWALL_SIDE');
+
+            // Door
+            this.placeTileAt(8, 1, 'tileWALL_DOOR');
         }
 
         placeTileAt(x: number, y: number, tile :String): Phaser.Sprite {
