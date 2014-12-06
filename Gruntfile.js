@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         },
         watch: {
             skulpt: {
-                files: ['lucy/dev/lang/lucy.py.js'],
+                files: ['lucy/dev/lang/lucy.lang.js'],
                 tasks: ['copy:skulpt'],
                 options: {
                     interrupt: true
