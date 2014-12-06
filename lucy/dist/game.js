@@ -76,7 +76,6 @@ var KodingSpy;
                 var newPos = new KodingSpy.Model.TileCoordinate(currentPos.x + x, currentPos.y + y);
                 var worldPos = KodingSpy.Utils.getWorldPosition(newPos.x, newPos.y);
                 var delta = Math.abs(x || y);
-                console.log(delta);
                 var moveTween = this.game.add.tween(this.sprite).to({
                     'x': worldPos.x,
                     'y': worldPos.y
