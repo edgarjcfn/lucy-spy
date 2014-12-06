@@ -43,8 +43,7 @@ $(document).ready(function()
   $.ajax({
     url: 'lucy/dev/lang/level01.txt',
     success: function(data) {
-      editor.setValue(data);
-      // Hide import statements
+      editor.setValue(data, 1);
       editor.session.addFold("", new AceRange(0,0,1,100));
     }
   });
