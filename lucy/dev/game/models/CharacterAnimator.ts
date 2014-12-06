@@ -50,12 +50,15 @@ module KodingSpy.Controller {
 
         rotateTo(direction: KodingSpy.Model.Direction, next: ControllerDelegate) : void {
             this.updateDirection();
-            next();
+            var waitTween = this.game.add.tween(this.sprite).to({}, 500);
+            waitTween.onComplete.add(next);
+            waitTween.start();
         }
 
         updateDirection() {
             var animationName = 'walk' + this.character.direction;
-            this.sprite.animations.play(animationName);
+            this.sprite.animations.stop(animationName, true);
+
         }
 
     }

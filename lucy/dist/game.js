@@ -95,11 +95,13 @@ var KodingSpy;
             };
             CharacterController.prototype.rotateTo = function (direction, next) {
                 this.updateDirection();
-                next();
+                var waitTween = this.game.add.tween(this.sprite).to({}, 500);
+                waitTween.onComplete.add(next);
+                waitTween.start();
             };
             CharacterController.prototype.updateDirection = function () {
                 var animationName = 'walk' + this.character.direction;
-                this.sprite.animations.play(animationName);
+                this.sprite.animations.stop(animationName, true);
             };
             return CharacterController;
         })();
