@@ -86,11 +86,15 @@
     editor.setHighlightActiveLine(true);
 
     $.ajax({
-      url: 'lucy/dev/game/assets/level01.py',
+      url: 'lucy/dev/lang/level01.py',
       success: function(data) {
         editor.setValue(data);
       }
     });
+
+    var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameCanvas');
+    game.state.add('Boot', KodingSpy.Boot);
+    game.state.add('Preloader', KodingSpy.Preloader)
 
   });
   </script>

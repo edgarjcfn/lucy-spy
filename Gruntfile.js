@@ -2,30 +2,42 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        'watch': {
-            game: {
-                files: ['lucy/dev/game/**/*.js'],
-                tasks: ['concat:game'],
+        ts: {
+            options: {
+
+            },
+            dev: {
+                // the files to concatenate
+                src: [
+                'lucy/dev/game/**/*.ts'
+                ],
+                // the location of the resulting JS file
+                out: 'lucy/dist/lucy.js'
+            }
+        },
+        watch: {
+            skulpt: {
+                files: ['lucy/dev/skulpt/lucy.skulpt.js'],
+                tasks: ['copy:skulpt'],
                 options: {
                     interrupt: true
                 }
             },
-            lang: {
-                files: ['lucy/dev/lang/**/*.js'],
-                tasks: ['concat:lang'],
+
+            ts: {
+                files: ['lucy/dev/game/**/*.ts'],
+                tasks: ['ts:dev'],
                 options: {
                     interrupt: true
                 }
             }
+
         },
-        'concat': {
-            game: {
-                src: ['lucy/dev/game/**/*.js'],
-                dest: 'lucy/dist/game.js'
-            },
-            lang: {
-                src: ['lucy/dev/lang/**/*.js'],
-                dest: 'lucy/dist/lang.js'
+        copy: {
+            skulpt : {
+                files : [
+                    {expand:true, src:['lucy/dev/skulpt/*.js'], dest:'lucy/dist/', flatten:true}
+                ]
             }
         },
         'http-server' : {
@@ -34,22 +46,23 @@ module.exports = function(grunt) {
                 port: 8081
             }
         },
-        'concurrent' : {
+        concurrent : {
             dev : {
-                tasks: ['http-server', 'watch:game', 'watch:lang'],
+                tasks: ['http-server', 'watch:skulpt', 'watch:ts'],
                 options: {
                     logConcurrentOutput:true
                 }
             }
         }
+
+
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-http-server');
     grunt.loadNpmTasks('grunt-concurrent');
+    grunt.loadNpmTasks('grunt-ts');
 
-    grunt.registerTask('dev', ['concat:game', 'concat:lang', 'concurrent:dev']);
-
+    grunt.registerTask('dev', ['concurrent:dev'])
 };
