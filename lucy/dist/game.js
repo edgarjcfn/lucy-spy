@@ -70,10 +70,10 @@ var KodingSpy;
                 this.character = lucy;
                 var lucyPosition = KodingSpy.Utils.getWorldPosition(this.character.position.x, this.character.position.y);
                 this.sprite = this.game.add.sprite(lucyPosition.x, lucyPosition.y, 'lucy');
-                this.sprite.animations.add('idle0', [1], 24, false);
-                this.sprite.animations.add('idle1', [0], 24, false);
-                this.sprite.animations.add('idle2', [2], 24, false);
-                this.sprite.animations.add('idle3', [3], 24, false);
+                this.sprite.animations.add('walk0', Phaser.Animation.generateFrameNames('walk_N_0', 1, 16), 24, true, false);
+                this.sprite.animations.add('walk1', Phaser.Animation.generateFrameNames('walk_W_0', 1, 16), 24, true, false);
+                this.sprite.animations.add('walk2', Phaser.Animation.generateFrameNames('walk_S_0', 1, 16), 24, true, false);
+                this.sprite.animations.add('walk3', Phaser.Animation.generateFrameNames('walk_W_0', 1, 16), 24, true, false);
                 this.updateDirection();
             };
             CharacterController.prototype.moveBy = function (x, y, next) {
@@ -81,6 +81,9 @@ var KodingSpy;
                 var newPos = new KodingSpy.Model.TileCoordinate(currentPos.x + x, currentPos.y + y);
                 var worldPos = KodingSpy.Utils.getWorldPosition(newPos.x, newPos.y);
                 var delta = Math.abs(x || y);
+                var animationName = 'walk' + this.character.direction;
+                var animation = this.sprite.animations.play(animationName);
+                console.log(worldPos);
                 var moveTween = this.game.add.tween(this.sprite).to({
                     'x': worldPos.x,
                     'y': worldPos.y
@@ -94,7 +97,7 @@ var KodingSpy;
                 next();
             };
             CharacterController.prototype.updateDirection = function () {
-                var animationName = 'idle' + this.character.direction;
+                var animationName = 'walk' + this.character.direction;
                 this.sprite.animations.play(animationName);
             };
             return CharacterController;
