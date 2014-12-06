@@ -216,29 +216,11 @@ var KodingSpy;
                 this.levelName = levelName;
             }
             LevelController.prototype.create = function () {
-                var rows = 12;
-                var columns = 16;
-                for (var x = 0; x < columns; x++) {
-                    for (var y = 0; y < rows; y++) {
-                        this.placeTileAt(x, y, 'tileFLOOR');
-                    }
-                }
-                for (var x = 0; x < columns; x++) {
-                    this.placeTileAt(x, 0, 'tileWALL_TOP');
-                    this.placeTileAt(x, 1, 'tileWALL_FACE');
-                    this.placeTileAt(x, rows - 1, 'tileWALL_BACK');
-                }
-                for (var y = 0; y < rows - 1; y++) {
-                    this.placeTileAt(0, y, 'tileWALL_SIDE');
-                    this.placeTileAt(columns, y, 'tileWALL_SIDE').scale.x = -1;
-                }
-                this.placeTileAt(0, rows - 1, 'tileWALL_CORNER');
-                this.placeTileAt(columns, rows - 1, 'tileWALL_CORNER').scale.x = -1;
-                this.placeTileAt(8, 1, 'tileWALL_DOOR');
-            };
-            LevelController.prototype.placeTileAt = function (x, y, tile) {
-                var position = KodingSpy.Utils.getWorldPosition(x, y);
-                return this.game.add.sprite(position.x, position.y, tile);
+                this.map = this.game.add.tilemap(this.levelName);
+                console.log(this.levelName);
+                console.log(this.map);
+                this.map.addTilesetImage('floor_walls', 'tilemap');
+                this.map.createLayer('Floor');
             };
             return LevelController;
         })();
@@ -273,7 +255,7 @@ var KodingSpy;
         Gameplay.prototype.create = function () {
             this.lucy = new KodingSpy.Model.Character(8, 6, 0 /* N */);
             var kodingSpyGame = this.game;
-            this.levelController = new KodingSpy.Controller.LevelController(kodingSpyGame, 'level01');
+            this.levelController = new KodingSpy.Controller.LevelController(kodingSpyGame, 'Level01');
             this.levelController.create();
             this.characterController = new KodingSpy.Controller.CharacterController(kodingSpyGame);
             this.characterController.create(this.lucy);
@@ -295,14 +277,9 @@ var KodingSpy;
         Preloader.prototype.preload = function () {
             this.preloadBar = this.add.sprite(200, 250, 'preloadBar');
             this.load.setPreloadSprite(this.preloadBar);
-            this.load.image('tileFLOOR', 'lucy/dev/game/assets/tiles/tileFLOOR.png');
-            this.load.image('tileWALL_BACK', 'lucy/dev/game/assets/tiles/tileWALL_BACK.png');
-            this.load.image('tileWALL_CORNER', 'lucy/dev/game/assets/tiles/tileWALL_CORNER.png');
-            this.load.image('tileWALL_DOOR', 'lucy/dev/game/assets/tiles/tileWALL_DOOR.png');
-            this.load.image('tileWALL_FACE', 'lucy/dev/game/assets/tiles/tileWALL_FACE.png');
-            this.load.image('tileWALL_SIDE', 'lucy/dev/game/assets/tiles/tileWALL_SIDE.png');
-            this.load.image('tileWALL_TOP', 'lucy/dev/game/assets/tiles/tileWALL_TOP.png');
+            this.load.image('tilemap', 'lucy/dev/game/assets/tiles/TileSheet.png');
             this.load.atlasJSONHash('lucy', 'lucy/dev/game/assets/char/lucy.png', 'lucy/dev/game/assets/char/lucy.json');
+            this.load.tilemap('Level01', 'lucy/dev/game/assets/levels/Level01.json', null, Phaser.Tilemap.TILED_JSON);
         };
         Preloader.prototype.create = function () {
             var tween = this.add.tween(this.preloadBar).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);

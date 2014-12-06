@@ -12,14 +12,11 @@ module KodingSpy {
 
             //  Load our actual games assets
 
-            this.load.image('tileFLOOR', 'lucy/dev/game/assets/tiles/tileFLOOR.png');
-            this.load.image('tileWALL_BACK', 'lucy/dev/game/assets/tiles/tileWALL_BACK.png');
-            this.load.image('tileWALL_CORNER', 'lucy/dev/game/assets/tiles/tileWALL_CORNER.png');
-            this.load.image('tileWALL_DOOR', 'lucy/dev/game/assets/tiles/tileWALL_DOOR.png');
-            this.load.image('tileWALL_FACE', 'lucy/dev/game/assets/tiles/tileWALL_FACE.png');
-            this.load.image('tileWALL_SIDE', 'lucy/dev/game/assets/tiles/tileWALL_SIDE.png');
-            this.load.image('tileWALL_TOP', 'lucy/dev/game/assets/tiles/tileWALL_TOP.png');
+            this.load.image('tilemap', 'lucy/dev/game/assets/tiles/TileSheet.png');
             this.load.atlasJSONHash('lucy', 'lucy/dev/game/assets/char/lucy.png', 'lucy/dev/game/assets/char/lucy.json');
+
+            // Levels
+            this.load.tilemap('Level01', 'lucy/dev/game/assets/levels/Level01.json', null, Phaser.Tilemap.TILED_JSON);
         }
 
         create() {
