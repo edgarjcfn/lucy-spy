@@ -260,10 +260,12 @@ var KodingSpy;
             _super.apply(this, arguments);
         }
         Gameplay.prototype.create = function () {
+            var levelToPlay = 'Level01';
             this.lucy = new KodingSpy.Model.Character(8, 6, 0 /* N */);
             var kodingSpyGame = this.game;
-            this.levelController = new KodingSpy.Controller.LevelController(kodingSpyGame, 'Level01');
+            this.levelController = new KodingSpy.Controller.LevelController(kodingSpyGame, levelToPlay);
             this.levelController.create();
+            AceLoader(levelToPlay);
             this.characterController = new KodingSpy.Controller.CharacterController(kodingSpyGame);
             this.characterController.create(this.lucy);
             SkulptAnimator = this.characterController;

@@ -1,6 +1,18 @@
 var SkulptRunning = false;
 var TheGame;
 
+var AceLoader = function (level) {
+  $.ajax({
+    url: 'lucy/dev/game/assets/levels/' + level + '.txt',
+    success: function(data) {
+      var editor = ace.edit("editor");
+      editor.setValue(data, 1);
+      editor.session.addFold("", new AceRange(0,0,1,100));
+    }
+  });
+}
+
+
 function builtinRead(x) {
   if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
     throw "File not found: '" + x + "'";
@@ -81,14 +93,6 @@ $(document).ready(function()
   editor.getSession().setMode("ace/mode/python");
   editor.setFontSize('14pt');
   editor.setHighlightActiveLine(true);
-
-  $.ajax({
-    url: 'lucy/dev/game/assets/levels/Level01.txt',
-    success: function(data) {
-      editor.setValue(data, 1);
-      editor.session.addFold("", new AceRange(0,0,1,100));
-    }
-  });
 
   TheGame = new KodingSpy.Game();
   setButtonState('Run');
