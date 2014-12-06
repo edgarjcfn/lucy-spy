@@ -214,11 +214,36 @@ var KodingSpy;
             _super.apply(this, arguments);
         }
         Gameplay.prototype.create = function () {
-            var lucy = new KodingSpy.Model.Character(0, 0, 0 /* N */);
+            this.lucy = new KodingSpy.Model.Character(8, 6, 0 /* N */);
             var kodingSpyGame = this.game;
             this.characterController = new KodingSpy.Controller.CharacterController(kodingSpyGame);
-            this.characterController.create(lucy);
+            this.characterController.create(this.lucy);
+            var lucyPosition = KodingSpy.Utils.getWorldPosition(this.lucy.position.x, this.lucy.position.y);
+            var lucySprite = this.game.add.sprite(lucyPosition.x, lucyPosition.y, 'lucy');
             SkulptAnimator = this.characterController;
+        };
+        Gameplay.prototype.preload = function () {
+            var rows = 12;
+            var columns = 16;
+            for (var x = 0; x <= columns; x++) {
+                for (var y = 0; y <= rows; y++) {
+                    var position = KodingSpy.Utils.getWorldPosition(x, y);
+                    this.game.add.sprite(position.x, position.y, 'tileFLOOR');
+                }
+            }
+            for (var x = 0; x <= columns; x++) {
+                var position = KodingSpy.Utils.getWorldPosition(x, 0);
+                this.game.add.sprite(position.x, position.y, 'tileWALL_TOP');
+                position = KodingSpy.Utils.getWorldPosition(x, rows - 1);
+                this.game.add.sprite(position.x, position.y, 'tileWALL_BACK');
+            }
+            for (var y = 0; y <= rows; y++) {
+                var position = KodingSpy.Utils.getWorldPosition(0, y);
+                this.game.add.sprite(position.x, position.y, 'tileWALL_SIDE');
+                position = KodingSpy.Utils.getWorldPosition(columns, y);
+                var rightSprite = this.game.add.sprite(position.x, position.y, 'tileWALL_SIDE');
+                rightSprite.scale.x = -1;
+            }
         };
         return Gameplay;
     })(Phaser.State);
@@ -234,6 +259,14 @@ var KodingSpy;
         Preloader.prototype.preload = function () {
             this.preloadBar = this.add.sprite(200, 250, 'preloadBar');
             this.load.setPreloadSprite(this.preloadBar);
+            this.load.image('tileFLOOR', 'lucy/dev/game/assets/tiles/tileFLOOR.png');
+            this.load.image('tileWALL_BACK', 'lucy/dev/game/assets/tiles/tileWALL_BACK.png');
+            this.load.image('tileWALL_CORNER', 'lucy/dev/game/assets/tiles/tileWALL_CORNER.png');
+            this.load.image('tileWALL_DOOR', 'lucy/dev/game/assets/tiles/tileWALL_DOOR.png');
+            this.load.image('tileWALL_FACE', 'lucy/dev/game/assets/tiles/tileWALL_FACE.png');
+            this.load.image('tileWALL_SIDE', 'lucy/dev/game/assets/tiles/tileWALL_SIDE.png');
+            this.load.image('tileWALL_TOP', 'lucy/dev/game/assets/tiles/tileWALL_TOP.png');
+            this.load.image('lucy', 'lucy/dev/game/assets/lucy.png');
         };
         Preloader.prototype.create = function () {
             var tween = this.add.tween(this.preloadBar).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
