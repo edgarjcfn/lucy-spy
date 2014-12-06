@@ -1,4 +1,4 @@
-from mygame import turnRight, moveForward, turnLeft;
+from lucy import turnRight, moveForward, turnLeft;
 
 
 turnRight()

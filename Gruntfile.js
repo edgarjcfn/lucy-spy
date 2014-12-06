@@ -1,31 +1,31 @@
-module.exports = function(grunt) { 
+module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         'watch': {
             game: {
-                files: ['mygame/dev/game/**/*.js'],
+                files: ['lucy/dev/game/**/*.js'],
                 tasks: ['concat:game'],
                 options: {
                     interrupt: true
                 }
             },
             lang: {
-                files: ['mygame/dev/lang/**/*.js'],
+                files: ['lucy/dev/lang/**/*.js'],
                 tasks: ['concat:lang'],
                 options: {
                     interrupt: true
                 }
-            }            
+            }
         },
         'concat': {
             game: {
-                src: ['mygame/dev/game/**/*.js'],
-                dest: 'mygame/dist/game.js'
+                src: ['lucy/dev/game/**/*.js'],
+                dest: 'lucy/dist/game.js'
             },
             lang: {
-                src: ['mygame/dev/lang/**/*.js'],
-                dest: 'mygame/dist/lang.js'
+                src: ['lucy/dev/lang/**/*.js'],
+                dest: 'lucy/dist/lang.js'
             }
         },
         'http-server' : {
@@ -41,7 +41,7 @@ module.exports = function(grunt) {
                     logConcurrentOutput:true
                 }
             }
-        }            
+        }
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');

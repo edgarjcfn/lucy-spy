@@ -205,6 +205,7 @@ var TurnRightCommand = function(character, animator) {
 }
 
 
+
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameCanvas', { preload: preload, create: create, update: update });
 
 var characterAnimator;
@@ -212,8 +213,8 @@ var isoGroup;
 var mainChar;
 
 function preload() {
-    game.load.image('ship', 'mygame/dev/game/assets/ship.png');
-    game.load.image('background', 'mygame/dev/game/assets/background.png');
+    game.load.image('ship', 'lucy/dev/game/assets/ship.png');
+    game.load.image('background', 'lucy/dev/game/assets/background.png');
 
     game.time.advancedTiming = true;
 }
@@ -230,3 +231,4 @@ function create() {
 function update() {
     characterAnimator.update();
 }
+

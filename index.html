@@ -1,23 +1,23 @@
-<html> 
-<head> 
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script> 
+<html>
+<head>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
 
-  <script src="bower_components/skulpt/skulpt.min.js" type="text/javascript"></script> 
-  <script src="bower_components/skulpt/skulpt-stdlib.js" type="text/javascript"></script> 
+  <script src="bower_components/skulpt/skulpt.min.js" type="text/javascript"></script>
+  <script src="bower_components/skulpt/skulpt-stdlib.js" type="text/javascript"></script>
   <script src="bower_components/ace-builds/src-min/ace.js"></script>
   <script src="bower_components/phaser/build/phaser.js"></script>
   <script src="bower_components/phaser-plugin-isometric/dist/phaser-plugin-isometric.js"></script>
 
-  <script src="mygame/dist/game.js"></script>
-  <script src="mygame/dist/lang.js"></script>
-  
+  <script src="lucy/dist/game.js"></script>
+  <script src="lucy/dist/lang.js"></script>
+
   <style type="text/css" media="screen">
   #leftPane {
     float:left;
     width:40%;
   }
 
-  #editor { 
+  #editor {
     position: relative;
     top: 0;
     right: 0;
@@ -28,9 +28,9 @@
   }
 
   #gameContainer {
-    border:0 0 0 0; 
-    width:60%; 
-    height:600px; 
+    border:0 0 0 0;
+    width:60%;
+    height:600px;
     float:right;
   }
 
@@ -53,27 +53,27 @@
   }
   </style>
 
-</head> 
+</head>
 
 <body bgcolor="#000">
 
 <a href="https://github.com/you"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
-  
-  
+
+
   <div id="leftPane">
     <div id="editor">
       </div>
       <div>
-      <button id="runButton" type="button" onclick="runPython()">Run</button> 
+      <button id="runButton" type="button" onclick="runPython()">Run</button>
     </div>
   </div>
 
-  <br /> 
+  <br />
 
   <div id="gameCanvas" style="float:right; width:60%; height:600px">
   </div>
-  
+
 
 
   <script type="text/javascript">
@@ -86,7 +86,7 @@
     editor.setHighlightActiveLine(true);
 
     $.ajax({
-      url: 'mygame/dev/game/assets/level01.py',
+      url: 'lucy/dev/game/assets/level01.py',
       success: function(data) {
         editor.setValue(data);
       }
@@ -95,7 +95,7 @@
   });
   </script>
 
-  <script id="skulpt" type="text/javascript"> 
+  <script id="skulpt" type="text/javascript">
 // output functions are configurable.  This one just appends some text
 // to a pre element.
 function builtinRead(x) {
@@ -104,12 +104,12 @@ function builtinRead(x) {
   return Sk.builtinFiles["files"][x];
 }
 
-function runPython() { 
-  var prog = ace.edit("editor").getValue(); 
+function runPython() {
+  var prog = ace.edit("editor").getValue();
 
   Sk.externalLibraries = {
-    mygame : {
-      path : 'mygame/dist/lang.js',
+    lucy : {
+      path : 'lucy/dist/lang.js',
       dependencies : []
     },
   };
@@ -126,7 +126,7 @@ function runPython() {
       //console.debug('error', e);
       throw e
     }
-  } 
+  }
 
   function updateLine(lineNumber) {
     var editor = ace.edit("editor");
@@ -135,6 +135,6 @@ function runPython() {
   }
   </script>
 
-</body> 
+</body>
 
-</html> 
+</html>
