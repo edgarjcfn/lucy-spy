@@ -9,12 +9,12 @@
   <script src="bower_components/phaser-plugin-isometric/dist/phaser-plugin-isometric.js"></script>
 
   <script src="lucy/dist/game.js"></script>
-  <script src="lucy/dist/lang.js"></script>
+  <script src="lucy/dist/lucy.py.js"></script>
 
   <style type="text/css" media="screen">
   #leftPane {
     float:left;
-    width:40%;
+    width:30%;
   }
 
   #editor {
@@ -29,7 +29,7 @@
 
   #gameContainer {
     border:0 0 0 0;
-    width:60%;
+    width:800px;
     height:600px;
     float:right;
   }
@@ -82,7 +82,7 @@
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/monokai");
     editor.getSession().setMode("ace/mode/python");
-    editor.setFontSize('16pt');
+    editor.setFontSize('14pt');
     editor.setHighlightActiveLine(true);
 
     $.ajax({
@@ -92,9 +92,7 @@
       }
     });
 
-    var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameCanvas');
-    game.state.add('Boot', KodingSpy.Boot);
-    game.state.add('Preloader', KodingSpy.Preloader)
+    var game = new KodingSpy.Game();
 
   });
   </script>

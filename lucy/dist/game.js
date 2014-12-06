@@ -196,7 +196,7 @@ var KodingSpy;
             _super.apply(this, arguments);
         }
         Boot.prototype.preload = function () {
-            this.load.image('preloadBar', 'pylearn/dev/game/assets/loader.png');
+            this.load.image('preloadBar', 'lucy/dev/game/assets/loader.png');
         };
         Boot.prototype.create = function () {
             this.game.time.advancedTiming = true;
@@ -270,4 +270,4 @@ var KodingSpy;
     })();
     KodingSpy.Utils = Utils;
 })(KodingSpy || (KodingSpy = {}));
-//# sourceMappingURL=lucy.js.map
+//# sourceMappingURL=game.js.map

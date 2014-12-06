@@ -12,12 +12,12 @@ module.exports = function(grunt) {
                 'lucy/dev/game/**/*.ts'
                 ],
                 // the location of the resulting JS file
-                out: 'lucy/dist/lucy.js'
+                out: 'lucy/dist/game.js'
             }
         },
         watch: {
             skulpt: {
-                files: ['lucy/dev/skulpt/lucy.skulpt.js'],
+                files: ['lucy/dev/lang/lucy.py.js'],
                 tasks: ['copy:skulpt'],
                 options: {
                     interrupt: true
@@ -36,7 +36,7 @@ module.exports = function(grunt) {
         copy: {
             skulpt : {
                 files : [
-                    {expand:true, src:['lucy/dev/skulpt/*.js'], dest:'lucy/dist/', flatten:true}
+                    {expand:true, src:['lucy/dev/lang/*.js'], dest:'lucy/dist/', flatten:true}
                 ]
             }
         },

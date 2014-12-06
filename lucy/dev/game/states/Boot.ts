@@ -3,7 +3,7 @@ module KodingSpy {
     export class Boot extends Phaser.State {
 
         preload() {
-            this.load.image('preloadBar', 'pylearn/dev/game/assets/loader.png');
+            this.load.image('preloadBar', 'lucy/dev/game/assets/loader.png');
         }
 
         create() {
