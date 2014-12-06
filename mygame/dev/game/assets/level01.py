@@ -1,11 +1,11 @@
-import mygame
+from mygame import turnRight, moveForward, turnLeft;
 
-char = mygame.Character();
-char.turnRight();
-char.moveForward(1);
-char.turnRight();
-char.moveForward(1);
-char.turnRight();
-char.moveForward(1);
-char.turnRight();
-char.moveForward(1);
+
+turnRight()
+moveForward(1)
+turnRight()
+moveForward(1)
+turnRight()
+moveForward(1)
+turnRight()
+moveForward(1)
