@@ -17,10 +17,11 @@ module KodingSpy.Controller {
             var lucyPosition = KodingSpy.Utils.getWorldPosition(this.character.position.x, this.character.position.y);
             this.sprite = this.game.add.sprite(lucyPosition.x, lucyPosition.y, 'lucy');
 
-            this.sprite.animations.add('walk0', Phaser.Animation.generateFrameNames('walk_N_0', 1, 16), 24, true, false);
-            this.sprite.animations.add('walk1', Phaser.Animation.generateFrameNames('walk_W_0', 1, 16), 24, true, false);
-            this.sprite.animations.add('walk2', Phaser.Animation.generateFrameNames('walk_S_0', 1, 16), 24, true, false);
-            this.sprite.animations.add('walk3', Phaser.Animation.generateFrameNames('walk_W_0', 1, 16), 24, true, false);
+            this.sprite.animations.add('walk0', Phaser.Animation.generateFrameNames('walk_N', 1, 16, '', 4), 24, true, false);
+            this.sprite.animations.add('walk1', Phaser.Animation.generateFrameNames('walk_E', 1, 16, '', 4), 24, true, false);
+            this.sprite.animations.add('walk2', Phaser.Animation.generateFrameNames('walk_S', 1, 16, '', 4), 24, true, false);
+            this.sprite.animations.add('walk3', Phaser.Animation.generateFrameNames('walk_W', 1, 16, '', 4), 24, true, false);
+            this.sprite.animations.add('item', Phaser.Animation.generateFrameNames( 'item',   1, 16, '', 4), 24, true, false);
 
             this.updateDirection();
         }
@@ -34,12 +35,6 @@ module KodingSpy.Controller {
 
             var animationName = 'walk'+ this.character.direction;
             var animation = this.sprite.animations.play(animationName);
-            // if (this.character.direction == KodingSpy.Model.Direction.E) {
-            //     this.sprite.scale.x = -1;
-            // }
-            // else  {
-            //     this.sprite.scale.x = 1;
-            // }
 
             console.log(worldPos);
 
