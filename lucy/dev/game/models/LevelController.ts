@@ -15,6 +15,11 @@ module KodingSpy.Controller {
             this.map.addTilesetImage('floor_walls', 'tilemap');
 
             this.map.createLayer('Floor');
+
+            var collisions = this.map.createLayer('Obstacles');
+            this.game.collisionController.enableLayer(collisions);
+
+            this.map.setCollisionByExclusion([], true, 'Obstacles');
         }
     }
 }

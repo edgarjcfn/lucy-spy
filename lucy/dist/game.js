@@ -75,6 +75,8 @@ var KodingSpy;
                 this.sprite.animations.add('walk2', Phaser.Animation.generateFrameNames('walk_S', 1, 16, '', 4), 24, true, false);
                 this.sprite.animations.add('walk3', Phaser.Animation.generateFrameNames('walk_W', 1, 16, '', 4), 24, true, false);
                 this.sprite.animations.add('item', Phaser.Animation.generateFrameNames('item', 1, 16, '', 4), 24, true, false);
+                this.game.collisionController.enableCharacter(this.sprite);
+                this.sprite.body.collideWorldBounds = true;
                 this.updateDirection();
             };
             CharacterController.prototype.moveBy = function (x, y, next) {
@@ -84,7 +86,6 @@ var KodingSpy;
                 var delta = Math.abs(x || y);
                 var animationName = 'walk' + this.character.direction;
                 var animation = this.sprite.animations.play(animationName);
-                console.log(worldPos);
                 var moveTween = this.game.add.tween(this.sprite).to({
                     'x': worldPos.x,
                     'y': worldPos.y
@@ -103,9 +104,43 @@ var KodingSpy;
                 var animationName = 'walk' + this.character.direction;
                 this.sprite.animations.stop(animationName, true);
             };
+            CharacterController.prototype.update = function () {
+                this.game.debug.body(this.sprite);
+            };
             return CharacterController;
         })();
         Controller.CharacterController = CharacterController;
+    })(Controller = KodingSpy.Controller || (KodingSpy.Controller = {}));
+})(KodingSpy || (KodingSpy = {}));
+var KodingSpy;
+(function (KodingSpy) {
+    var Controller;
+    (function (Controller) {
+        var CollisionController = (function () {
+            function CollisionController(game) {
+                this.game = game;
+                this.layers = [];
+            }
+            CollisionController.prototype.startPhysics = function () {
+                this.game.physics.startSystem(Phaser.Physics.ARCADE);
+            };
+            CollisionController.prototype.enableCharacter = function (sprite) {
+                this.game.physics.enable(sprite);
+                this.character = sprite;
+            };
+            CollisionController.prototype.enableLayer = function (layer) {
+                this.layers.push(layer);
+            };
+            CollisionController.prototype.update = function () {
+                for (var i = 0; i < this.layers.length; i++) {
+                    if (this.game.physics.arcade.collide(this.character, this.layers[i])) {
+                        console.log("collision!!!");
+                    }
+                }
+            };
+            return CollisionController;
+        })();
+        Controller.CollisionController = CollisionController;
     })(Controller = KodingSpy.Controller || (KodingSpy.Controller = {}));
 })(KodingSpy || (KodingSpy = {}));
 var KodingSpy;
@@ -228,6 +263,11 @@ var KodingSpy;
                 this.map = this.game.add.tilemap(this.levelName);
                 this.map.addTilesetImage('floor_walls', 'tilemap');
                 this.map.createLayer('Floor');
+                var collisions = this.map.createLayer('Obstacles');
+                this.game.collisionController.enableLayer(collisions);
+                collisions.debug = true;
+                collisions.resizeWorld();
+                this.map.setCollisionByExclusion([], true, 'Obstacles');
             };
             return LevelController;
         })();
@@ -260,9 +300,10 @@ var KodingSpy;
             _super.apply(this, arguments);
         }
         Gameplay.prototype.create = function () {
-            var levelToPlay = 'Level01';
-            this.lucy = new KodingSpy.Model.Character(8, 6, 0 /* N */);
+            var levelToPlay = 'Level02';
+            this.lucy = new KodingSpy.Model.Character(8, 9, 0 /* N */);
             var kodingSpyGame = this.game;
+            kodingSpyGame.collisionController = new KodingSpy.Controller.CollisionController(kodingSpyGame);
             this.levelController = new KodingSpy.Controller.LevelController(kodingSpyGame, levelToPlay);
             this.levelController.create();
             AceLoader(levelToPlay);
@@ -271,6 +312,13 @@ var KodingSpy;
             SkulptAnimator = this.characterController;
         };
         Gameplay.prototype.preload = function () {
+        };
+        Gameplay.prototype.update = function () {
+            this.characterController.update();
+            this.game.collisionController.update();
+        };
+        Gameplay.prototype.render = function () {
+            this.game.debug.bodyInfo(this.characterController.sprite, 32, 320);
         };
         return Gameplay;
     })(Phaser.State);
@@ -289,6 +337,7 @@ var KodingSpy;
             this.load.image('tilemap', 'lucy/dev/game/assets/tiles/TileSheet.png');
             this.load.atlasJSONHash('lucy', 'lucy/dev/game/assets/char/lucy.png', 'lucy/dev/game/assets/char/lucy.json');
             this.load.tilemap('Level01', 'lucy/dev/game/assets/levels/Level01.json', null, Phaser.Tilemap.TILED_JSON);
+            this.load.tilemap('Level02', 'lucy/dev/game/assets/levels/Level02.json', null, Phaser.Tilemap.TILED_JSON);
         };
         Preloader.prototype.create = function () {
             var tween = this.add.tween(this.preloadBar).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);

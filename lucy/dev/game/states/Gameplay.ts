@@ -10,10 +10,12 @@ module KodingSpy {
 
         create() {
 
-            var levelToPlay = 'Level01';
+            var levelToPlay = 'Level02';
 
-            this.lucy = new KodingSpy.Model.Character(8, 6, KodingSpy.Model.Direction.N);
+            this.lucy = new KodingSpy.Model.Character(8, 9, KodingSpy.Model.Direction.N);
             var kodingSpyGame = <KodingSpy.Game> this.game;
+
+            kodingSpyGame.collisionController = new KodingSpy.Controller.CollisionController(kodingSpyGame);
 
             this.levelController = new KodingSpy.Controller.LevelController(kodingSpyGame, levelToPlay);
             this.levelController.create();
@@ -26,6 +28,15 @@ module KodingSpy {
         }
 
         preload() {
+        }
+
+        update() {
+            this.characterController.update();
+            (<KodingSpy.Game> this.game).collisionController.update();
+        }
+
+        render() {
+            this.game.debug.bodyInfo(this.characterController.sprite, 32, 320);
         }
     }
 }

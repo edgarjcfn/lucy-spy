@@ -6,6 +6,7 @@ var AceLoader = function (level) {
     url: 'lucy/dev/game/assets/levels/' + level + '.txt',
     success: function(data) {
       var editor = ace.edit("editor");
+      var AceRange = ace.require('ace/range').Range;
       editor.setValue(data, 1);
       editor.session.addFold("", new AceRange(0,0,1,100));
     }
@@ -88,7 +89,6 @@ function setButtonState(state) {
 $(document).ready(function()
 {
   var editor = ace.edit("editor");
-  var AceRange = ace.require('ace/range').Range;
   editor.setTheme("ace/theme/monokai");
   editor.getSession().setMode("ace/mode/python");
   editor.setFontSize('14pt');

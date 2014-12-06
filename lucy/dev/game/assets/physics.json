@@ -1,0 +1,97 @@
+{
+  "check": [
+    {
+      "density": 2,
+      "friction": 0,
+      "bounce": 0,
+      "filter": {
+        "categoryBits": 1,
+        "maskBits": 65535
+      },
+      "shape": [
+        33,
+        58.5,
+        51.5,
+        90,
+        24,
+        95.5,
+        -0.5,
+        80
+      ]
+    },
+    {
+      "density": 2,
+      "friction": 0,
+      "bounce": 0,
+      "filter": {
+        "categoryBits": 1,
+        "maskBits": 65535
+      },
+      "shape": [
+        51.5,
+        90,
+        55,
+        124.5,
+        24,
+        95.5
+      ]
+    },
+    {
+      "density": 2,
+      "friction": 0,
+      "bounce": 0,
+      "filter": {
+        "categoryBits": 1,
+        "maskBits": 65535
+      },
+      "shape": [
+        51.5,
+        90,
+        85.5,
+        34,
+        91.5,
+        76,
+        55,
+        124.5
+      ]
+    },
+    {
+      "density": 2,
+      "friction": 0,
+      "bounce": 0,
+      "filter": {
+        "categoryBits": 1,
+        "maskBits": 65535
+      },
+      "shape": [
+        85.5,
+        34,
+        123.5,
+        36,
+        127.5,
+        47,
+        91.5,
+        76
+      ]
+    },
+    {
+      "density": 2,
+      "friction": 0,
+      "bounce": 0,
+      "filter": {
+        "categoryBits": 1,
+        "maskBits": 65535
+      },
+      "shape": [
+        124,
+        0.5,
+        125,
+        0.5,
+        123.5,
+        36,
+        85.5,
+        34
+      ]
+    }
+  ]
+}

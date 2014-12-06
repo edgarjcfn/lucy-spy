@@ -24,6 +24,11 @@ module KodingSpy.Controller {
             this.sprite.animations.add('walk3', Phaser.Animation.generateFrameNames('walk_W', 1, 16, '', 4), 24, true, false);
             this.sprite.animations.add('item', Phaser.Animation.generateFrameNames( 'item',   1, 16, '', 4), 24, true, false);
 
+            this.game.collisionController.enableCharacter(this.sprite);
+            this.sprite.body.collideWorldBounds = true;
+            // var collisionGroup = this.game.collisionController.getGroup('character');
+            // this.sprite.body.setCollisionGroup(collisionGroup);
+
             this.updateDirection();
         }
 
@@ -36,8 +41,6 @@ module KodingSpy.Controller {
 
             var animationName = 'walk'+ this.character.direction;
             var animation = this.sprite.animations.play(animationName);
-
-            console.log(worldPos);
 
             var moveTween = this.game.add.tween(this.sprite).to({
                 'x':worldPos.x,
@@ -60,6 +63,10 @@ module KodingSpy.Controller {
             var animationName = 'walk' + this.character.direction;
             this.sprite.animations.stop(animationName, true);
 
+        }
+
+        update() {
+            this.game.debug.body(this.sprite);
         }
 
     }

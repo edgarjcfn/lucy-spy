@@ -7,6 +7,9 @@ module KodingSpy {
     }
 
     export class Game extends Phaser.Game {
+
+        collisionController : KodingSpy.Controller.CollisionController;
+
         constructor() {
             super(800, 600, Phaser.AUTO, 'gameCanvas', null);
 
