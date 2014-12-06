@@ -1,0 +1,31 @@
+{
+  "name": "koding-game-starterkit",
+  "version": "1.0.0",
+  "homepage": "https://github.com/edgarjcfn/koding-game-starterkit",
+  "authors": [
+    "edgarjcfn <edgar.figueiredo@gmail.com>"
+  ],
+  "description": "A starter kit for a python-based browser game",
+  "keywords": [
+    "game",
+    "python",
+    "javascript",
+    "html5"
+  ],
+  "license": "MIT",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "ace-builds": "~1.1.7",
+    "skulpt": "skulpt/skulpt-dist#~0.9.7",
+    "phaser": "~2.1.1",
+    "phaser-plugin-isometric": "lewster32/phaser-plugin-isometric"
+  }
+}
