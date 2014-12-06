@@ -9,7 +9,7 @@
   <script src="bower_components/phaser-plugin-isometric/dist/phaser-plugin-isometric.js"></script>
 
   <script src="lucy/dist/game.js"></script>
-  <script src="lucy/dist/lucy.py.js"></script>
+  <script src="lucy/dist/lucy.lang.js"></script>
 
   <style type="text/css" media="screen">
   #leftPane {
@@ -111,12 +111,11 @@ function runPython() {
 
   Sk.externalLibraries = {
     lucy : {
-      path : 'lucy/dist/lang.js',
+      path : 'lucy/dist/lucy.lang.js',
       dependencies : []
     },
   };
-  Sk.animator = characterAnimator;
-  Sk.commandChain = new CommandChain(updateLine);
+  Sk.commandChain = new KodingSpy.Command.CommandQueue(updateLine);
     // Sk.pre = "output";
     Sk.configure({read:builtinRead});
 

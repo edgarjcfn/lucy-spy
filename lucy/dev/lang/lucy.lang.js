@@ -5,8 +5,8 @@ var $builtinmodule = function(name)
     /**
     * SKULPT module definition
     */
-    var mod = {};
-    var character = new Character();
+    var mod = { };
+
 
     //
     // functions
@@ -16,17 +16,17 @@ var $builtinmodule = function(name)
     });
 
     mod.moveForward = new Sk.builtin.func(function(x) {
-        var moveCmd = new MoveCommand(x.v, character, Sk.animator);
+        var moveCmd = new KodingSpy.Command.MoveCommand(x.v, SkulptAnimator);
         Sk.commandChain.append(moveCmd, Sk.currLineNo);
     });
 
     mod.turnLeft = new Sk.builtin.func(function() {
-        var turnCmd = new TurnLeftCommand(character, Sk.animator);
+        var turnCmd = new KodingSpy.Command.TurnLeftCommand(SkulptAnimator);
         Sk.commandChain.append(turnCmd, Sk.currLineNo);
     });
 
     mod.turnRight = new Sk.builtin.func(function() {
-        var turnCmd = new TurnRightCommand(character, Sk.animator);
+        var turnCmd = new KodingSpy.Command.TurnRightCommand(SkulptAnimator);
         Sk.commandChain.append(turnCmd, Sk.currLineNo);
     });
 
@@ -35,7 +35,7 @@ var $builtinmodule = function(name)
     //
     mod.Character = Sk.misceval.buildClass(mod, function($gbl, $loc) {
          $loc.__init__ = new Sk.builtin.func(function(self) {
-            self.character = new Character();
+            // self.character = new Character();
          });
 
     },

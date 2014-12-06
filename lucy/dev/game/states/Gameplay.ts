@@ -1,5 +1,6 @@
 module KodingSpy {
     declare var SkulptAnimator : KodingSpy.Interfaces.ICharacterController;
+    declare var SkulptQueue : KodingSpy.Command.CommandQueue;
 
     export class Gameplay extends Phaser.State {
         characterController : KodingSpy.Controller.CharacterController;
@@ -12,8 +13,6 @@ module KodingSpy {
 
             this.characterController = new KodingSpy.Controller.CharacterController(kodingSpyGame);
             this.characterController.create(this.lucy);
-            var lucyPosition = KodingSpy.Utils.getWorldPosition(this.lucy.position.x, this.lucy.position.y);
-            var lucySprite = this.game.add.sprite(lucyPosition.x, lucyPosition.y, 'lucy');
 
             SkulptAnimator = this.characterController;
         }
@@ -46,10 +45,6 @@ module KodingSpy {
             // Corner tiles
             this.placeTileAt(0, rows-1, 'tileWALL_CORNER');
             this.placeTileAt(columns, rows-1, 'tileWALL_CORNER').scale.x = -1;
-            // var position = KodingSpy.Utils.getWorldPosition(0, rows-1);
-            // this.game.add.sprite(position.x, position.y, 'tileWALL_SIDE');
-            // var position = KodingSpy.Utils.getWorldPosition(columns-1, rows-1);
-            // this.game.add.sprite(position.x, position.y, 'tileWALL_SIDE');
 
             // Door
             this.placeTileAt(8, 1, 'tileWALL_DOOR');

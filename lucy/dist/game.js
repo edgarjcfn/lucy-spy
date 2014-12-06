@@ -68,14 +68,22 @@ var KodingSpy;
             }
             CharacterController.prototype.create = function (lucy) {
                 this.character = lucy;
+                var lucyPosition = KodingSpy.Utils.getWorldPosition(this.character.position.x, this.character.position.y);
+                this.sprite = this.game.add.sprite(lucyPosition.x, lucyPosition.y, 'lucy');
             };
             CharacterController.prototype.moveBy = function (x, y, next) {
-                var worldPos = KodingSpy.Utils.getWorldPosition(x, y);
-                var animationName = 'walk' + this.character.direction;
-                var animation = this.sprite.animations.play(animationName);
-                var moveTween = this.game.add.tween(this.sprite).to({ 'x': worldPos.x, 'y': worldPos.y }, 1000);
+                var currentPos = this.character.position;
+                var newPos = new KodingSpy.Model.TileCoordinate(currentPos.x + x, currentPos.y + y);
+                var worldPos = KodingSpy.Utils.getWorldPosition(newPos.x, newPos.y);
+                var delta = Math.abs(x || y);
+                console.log(delta);
+                var moveTween = this.game.add.tween(this.sprite).to({
+                    'x': worldPos.x,
+                    'y': worldPos.y
+                }, delta * 1000);
                 moveTween.onComplete.add(next);
                 moveTween.start();
+                this.character.position = newPos;
             };
             CharacterController.prototype.rotateTo = function (direction, next) {
                 next();
@@ -139,22 +147,23 @@ var KodingSpy;
             }
             MoveCommand.prototype.execute = function () {
                 var character = this.animator.character;
-                this.execute = function () {
-                    switch (character.direction) {
-                        case (0 /* N */):
-                            this.animator.moveBy(0, -(this.tiles), this.next);
-                            break;
-                        case (2 /* S */):
-                            this.animator.moveBy(0, (this.tiles), this.next);
-                            break;
-                        case (1 /* E */):
-                            this.animator.moveBy((this.tiles), 0, this.next);
-                            break;
-                        case (3 /* W */):
-                            this.animator.moveBy(-(this.tiles), 0, this.next);
-                            break;
-                    }
-                };
+                switch (character.direction) {
+                    case (0 /* N */):
+                        this.animator.moveBy(0, -(this.amount), this.next);
+                        break;
+                    case (2 /* S */):
+                        this.animator.moveBy(0, (this.amount), this.next);
+                        break;
+                    case (1 /* E */):
+                        this.animator.moveBy((this.amount), 0, this.next);
+                        break;
+                    case (3 /* W */):
+                        this.animator.moveBy(-(this.amount), 0, this.next);
+                        break;
+                    default:
+                        console.log('Invalid direction');
+                        break;
+                }
             };
             return MoveCommand;
         })();
@@ -218,8 +227,6 @@ var KodingSpy;
             var kodingSpyGame = this.game;
             this.characterController = new KodingSpy.Controller.CharacterController(kodingSpyGame);
             this.characterController.create(this.lucy);
-            var lucyPosition = KodingSpy.Utils.getWorldPosition(this.lucy.position.x, this.lucy.position.y);
-            var lucySprite = this.game.add.sprite(lucyPosition.x, lucyPosition.y, 'lucy');
             SkulptAnimator = this.characterController;
         };
         Gameplay.prototype.preload = function () {

@@ -23,22 +23,22 @@ module KodingSpy.Command {
         execute():void {
             var character = this.animator.character;
 
-            this.execute = function() {
-
-                switch (character.direction) {
-                    case (KodingSpy.Model.Direction.N) :
-                        this.animator.moveBy(0, -(this.tiles), this.next);
+            switch (character.direction) {
+                case (KodingSpy.Model.Direction.N) :
+                    this.animator.moveBy(0, -(this.amount), this.next);
+                break;
+                case (KodingSpy.Model.Direction.S) :
+                    this.animator.moveBy(0, (this.amount), this.next);
+                break;
+                case (KodingSpy.Model.Direction.E) :
+                    this.animator.moveBy((this.amount), 0, this.next);
+                break;
+                case (KodingSpy.Model.Direction.W) :
+                    this.animator.moveBy(-(this.amount), 0, this.next);
+                break;
+                default:
+                    console.log('Invalid direction');
                     break;
-                    case (KodingSpy.Model.Direction.S) :
-                        this.animator.moveBy(0, (this.tiles), this.next);
-                    break;
-                    case (KodingSpy.Model.Direction.E) :
-                        this.animator.moveBy((this.tiles), 0, this.next);
-                    break;
-                    case (KodingSpy.Model.Direction.W) :
-                        this.animator.moveBy(-(this.tiles), 0, this.next);
-                    break;
-                }
             }
         }
     }
