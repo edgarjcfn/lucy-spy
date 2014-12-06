@@ -217,8 +217,6 @@ var KodingSpy;
             }
             LevelController.prototype.create = function () {
                 this.map = this.game.add.tilemap(this.levelName);
-                console.log(this.levelName);
-                console.log(this.map);
                 this.map.addTilesetImage('floor_walls', 'tilemap');
                 this.map.createLayer('Floor');
             };
