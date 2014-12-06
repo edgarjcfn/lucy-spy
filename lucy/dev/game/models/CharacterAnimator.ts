@@ -1,4 +1,5 @@
 module KodingSpy.Controller {
+
     export interface ControllerDelegate {
         ():void;
     }

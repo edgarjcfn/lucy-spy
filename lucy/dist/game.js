@@ -135,12 +135,15 @@ var KodingSpy;
             };
             CommandQueue.prototype.execute = function () {
                 if (this._currentIndex < this.commands.length) {
+                    SkulptRunning = true;
                     var executionListItem = this.commands[this._currentIndex];
                     this.onExecute(executionListItem.lineNumber);
                     executionListItem.command.execute();
                 }
                 else {
-                    console.log('command chain finished');
+                    SkulptRunning = false;
+                    console.log('Command Queue finished');
+                    this.onExecute(-1);
                 }
             };
             CommandQueue.prototype.clear = function () {

@@ -1,3 +1,6 @@
+var SkulptRunning = false;
+var TheGame;
+
 function builtinRead(x) {
   if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
     throw "File not found: '" + x + "'";
@@ -13,7 +16,7 @@ function runPython() {
       dependencies : []
     },
   };
-  Sk.commandChain = new KodingSpy.Command.CommandQueue(updateLine);
+  Sk.commandChain = new KodingSpy.Command.CommandQueue(onLineExecuted);
   Sk.configure({read:builtinRead});
 
   try {
@@ -22,13 +25,52 @@ function runPython() {
   }
   catch(e) {
     //console.debug('error', e);
+    SkulptRunning = false;
     throw e
   }
 }
 
-function updateLine(lineNumber) {
-  var editor = ace.edit("editor");
-  editor.gotoLine(lineNumber);
+function onButtonClicked() {
+  var runButton = $('#runButton');
+  if (runButton.data('state') == 'Run') {
+    runPython();
+  } else if (runButton.data('state') == 'Reset') {
+    TheGame.state.start('Gameplay', true, false);
+    setButtonState('Run');
+  }
+
+}
+
+function onLineExecuted(lineNumber) {
+  if (lineNumber > 0) {
+    var editor = ace.edit("editor");
+    editor.gotoLine(lineNumber);
+  }
+
+  updateButtonBehaviour();
+}
+
+function updateButtonBehaviour() {
+  if (SkulptRunning) {
+    setButtonState('Reset');
+  }
+}
+
+function setButtonState(state) {
+  var runButton = $('#runButton');
+
+  if (state == 'Reset') {
+    if (runButton.data('state') == 'Run') {
+      runButton.attr('class', 'btn btn-danger btn-lg');
+      runButton.html('Reset');
+      runButton.data('state', 'Reset');
+    }
+  }
+  else if (state == 'Run') {
+    runButton.attr('class', 'btn btn-success btn-lg');
+    runButton.html('Run');
+    runButton.data('state', 'Run');
+  }
 }
 
 $(document).ready(function()
@@ -41,13 +83,13 @@ $(document).ready(function()
   editor.setHighlightActiveLine(true);
 
   $.ajax({
-    url: 'lucy/dev/lang/level01.txt',
+    url: 'lucy/dev/game/assets/levels/Level01.txt',
     success: function(data) {
       editor.setValue(data, 1);
       editor.session.addFold("", new AceRange(0,0,1,100));
     }
   });
 
-  var game = new KodingSpy.Game();
-
+  TheGame = new KodingSpy.Game();
+  setButtonState('Run');
 });

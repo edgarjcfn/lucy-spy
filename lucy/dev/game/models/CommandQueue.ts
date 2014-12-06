@@ -1,5 +1,7 @@
 module KodingSpy.Command {
 
+    declare var SkulptRunning :Boolean;
+
     interface ExecuteDelegate {
         (x: number):void;
     }
@@ -39,6 +41,7 @@ module KodingSpy.Command {
         execute() : void {
             if (this._currentIndex < this.commands.length)
             {
+                SkulptRunning = true;
                 var executionListItem = this.commands[this._currentIndex];
                 // Notify line number
                 this.onExecute(executionListItem.lineNumber);
@@ -47,7 +50,9 @@ module KodingSpy.Command {
             }
             else
             {
-                console.log('command chain finished')
+                SkulptRunning = false;
+                console.log('Command Queue finished');
+                this.onExecute(-1);
             }
         }
 

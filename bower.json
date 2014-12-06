@@ -28,6 +28,6 @@
     "phaser": "~2.1.1",
     "phaser-plugin-isometric": "lewster32/phaser-plugin-isometric",
     "bootstrap": "3.3.1",
-    "bootswatch-dist": "3.3.0-slate"
+    "bootswatch-dist": "3.3.0-slate",
   }
 }
