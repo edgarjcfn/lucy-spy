@@ -19,7 +19,7 @@ module KodingSpy {
             this.load.image('tileWALL_FACE', 'lucy/dev/game/assets/tiles/tileWALL_FACE.png');
             this.load.image('tileWALL_SIDE', 'lucy/dev/game/assets/tiles/tileWALL_SIDE.png');
             this.load.image('tileWALL_TOP', 'lucy/dev/game/assets/tiles/tileWALL_TOP.png');
-            this.load.image('lucy', 'lucy/dev/game/assets/lucy.png');
+            this.load.atlasJSONHash('lucy', 'lucy/dev/game/assets/char/lucy.png', 'lucy/dev/game/assets/char/lucy.json');
         }
 
         create() {

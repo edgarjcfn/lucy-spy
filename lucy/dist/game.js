@@ -70,6 +70,11 @@ var KodingSpy;
                 this.character = lucy;
                 var lucyPosition = KodingSpy.Utils.getWorldPosition(this.character.position.x, this.character.position.y);
                 this.sprite = this.game.add.sprite(lucyPosition.x, lucyPosition.y, 'lucy');
+                this.sprite.animations.add('idle0', [1], 24, false);
+                this.sprite.animations.add('idle1', [0], 24, false);
+                this.sprite.animations.add('idle2', [2], 24, false);
+                this.sprite.animations.add('idle3', [3], 24, false);
+                this.updateDirection();
             };
             CharacterController.prototype.moveBy = function (x, y, next) {
                 var currentPos = this.character.position;
@@ -85,7 +90,12 @@ var KodingSpy;
                 this.character.position = newPos;
             };
             CharacterController.prototype.rotateTo = function (direction, next) {
+                this.updateDirection();
                 next();
+            };
+            CharacterController.prototype.updateDirection = function () {
+                var animationName = 'idle' + this.character.direction;
+                this.sprite.animations.play(animationName);
             };
             return CharacterController;
         })();
@@ -274,7 +284,7 @@ var KodingSpy;
             this.load.image('tileWALL_FACE', 'lucy/dev/game/assets/tiles/tileWALL_FACE.png');
             this.load.image('tileWALL_SIDE', 'lucy/dev/game/assets/tiles/tileWALL_SIDE.png');
             this.load.image('tileWALL_TOP', 'lucy/dev/game/assets/tiles/tileWALL_TOP.png');
-            this.load.image('lucy', 'lucy/dev/game/assets/lucy.png');
+            this.load.atlasJSONHash('lucy', 'lucy/dev/game/assets/char/lucy.png', 'lucy/dev/game/assets/char/lucy.json');
         };
         Preloader.prototype.create = function () {
             var tween = this.add.tween(this.preloadBar).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);

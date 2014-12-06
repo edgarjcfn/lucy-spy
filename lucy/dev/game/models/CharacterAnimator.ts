@@ -16,6 +16,13 @@ module KodingSpy.Controller {
             this.character = lucy;
             var lucyPosition = KodingSpy.Utils.getWorldPosition(this.character.position.x, this.character.position.y);
             this.sprite = this.game.add.sprite(lucyPosition.x, lucyPosition.y, 'lucy');
+
+            this.sprite.animations.add('idle0', [1], 24,  false);
+            this.sprite.animations.add('idle1', [0], 24,  false);
+            this.sprite.animations.add('idle2', [2], 24,  false);
+            this.sprite.animations.add('idle3', [3], 24,  false);
+
+            this.updateDirection();
         }
 
         moveBy(x :number , y: number, next: ControllerDelegate) : void {
@@ -39,7 +46,13 @@ module KodingSpy.Controller {
         }
 
         rotateTo(direction: KodingSpy.Model.Direction, next: ControllerDelegate) : void {
+            this.updateDirection();
             next();
+        }
+
+        updateDirection() {
+            var animationName = 'idle' + this.character.direction;
+            this.sprite.animations.play(animationName);
         }
 
     }

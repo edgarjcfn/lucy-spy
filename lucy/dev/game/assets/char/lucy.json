@@ -1,0 +1,97 @@
+{
+  "frames": [
+    {
+      "filename": "char_idle_E",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 50,
+        "h": 100
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 50,
+        "h": 100
+      },
+      "sourceSize": {
+        "w": 50,
+        "h": 100
+      }
+    },
+    {
+      "filename": "char_idle_N",
+      "frame": {
+        "x": 51,
+        "y": 0,
+        "w": 50,
+        "h": 100
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 50,
+        "h": 100
+      },
+      "sourceSize": {
+        "w": 50,
+        "h": 100
+      }
+    },
+    {
+      "filename": "char_idle_S",
+      "frame": {
+        "x": 102,
+        "y": 0,
+        "w": 50,
+        "h": 100
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 50,
+        "h": 100
+      },
+      "sourceSize": {
+        "w": 50,
+        "h": 100
+      }
+    },
+    {
+      "filename": "char_idle_W",
+      "frame": {
+        "x": 0,
+        "y": 101,
+        "w": 50,
+        "h": 100
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 50,
+        "h": 100
+      },
+      "sourceSize": {
+        "w": 50,
+        "h": 100
+      }
+    }
+  ],
+  "meta": {
+    "app": "http://www.leshylabs.com/apps/sstool/",
+    "version": "Leshy SpriteSheet Tool v0.8.1",
+    "size": {
+      "w": 152,
+      "h": 201
+    },
+    "scale": 1
+  }
+}
