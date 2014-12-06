@@ -208,6 +208,45 @@ var KodingSpy;
 })(KodingSpy || (KodingSpy = {}));
 var KodingSpy;
 (function (KodingSpy) {
+    var Controller;
+    (function (Controller) {
+        var LevelController = (function () {
+            function LevelController(game, levelName) {
+                this.game = game;
+                this.levelName = levelName;
+            }
+            LevelController.prototype.create = function () {
+                var rows = 12;
+                var columns = 16;
+                for (var x = 0; x < columns; x++) {
+                    for (var y = 0; y < rows; y++) {
+                        this.placeTileAt(x, y, 'tileFLOOR');
+                    }
+                }
+                for (var x = 0; x < columns; x++) {
+                    this.placeTileAt(x, 0, 'tileWALL_TOP');
+                    this.placeTileAt(x, 1, 'tileWALL_FACE');
+                    this.placeTileAt(x, rows - 1, 'tileWALL_BACK');
+                }
+                for (var y = 0; y < rows - 1; y++) {
+                    this.placeTileAt(0, y, 'tileWALL_SIDE');
+                    this.placeTileAt(columns, y, 'tileWALL_SIDE').scale.x = -1;
+                }
+                this.placeTileAt(0, rows - 1, 'tileWALL_CORNER');
+                this.placeTileAt(columns, rows - 1, 'tileWALL_CORNER').scale.x = -1;
+                this.placeTileAt(8, 1, 'tileWALL_DOOR');
+            };
+            LevelController.prototype.placeTileAt = function (x, y, tile) {
+                var position = KodingSpy.Utils.getWorldPosition(x, y);
+                return this.game.add.sprite(position.x, position.y, tile);
+            };
+            return LevelController;
+        })();
+        Controller.LevelController = LevelController;
+    })(Controller = KodingSpy.Controller || (KodingSpy.Controller = {}));
+})(KodingSpy || (KodingSpy = {}));
+var KodingSpy;
+(function (KodingSpy) {
     var Boot = (function (_super) {
         __extends(Boot, _super);
         function Boot() {
@@ -234,34 +273,13 @@ var KodingSpy;
         Gameplay.prototype.create = function () {
             this.lucy = new KodingSpy.Model.Character(8, 6, 0 /* N */);
             var kodingSpyGame = this.game;
+            this.levelController = new KodingSpy.Controller.LevelController(kodingSpyGame, 'level01');
+            this.levelController.create();
             this.characterController = new KodingSpy.Controller.CharacterController(kodingSpyGame);
             this.characterController.create(this.lucy);
             SkulptAnimator = this.characterController;
         };
         Gameplay.prototype.preload = function () {
-            var rows = 12;
-            var columns = 16;
-            for (var x = 0; x < columns; x++) {
-                for (var y = 0; y < rows; y++) {
-                    this.placeTileAt(x, y, 'tileFLOOR');
-                }
-            }
-            for (var x = 0; x < columns; x++) {
-                this.placeTileAt(x, 0, 'tileWALL_TOP');
-                this.placeTileAt(x, 1, 'tileWALL_FACE');
-                this.placeTileAt(x, rows - 1, 'tileWALL_BACK');
-            }
-            for (var y = 0; y < rows - 1; y++) {
-                this.placeTileAt(0, y, 'tileWALL_SIDE');
-                this.placeTileAt(columns, y, 'tileWALL_SIDE').scale.x = -1;
-            }
-            this.placeTileAt(0, rows - 1, 'tileWALL_CORNER');
-            this.placeTileAt(columns, rows - 1, 'tileWALL_CORNER').scale.x = -1;
-            this.placeTileAt(8, 1, 'tileWALL_DOOR');
-        };
-        Gameplay.prototype.placeTileAt = function (x, y, tile) {
-            var position = KodingSpy.Utils.getWorldPosition(x, y);
-            return this.game.add.sprite(position.x, position.y, tile);
         };
         return Gameplay;
     })(Phaser.State);
