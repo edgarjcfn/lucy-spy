@@ -80,7 +80,7 @@ var KodingSpy;
                 var moveTween = this.game.add.tween(this.sprite).to({
                     'x': worldPos.x,
                     'y': worldPos.y
-                }, delta * 1000);
+                }, delta * 500);
                 moveTween.onComplete.add(next);
                 moveTween.start();
                 this.character.position = newPos;
