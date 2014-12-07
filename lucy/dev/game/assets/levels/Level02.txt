@@ -5,10 +5,10 @@ from lucy import turnRight, moveForward, turnLeft;
 #################
 
 # Lucy can only escape each floor
-# after collecting the GREEN KEY
+# after collecting the GREEN KEY.
 
 # Collecting all the Diamonds is optional
-# but will give you more points
+# but will give you more points!
 
 # Now you try! This level is only
 # partially solved.

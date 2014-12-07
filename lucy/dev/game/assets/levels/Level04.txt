@@ -1,0 +1,11 @@
+from lucy import turnRight, moveForward, turnLeft;
+
+#################
+#   4th Floor   #
+#################
+
+# Watch out for Lasers!!
+
+# Don't let Lucy get hurt.
+
+moveForward(5)

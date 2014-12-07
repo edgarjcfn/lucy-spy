@@ -12,10 +12,10 @@ from lucy import turnRight, moveForward, turnLeft;
 # and has defeated the Thieves
 # in their own headquarters!
 
-# Now she needs to escape the HQ while
-# recovering the diamonds.
+# Now she needs to escape their HQ while
+# recovering the diamonds!
 
 # Help her escape by typing commands
-# below and hitting the "Run" button
+# below and hitting the "Run" button.
 
 moveForward(8)
