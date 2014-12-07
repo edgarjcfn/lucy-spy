@@ -1,5 +1,15 @@
 module KodingSpy.Controller {
 
+    export class ColliderData {
+        name :string;
+        sprite :Phaser.Sprite;
+
+        constructor(name :string, sprite:Phaser.Sprite){
+            this.name = name;
+            this.sprite = sprite;
+        }
+    }
+
     export class CollisionController {
 
         game:KodingSpy.Game;
@@ -32,7 +42,7 @@ module KodingSpy.Controller {
             this.colliders[name].push(sprite);
         }
 
-        checkCollisions() :string{
+        checkCollisions() :ColliderData{
             var player = this.characterController.sprite.body;
 
             for (var colliderName in this.colliders) {
@@ -40,7 +50,7 @@ module KodingSpy.Controller {
                 for (var i=0; i < colliderArray.length; i++) {
                     var collider = colliderArray[i].body;
                     if (this.game.physics.arcade.intersects(player, collider)) {
-                        return colliderName;
+                        return new ColliderData(colliderName, colliderArray[i]);
                     }
                 }
 
@@ -50,16 +60,16 @@ module KodingSpy.Controller {
         }
 
         update() {
-            this.game.debug.bodyInfo(this.characterController.sprite, 32, 320);
-            this.game.debug.body(this.characterController.sprite);
-            for (var colliderName in this.colliders) {
-                var colliderArray = this.colliders[colliderName];
-                for (var i=0; i < colliderArray.length; i++) {
-                    var collider = colliderArray[i];
-                    this.game.debug.body(collider);
-                }
+            // this.game.debug.bodyInfo(this.characterController.sprite, 32, 320);
+            // this.game.debug.body(this.characterController.sprite);
+            // for (var colliderName in this.colliders) {
+            //     var colliderArray = this.colliders[colliderName];
+            //     for (var i=0; i < colliderArray.length; i++) {
+            //         var collider = colliderArray[i];
+            //         this.game.debug.body(collider);
+            //     }
 
-            }
+            // }
         }
     }
 }

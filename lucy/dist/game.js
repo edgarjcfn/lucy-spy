@@ -115,16 +115,17 @@ var KodingSpy;
             };
             CharacterController.prototype.update = function () {
             };
-            CharacterController.prototype.onCollision = function (colliderName, next) {
-                console.log(colliderName);
-                switch (colliderName) {
+            CharacterController.prototype.onCollision = function (data, next) {
+                switch (data.name) {
                     case "diamond":
+                        data.sprite.destroy();
                         var diamondAnim = this.sprite.animations.play("itemDiamond");
                         var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
                         waitTween.onComplete.add(next);
                         waitTween.start();
                         break;
                     case "python":
+                        data.sprite.destroy();
                         var pythonAnim = this.sprite.animations.play("itemPython");
                         var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
                         waitTween.onComplete.add(next);
@@ -145,6 +146,14 @@ var KodingSpy;
 (function (KodingSpy) {
     var Controller;
     (function (Controller) {
+        var ColliderData = (function () {
+            function ColliderData(name, sprite) {
+                this.name = name;
+                this.sprite = sprite;
+            }
+            return ColliderData;
+        })();
+        Controller.ColliderData = ColliderData;
         var CollisionController = (function () {
             function CollisionController(game) {
                 this.game = game;
@@ -175,22 +184,13 @@ var KodingSpy;
                     for (var i = 0; i < colliderArray.length; i++) {
                         var collider = colliderArray[i].body;
                         if (this.game.physics.arcade.intersects(player, collider)) {
-                            return colliderName;
+                            return new ColliderData(colliderName, colliderArray[i]);
                         }
                     }
                 }
                 return null;
             };
             CollisionController.prototype.update = function () {
-                this.game.debug.bodyInfo(this.characterController.sprite, 32, 320);
-                this.game.debug.body(this.characterController.sprite);
-                for (var colliderName in this.colliders) {
-                    var colliderArray = this.colliders[colliderName];
-                    for (var i = 0; i < colliderArray.length; i++) {
-                        var collider = colliderArray[i];
-                        this.game.debug.body(collider);
-                    }
-                }
             };
             return CollisionController;
         })();

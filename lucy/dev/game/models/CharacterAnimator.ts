@@ -77,16 +77,17 @@ module KodingSpy.Controller {
 
         }
 
-        onCollision(colliderName :string, next :ControllerDelegate) {
-            console.log(colliderName);
-            switch (colliderName) {
+        onCollision(data :ColliderData, next :ControllerDelegate) {
+            switch (data.name) {
                 case "diamond":
+                    data.sprite.destroy();
                     var diamondAnim = this.sprite.animations.play("itemDiamond");
                     var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
                     waitTween.onComplete.add(next);
                     waitTween.start();
                     break;
                 case "python":
+                    data.sprite.destroy();
                     var pythonAnim = this.sprite.animations.play("itemPython");
                     var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
                     waitTween.onComplete.add(next);
