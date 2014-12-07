@@ -21,7 +21,3 @@ Our vision is to continue to improve this project in the upcoming months with th
 ![Koding Hackathon](/images/screenshot02.png?raw=true "Koding Hackathon")
 ![Koding Hackathon](/images/screenshot03.png?raw=true "Koding Hackathon")
 ![Koding Hackathon](/images/screenshot04.png?raw=true "Koding Hackathon")
-
-## APIs used
-
-TODO: Add APIs (probably none)
