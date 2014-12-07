@@ -12,7 +12,9 @@ module KodingSpy {
 
             //  Load our actual games assets
 
+            this.load.atlasJSONHash('items', 'lucy/dev/game/assets/items.png', 'lucy/dev/game/assets/items.json');
             this.load.image('tilemap', 'lucy/dev/game/assets/tiles/TileSheet.png');
+            this.load.image('emptyTile', 'lucy/dev/game/assets/tiles/tileFLOOR.png');
             this.load.atlasJSONHash('lucy', 'lucy/dev/game/assets/char/lucy.png', 'lucy/dev/game/assets/char/lucy.json');
 
             // Levels

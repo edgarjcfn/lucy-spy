@@ -15,11 +15,31 @@ module KodingSpy.Controller {
             this.map.addTilesetImage('floor_walls', 'tilemap');
 
             this.map.createLayer('Floor');
+            var collision = this.map.createLayer('Collision');
 
-            var collisions = this.map.createLayer('Obstacles');
-            this.game.collisionController.enableLayer(collisions);
+            this.map.setCollisionByExclusion([], true, 'Collision');
 
-            this.map.setCollisionByExclusion([], true, 'Obstacles');
+            this.buildItems();
+        }
+
+        buildItems() :void {
+
+            for (var y=0; y<12; y++) {
+                for (var x=0; x<16; x++) {
+                    var tile = this.map.getTile(x, y, 'Collision', true);
+                    if (tile.properties.type) {
+                        var tileType = <string> tile.properties.type;
+                        this.game.add.sprite(tile.worldX, tile.worldY, 'emptyTile');
+                        var sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
+                        sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 1, 29, '', 4), 24, true, false);
+                        // sprite.animations.add('python', Phaser.Animation.generateFrameNames('python', 1, 29, '', 4), 24, true, false);
+                        // sprite.animations.add('star', Phaser.Animation.generateFrameNames('star', 1, 29, '', 4), 24, true, false);
+                        sprite.animations.play(tileType);
+                        this.game.collisionController.enableCollider(sprite, tileType);
+                        console.log(tile);
+                    }
+                }
+            }
         }
     }
 }

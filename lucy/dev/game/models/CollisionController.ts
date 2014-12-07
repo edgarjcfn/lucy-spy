@@ -3,12 +3,10 @@ module KodingSpy.Controller {
     export class CollisionController {
 
         game:KodingSpy.Game;
-        layers:Array<Phaser.TilemapLayer>;
         character:Phaser.Sprite;
 
         constructor(game :KodingSpy.Game) {
             this.game = game;
-            this.layers = [];
         }
 
         // TODO:  try this http://www.gamedevacademy.org/html5-phaser-tutorial-top-down-games-with-tiled/
@@ -21,16 +19,16 @@ module KodingSpy.Controller {
             this.character = sprite;
         }
 
-        enableLayer(layer :Phaser.TilemapLayer) :void {
-            this.layers.push(layer);
+        enableCollider(sprite :Phaser.Sprite, name :String) :void {
+            //TODO : store colliders
         }
 
         update(){
-            for (var i=0; i < this.layers.length; i++) {
-                if (this.game.physics.arcade.collide(this.character, this.layers[i])) {
-                    console.log("collision!!!");
-                }
-            }
+        //     for (var i=0; i < this.layers.length; i++) {
+        //         if (this.game.physics.arcade.collide(this.character, this.layers[i])) {
+        //             console.log("collision!!!");
+        //         }
+        //     }
         }
     }
 }

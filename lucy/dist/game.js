@@ -70,11 +70,12 @@ var KodingSpy;
                 this.character = lucy;
                 var lucyPosition = KodingSpy.Utils.getWorldPosition(this.character.position.x, this.character.position.y);
                 this.sprite = this.game.add.sprite(lucyPosition.x, lucyPosition.y, 'lucy');
-                this.sprite.animations.add('walk0', Phaser.Animation.generateFrameNames('walk_N', 1, 16, '', 4), 24, true, false);
-                this.sprite.animations.add('walk1', Phaser.Animation.generateFrameNames('walk_E', 1, 16, '', 4), 24, true, false);
-                this.sprite.animations.add('walk2', Phaser.Animation.generateFrameNames('walk_S', 1, 16, '', 4), 24, true, false);
-                this.sprite.animations.add('walk3', Phaser.Animation.generateFrameNames('walk_W', 1, 16, '', 4), 24, true, false);
-                this.sprite.animations.add('item', Phaser.Animation.generateFrameNames('item', 1, 16, '', 4), 24, true, false);
+                this.sprite.animations.add('walk0', Phaser.Animation.generateFrameNames('walkN', 1, 16, '', 4), 24, true, false);
+                this.sprite.animations.add('walk1', Phaser.Animation.generateFrameNames('walkE', 1, 16, '', 4), 24, true, false);
+                this.sprite.animations.add('walk2', Phaser.Animation.generateFrameNames('walkS', 1, 16, '', 4), 24, true, false);
+                this.sprite.animations.add('walk3', Phaser.Animation.generateFrameNames('walkW', 1, 16, '', 4), 24, true, false);
+                this.sprite.animations.add('itemPython', Phaser.Animation.generateFrameNames('itemPython', 1, 16, '', 4), 24, true, false);
+                this.sprite.animations.add('itemDiamond', Phaser.Animation.generateFrameNames('itemDiamond', 1, 16, '', 4), 24, true, false);
                 this.game.collisionController.enableCharacter(this.sprite);
                 this.sprite.body.collideWorldBounds = true;
                 this.updateDirection();
@@ -105,7 +106,6 @@ var KodingSpy;
                 this.sprite.animations.stop(animationName, true);
             };
             CharacterController.prototype.update = function () {
-                this.game.debug.body(this.sprite);
             };
             return CharacterController;
         })();
@@ -119,7 +119,6 @@ var KodingSpy;
         var CollisionController = (function () {
             function CollisionController(game) {
                 this.game = game;
-                this.layers = [];
             }
             CollisionController.prototype.startPhysics = function () {
                 this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -128,15 +127,9 @@ var KodingSpy;
                 this.game.physics.enable(sprite);
                 this.character = sprite;
             };
-            CollisionController.prototype.enableLayer = function (layer) {
-                this.layers.push(layer);
+            CollisionController.prototype.enableCollider = function (sprite, name) {
             };
             CollisionController.prototype.update = function () {
-                for (var i = 0; i < this.layers.length; i++) {
-                    if (this.game.physics.arcade.collide(this.character, this.layers[i])) {
-                        console.log("collision!!!");
-                    }
-                }
             };
             return CollisionController;
         })();
@@ -263,11 +256,25 @@ var KodingSpy;
                 this.map = this.game.add.tilemap(this.levelName);
                 this.map.addTilesetImage('floor_walls', 'tilemap');
                 this.map.createLayer('Floor');
-                var collisions = this.map.createLayer('Obstacles');
-                this.game.collisionController.enableLayer(collisions);
-                collisions.debug = true;
-                collisions.resizeWorld();
-                this.map.setCollisionByExclusion([], true, 'Obstacles');
+                var collision = this.map.createLayer('Collision');
+                this.map.setCollisionByExclusion([], true, 'Collision');
+                this.buildItems();
+            };
+            LevelController.prototype.buildItems = function () {
+                for (var y = 0; y < 12; y++) {
+                    for (var x = 0; x < 16; x++) {
+                        var tile = this.map.getTile(x, y, 'Collision', true);
+                        if (tile.properties.type) {
+                            var tileType = tile.properties.type;
+                            this.game.add.sprite(tile.worldX, tile.worldY, 'emptyTile');
+                            var sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
+                            sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 1, 29, '', 4), 24, true, false);
+                            sprite.animations.play(tileType);
+                            this.game.collisionController.enableCollider(sprite, tileType);
+                            console.log(tile);
+                        }
+                    }
+                }
             };
             return LevelController;
         })();
@@ -334,7 +341,9 @@ var KodingSpy;
         Preloader.prototype.preload = function () {
             this.preloadBar = this.add.sprite(200, 250, 'preloadBar');
             this.load.setPreloadSprite(this.preloadBar);
+            this.load.atlasJSONHash('items', 'lucy/dev/game/assets/items.png', 'lucy/dev/game/assets/items.json');
             this.load.image('tilemap', 'lucy/dev/game/assets/tiles/TileSheet.png');
+            this.load.image('emptyTile', 'lucy/dev/game/assets/tiles/tileFLOOR.png');
             this.load.atlasJSONHash('lucy', 'lucy/dev/game/assets/char/lucy.png', 'lucy/dev/game/assets/char/lucy.json');
             this.load.tilemap('Level01', 'lucy/dev/game/assets/levels/Level01.json', null, Phaser.Tilemap.TILED_JSON);
             this.load.tilemap('Level02', 'lucy/dev/game/assets/levels/Level02.json', null, Phaser.Tilemap.TILED_JSON);

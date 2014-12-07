@@ -18,11 +18,12 @@ module KodingSpy.Controller {
             var lucyPosition = KodingSpy.Utils.getWorldPosition(this.character.position.x, this.character.position.y);
             this.sprite = this.game.add.sprite(lucyPosition.x, lucyPosition.y, 'lucy');
 
-            this.sprite.animations.add('walk0', Phaser.Animation.generateFrameNames('walk_N', 1, 16, '', 4), 24, true, false);
-            this.sprite.animations.add('walk1', Phaser.Animation.generateFrameNames('walk_E', 1, 16, '', 4), 24, true, false);
-            this.sprite.animations.add('walk2', Phaser.Animation.generateFrameNames('walk_S', 1, 16, '', 4), 24, true, false);
-            this.sprite.animations.add('walk3', Phaser.Animation.generateFrameNames('walk_W', 1, 16, '', 4), 24, true, false);
-            this.sprite.animations.add('item', Phaser.Animation.generateFrameNames( 'item',   1, 16, '', 4), 24, true, false);
+            this.sprite.animations.add('walk0', Phaser.Animation.generateFrameNames('walkN', 1, 16, '', 4), 24, true, false);
+            this.sprite.animations.add('walk1', Phaser.Animation.generateFrameNames('walkE', 1, 16, '', 4), 24, true, false);
+            this.sprite.animations.add('walk2', Phaser.Animation.generateFrameNames('walkS', 1, 16, '', 4), 24, true, false);
+            this.sprite.animations.add('walk3', Phaser.Animation.generateFrameNames('walkW', 1, 16, '', 4), 24, true, false);
+            this.sprite.animations.add('itemPython', Phaser.Animation.generateFrameNames( 'itemPython',   1, 16, '', 4), 24, true, false);
+            this.sprite.animations.add('itemDiamond', Phaser.Animation.generateFrameNames( 'itemDiamond',   1, 16, '', 4), 24, true, false);
 
             this.game.collisionController.enableCharacter(this.sprite);
             this.sprite.body.collideWorldBounds = true;
@@ -66,7 +67,7 @@ module KodingSpy.Controller {
         }
 
         update() {
-            this.game.debug.body(this.sprite);
+            // this.game.debug.body(this.sprite);
         }
 
     }

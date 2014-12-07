@@ -4,7 +4,7 @@
   <image source="../tiles/TileSheet.png" width="152" height="203"/>
   <tile id="3">
    <properties>
-    <property name="KILLS" value="true"/>
+    <property name="type" value="diamond"/>
    </properties>
   </tile>
  </tileset>
@@ -204,7 +204,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Obstacles" width="16" height="12">
+ <layer name="Collision" width="16" height="12">
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -294,7 +294,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="4"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -325,9 +325,9 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="4"/>
+   <tile gid="4"/>
+   <tile gid="4"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
