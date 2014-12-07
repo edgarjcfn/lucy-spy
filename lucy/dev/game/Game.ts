@@ -2,6 +2,8 @@
 
 module KodingSpy {
 
+    declare var AceLoader : (string)=>void;
+
     export interface ExecutionUpdateDelegate {
         (line: number):void;
     }
@@ -21,7 +23,7 @@ module KodingSpy {
                 'Level03',
             ];
 
-            this.currentLevelIndex = 0;
+            this.currentLevelIndex = -1;
 
             this.state.add('Boot', Boot, false);
             this.state.add('Preloader', Preloader, false);
@@ -35,7 +37,8 @@ module KodingSpy {
 
         gotoNextLevel() {
             this.currentLevelIndex++;
-            this.state.start('Gameplay');
+            this.state.start('Gameplay', true, false);
+            AceLoader(this.currentLevel());
         }
 
         currentLevel() :string {

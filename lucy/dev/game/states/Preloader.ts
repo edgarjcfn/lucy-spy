@@ -30,8 +30,8 @@ module KodingSpy {
         }
 
         startGame() {
-            this.game.state.start('Gameplay', true, false);
-
+            var myGame = <KodingSpy.Game> this.game;
+            myGame.gotoNextLevel();
          }
 
     }

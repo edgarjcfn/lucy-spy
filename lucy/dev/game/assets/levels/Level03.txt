@@ -1,8 +1,11 @@
 from lucy import turnRight, moveForward, turnLeft;
 
+#################
+#   3rd Floor   #
+#################
 
-# Now you try!
-# Available commands:
-# moveForward(x)
-# turnRight()
-# turnLeft()
+# Watch out for Lasers!!
+
+# Don't let Lucy get hurt.
+
+moveForward(5)

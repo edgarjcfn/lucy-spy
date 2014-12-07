@@ -1,16 +1,17 @@
 from lucy import turnRight, moveForward, turnLeft;
 
 #################
-#   2nd Floor   #
+#   Level 02    #
 #################
 
-# Lucy can only escape each floor
+
+# Lucy can only escape the level
 # after collecting the GREEN KEY
 
 # Collecting all the Diamonds is optional
 # but will give you more points
 
-# Now you try! This level is only
+# Now you try. This level is only
 # partially solved.
 
 moveForward(3)
@@ -18,3 +19,7 @@ turnLeft()
 moveForward(2)
 turnRight()
 moveForward(2)
+turnRight()
+moveForward(2)
+turnLeft()
+moveForward(4)

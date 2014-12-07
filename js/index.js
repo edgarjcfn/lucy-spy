@@ -95,7 +95,7 @@ $(document).ready(function()
 
   editor.setTheme("ace/theme/monokai");
   editor.getSession().setMode("ace/mode/python");
-  editor.setFontSize('14pt');
+  editor.setFontSize('12pt');
   editor.setHighlightActiveLine(true);
 
   editor.setOptions({
@@ -115,9 +115,6 @@ $(document).ready(function()
   }
 
   editor.completers = [customCompleter, langTools.snippetCompleter];
-
-  // langTools.addCompleter(customCompleter);
-  // console.log(langTools);
 
   TheGame = new KodingSpy.Game();
   setButtonState('Run');

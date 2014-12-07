@@ -1,7 +1,7 @@
 module KodingSpy {
     declare var SkulptAnimator : KodingSpy.Interfaces.ICharacterController;
     declare var SkulptQueue : KodingSpy.Command.CommandQueue;
-    declare var AceLoader : (string)=>void;
+
 
     export class Gameplay extends Phaser.State {
         characterController : KodingSpy.Controller.CharacterController;
@@ -18,7 +18,6 @@ module KodingSpy {
 
             this.levelController = new KodingSpy.Controller.LevelController(kodingSpyGame, levelToPlay);
             this.levelController.create();
-            AceLoader(levelToPlay);
 
             this.characterController = new KodingSpy.Controller.CharacterController(kodingSpyGame);
             this.characterController.create(this.lucy);

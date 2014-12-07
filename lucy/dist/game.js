@@ -15,7 +15,7 @@ var KodingSpy;
                 'Level02',
                 'Level03',
             ];
-            this.currentLevelIndex = 0;
+            this.currentLevelIndex = -1;
             this.state.add('Boot', KodingSpy.Boot, false);
             this.state.add('Preloader', KodingSpy.Preloader, false);
             this.state.add('Gameplay', KodingSpy.Gameplay, false);
@@ -26,7 +26,8 @@ var KodingSpy;
         };
         Game.prototype.gotoNextLevel = function () {
             this.currentLevelIndex++;
-            this.state.start('Gameplay');
+            this.state.start('Gameplay', true, false);
+            AceLoader(this.currentLevel());
         };
         Game.prototype.currentLevel = function () {
             return this.allLevels[this.currentLevelIndex];
@@ -407,7 +408,6 @@ var KodingSpy;
             kodingSpyGame.collisionController = new KodingSpy.Controller.CollisionController(kodingSpyGame);
             this.levelController = new KodingSpy.Controller.LevelController(kodingSpyGame, levelToPlay);
             this.levelController.create();
-            AceLoader(levelToPlay);
             this.characterController = new KodingSpy.Controller.CharacterController(kodingSpyGame);
             this.characterController.create(this.lucy);
             SkulptAnimator = this.characterController;
@@ -448,7 +448,8 @@ var KodingSpy;
             tween.onComplete.add(this.startGame, this);
         };
         Preloader.prototype.startGame = function () {
-            this.game.state.start('Gameplay', true, false);
+            var myGame = this.game;
+            myGame.gotoNextLevel();
         };
         return Preloader;
     })(Phaser.State);
