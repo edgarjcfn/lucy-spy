@@ -455,9 +455,11 @@ var KodingSpy;
             this.load.image('doorTilemap', 'lucy/dev/game/assets/tiles/door.png');
             this.load.image('emptyTile', 'lucy/dev/game/assets/tiles/tileFLOOR.png');
             this.load.atlasJSONHash('lucy', 'lucy/dev/game/assets/char/lucy.png', 'lucy/dev/game/assets/char/lucy.json');
-            this.load.tilemap('Level01', 'lucy/dev/game/assets/levels/Level01.json', null, Phaser.Tilemap.TILED_JSON);
-            this.load.tilemap('Level02', 'lucy/dev/game/assets/levels/Level02.json', null, Phaser.Tilemap.TILED_JSON);
-            this.load.tilemap('Level03', 'lucy/dev/game/assets/levels/Level03.json', null, Phaser.Tilemap.TILED_JSON);
+            var myGame = this.game;
+            for (var i = 0; i < myGame.allLevels.length; i++) {
+                var level = myGame.allLevels[i];
+                this.load.tilemap(level, 'lucy/dev/game/assets/levels/' + level + '.json', null, Phaser.Tilemap.TILED_JSON);
+            }
             this.load.audio('bgm', 'lucy/dev/game/assets/sounds/soundtrack.ogg');
             this.load.audio('python', 'lucy/dev/game/assets/sounds/python.ogg');
             this.load.audio('diamond', 'lucy/dev/game/assets/sounds/diamond.ogg');
