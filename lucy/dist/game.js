@@ -345,6 +345,7 @@ var KodingSpy;
             LevelController.prototype.create = function () {
                 this.map = this.game.add.tilemap(this.levelName);
                 this.map.addTilesetImage('floor_walls', 'tilemap');
+                this.map.addTilesetImage('door', 'doorTilemap');
                 this.map.createLayer('Floor');
                 var collision = this.map.createLayer('Collision');
                 this.map.setCollisionByExclusion([], true, 'Collision');
@@ -357,7 +358,9 @@ var KodingSpy;
                         if (tile.properties.type) {
                             var tileType = tile.properties.type;
                             var frames = tile.properties.frames;
-                            this.game.add.sprite(tile.worldX, tile.worldY, 'emptyTile');
+                            if (tileType != "door") {
+                                this.game.add.sprite(tile.worldX, tile.worldY, 'emptyTile');
+                            }
                             var sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
                             sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 0, frames - 1, '', 4), 24, true, false);
                             sprite.animations.play(tileType);
@@ -433,6 +436,7 @@ var KodingSpy;
             this.load.setPreloadSprite(this.preloadBar);
             this.load.atlasJSONHash('items', 'lucy/dev/game/assets/items.png', 'lucy/dev/game/assets/items.json');
             this.load.image('tilemap', 'lucy/dev/game/assets/tiles/TileSheet.png');
+            this.load.image('doorTilemap', 'lucy/dev/game/assets/tiles/door.png');
             this.load.image('emptyTile', 'lucy/dev/game/assets/tiles/tileFLOOR.png');
             this.load.atlasJSONHash('lucy', 'lucy/dev/game/assets/char/lucy.png', 'lucy/dev/game/assets/char/lucy.json');
             this.load.tilemap('Level01', 'lucy/dev/game/assets/levels/Level01.json', null, Phaser.Tilemap.TILED_JSON);

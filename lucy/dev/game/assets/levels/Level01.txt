@@ -1,4 +1,4 @@
 from lucy import turnRight, moveForward, turnLeft;
 
 
-moveForward(7)
+moveForward(8)

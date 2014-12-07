@@ -9,6 +9,7 @@
   </tile>
   <tile id="7">
    <properties>
+    <property name="frames" value="1"/>
     <property name="type" value="door"/>
    </properties>
   </tile>
@@ -46,6 +47,15 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="19" name="door" tilewidth="50" tileheight="50" spacing="1">
+  <image source="../tiles/door.png" width="50" height="101"/>
+  <tile id="1">
+   <properties>
+    <property name="frames" value="1"/>
+    <property name="type" value="door"/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="Floor" width="16" height="12">
   <data>
    <tile gid="0"/>
@@ -56,7 +66,7 @@
    <tile gid="6"/>
    <tile gid="10"/>
    <tile gid="10"/>
-   <tile gid="10"/>
+   <tile gid="19"/>
    <tile gid="10"/>
    <tile gid="10"/>
    <tile gid="9"/>
@@ -268,7 +278,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="8"/>
+   <tile gid="20"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>

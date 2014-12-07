@@ -13,6 +13,7 @@ module KodingSpy.Controller {
         create() {
             this.map = this.game.add.tilemap(this.levelName);
             this.map.addTilesetImage('floor_walls', 'tilemap');
+            this.map.addTilesetImage('door', 'doorTilemap');
 
             this.map.createLayer('Floor');
             var collision = this.map.createLayer('Collision');
@@ -30,7 +31,9 @@ module KodingSpy.Controller {
                     if (tile.properties.type) {
                         var tileType = <string> tile.properties.type;
                         var frames = <number> tile.properties.frames;
-                        this.game.add.sprite(tile.worldX, tile.worldY, 'emptyTile');
+                        if (tileType != "door") {
+                            this.game.add.sprite(tile.worldX, tile.worldY, 'emptyTile');
+                        }
                         var sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
                         sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 0, frames-1, '', 4), 24, true, false);
                         sprite.animations.play(tileType);
