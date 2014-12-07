@@ -24,6 +24,7 @@ module KodingSpy.Controller {
             this.sprite.animations.add('walk3', Phaser.Animation.generateFrameNames('walkW', 1, 16, '', 4), 24, true, false);
             this.sprite.animations.add('itemPython', Phaser.Animation.generateFrameNames( 'itemPython',   1, 16, '', 4), 24, false, false);
             this.sprite.animations.add('itemDiamond', Phaser.Animation.generateFrameNames( 'itemDiamond',   1, 16, '', 4), 24, false, false);
+            this.sprite.animations.add('burn', Phaser.Animation.generateFrameNames( 'burn',   1, 30, '', 4), 24, false, false);
 
             this.game.collisionController.enableCharacter(this);
             // this.sprite.body.collideWorldBounds = true;
@@ -96,7 +97,10 @@ module KodingSpy.Controller {
                 case "laserCannon":
                 case "laserBeamHorizontal":
                 case "laserBeamVertical":
-                    console.log("died!!");
+                    var burnanim = this.sprite.animations.play("burn");
+                    // var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
+                    // waitTween.onComplete.add(next);
+                    // waitTween.start();
 
             }
         }
