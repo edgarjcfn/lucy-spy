@@ -6,15 +6,20 @@ from lucy import turnRight, moveForward, turnLeft;
 
 # Lucy can only escape each floor
 # after collecting the GREEN KEY.
-
-# Collecting all the Diamonds is optional
+# Collecting all the DIAMONDS is optional
 # but will give you more points!
 
-# Now you try! This level is only
-# partially solved.
+# Have you noticed that Lucy ignores
+# lines that start with the # symbol?
+# Try it out below. Execute the code once
+# And then remove the # from the lines!
 
-moveForward(3)
-turnLeft()
-moveForward(2)
-turnRight()
-moveForward(2)
+moveForward(4)
+# turnLeft()
+# moveForward(2)
+# turnRight()
+# moveForward(1)
+# turnRight()
+# moveForward(2)
+# turnLeft()
+moveForward(5)

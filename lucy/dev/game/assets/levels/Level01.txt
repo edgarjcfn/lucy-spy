@@ -4,18 +4,20 @@ from lucy import turnRight, moveForward, turnLeft;
 #   Lucy is a SPY with Diamonds!!  #
 ####################################
 
-# The World Thieves Federation (W.T.F.) has
-# stolen a huge amount of diamonds!
+# The World Thieves Federation (W.T.F.)
+# has stolen a huge amount of diamonds!
 
-# Agent Lucy works for the Organization
-# of Marvelous Girls (O.M.G.)
+# Agent Lucy works for the
+# Organization of Marvelous Girls (O.M.G.)
 # and has defeated the Thieves
 # in their own headquarters!
 
 # Now she needs to escape their HQ while
 # recovering the diamonds!
 
-# Help her escape by typing commands
+# Help her escape by coding commands
 # below and hitting the "Run" button.
+# (This level is already solved, just
+# hit the "Run" button and watch it)
 
 moveForward(8)
