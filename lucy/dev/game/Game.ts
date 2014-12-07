@@ -26,7 +26,8 @@ module KodingSpy {
                 'Level04',
                 'Level05',
                 'Level06',
-                'Level07'
+                'Level07',
+                'Level08'
             ];
 
             this.currentLevelIndex = -1;
