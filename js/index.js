@@ -91,10 +91,33 @@ function setButtonState(state) {
 $(document).ready(function()
 {
   var editor = ace.edit("editor");
+  var langTools = ace.require("ace/ext/language_tools");
+
   editor.setTheme("ace/theme/monokai");
   editor.getSession().setMode("ace/mode/python");
   editor.setFontSize('14pt');
   editor.setHighlightActiveLine(true);
+
+  editor.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true
+    });
+  var customCompleter = {
+    getCompletions: function(editor, session, pos, prefix, callback) {
+      if (prefix.length === 0) { callback(null, []); return }
+      callback(null, [
+        {name:"moveForward",value:"moveForward(1)",meta:"Move Forward"},
+        {name:"turnLeft",value:"turnLeft()",meta:"Turn Left"},
+        {name:"turnRight",value:"turnRight()",meta:"Turn Right"},
+        ]);
+    }
+  }
+
+  editor.completers = [customCompleter, langTools.snippetCompleter];
+
+  // langTools.addCompleter(customCompleter);
+  // console.log(langTools);
 
   TheGame = new KodingSpy.Game();
   setButtonState('Run');
