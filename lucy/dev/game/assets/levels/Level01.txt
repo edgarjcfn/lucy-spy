@@ -13,10 +13,10 @@ from lucy import turnRight, moveForward, turnLeft;
 # in their own headquarters!
 
 # Now she needs to escape their HQ while
-# recovering the diamonds!
+# recovering the stolen diamonds!
 
-# Help her escape by coding commands
-# below and hitting the "Run" button.
+# Help her escape the Thieves!
+# Type code below and hit "Run".
 # (This level is already solved, just
 # hit the "Run" button and watch it)
 
