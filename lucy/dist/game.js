@@ -39,7 +39,7 @@ var KodingSpy;
             this.startCurrentLevel();
         };
         Game.prototype.levelCompleted = function (diamonds) {
-            ShowMessage('Well done!', diamonds);
+            ShowMessage('', diamonds);
             this.gotoNextLevel();
         };
         Game.prototype.currentLevel = function () {
@@ -147,6 +147,11 @@ var KodingSpy;
                 this.sprite.animations.stop(animationName, true);
             };
             CharacterController.prototype.update = function () {
+            };
+            CharacterController.prototype.respawn = function (newPos) {
+                var worldPos = KodingSpy.Utils.getWorldPosition(newPos.x, newPos.y);
+                this.character.position = newPos;
+                this.sprite.position.set(worldPos.x, worldPos.y);
             };
             CharacterController.prototype.onCollision = function (data, next) {
                 switch (data.name) {
@@ -363,6 +368,7 @@ var KodingSpy;
             function LevelController(game, levelName) {
                 this.game = game;
                 this.levelName = levelName;
+                this.spawnPosition = new KodingSpy.Model.TileCoordinate(8, 9);
             }
             LevelController.prototype.create = function () {
                 this.map = this.game.add.tilemap(this.levelName);
@@ -383,10 +389,15 @@ var KodingSpy;
                             if (tileType != "door") {
                                 this.game.add.sprite(tile.worldX, tile.worldY, 'emptyTile');
                             }
-                            var sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
-                            sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 0, frames - 1, '', 4), 24, true, false);
-                            sprite.animations.play(tileType);
-                            this.game.collisionController.enableCollider(sprite, tileType);
+                            if (tileType == "spawn") {
+                                this.spawnPosition = new KodingSpy.Model.TileCoordinate(x, y);
+                            }
+                            else {
+                                var sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
+                                sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 0, frames - 1, '', 4), 24, true, false);
+                                sprite.animations.play(tileType);
+                                this.game.collisionController.enableCollider(sprite, tileType);
+                            }
                         }
                     }
                 }
@@ -422,7 +433,7 @@ var KodingSpy;
             _super.apply(this, arguments);
         }
         Gameplay.prototype.create = function () {
-            this.lucy = new KodingSpy.Model.Character(8, 9, 0 /* N */);
+            this.lucy = new KodingSpy.Model.Character(0, 0, 0 /* N */);
             var kodingSpyGame = this.game;
             var levelToPlay = kodingSpyGame.currentLevel();
             kodingSpyGame.collisionController = new KodingSpy.Controller.CollisionController(kodingSpyGame);
@@ -430,6 +441,7 @@ var KodingSpy;
             this.levelController.create();
             this.characterController = new KodingSpy.Controller.CharacterController(kodingSpyGame);
             this.characterController.create(this.lucy);
+            this.characterController.respawn(this.levelController.spawnPosition);
             SkulptAnimator = this.characterController;
             this.game.sound.pauseAll();
             var music = this.game.add.audio('bgm', 0.3, true);

@@ -4,10 +4,12 @@ module KodingSpy.Controller {
         game :KodingSpy.Game;
         levelName :string;
         map :Phaser.Tilemap;
+        spawnPosition: KodingSpy.Model.TileCoordinate;
 
         constructor(game: KodingSpy.Game, levelName :string) {
             this.game = game;
             this.levelName = levelName;
+            this.spawnPosition = new KodingSpy.Model.TileCoordinate(8, 9);
         }
 
         create() {
@@ -34,10 +36,15 @@ module KodingSpy.Controller {
                         if (tileType != "door") {
                             this.game.add.sprite(tile.worldX, tile.worldY, 'emptyTile');
                         }
-                        var sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
-                        sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 0, frames-1, '', 4), 24, true, false);
-                        sprite.animations.play(tileType);
-                        this.game.collisionController.enableCollider(sprite, tileType);
+                        if (tileType == "spawn") {
+                            this.spawnPosition = new KodingSpy.Model.TileCoordinate(x, y);
+                        }
+                        else {
+                            var sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
+                            sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 0, frames-1, '', 4), 24, true, false);
+                            sprite.animations.play(tileType);
+                            this.game.collisionController.enableCollider(sprite, tileType);
+                        }
                     }
                 }
             }

@@ -55,12 +55,12 @@ module KodingSpy {
         }
 
         levelCompleted(diamonds :number) {
-            ShowMessage('Well done!', diamonds);
+            ShowMessage('', diamonds);
             this.gotoNextLevel();
         }
 
         currentLevel() :string {
-            return this.allLevels[this.currentLevelIndex];
+            return <string> this.allLevels[this.currentLevelIndex];
         }
 
     }

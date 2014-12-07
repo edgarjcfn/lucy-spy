@@ -87,6 +87,14 @@ module KodingSpy.Controller {
 
         }
 
+        respawn(newPos :KodingSpy.Model.TileCoordinate) {
+            var worldPos = KodingSpy.Utils.getWorldPosition(newPos.x, newPos.y);
+
+            this.character.position = newPos;
+            this.sprite.position.set(worldPos.x, worldPos.y);
+
+        }
+
         onCollision(data :ColliderData, next :ControllerDelegate) {
             switch (data.name) {
                 case "diamond":

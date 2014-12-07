@@ -1,6 +1,7 @@
 module KodingSpy {
     declare var SkulptAnimator : KodingSpy.Interfaces.ICharacterController;
     declare var SkulptQueue : KodingSpy.Command.CommandQueue;
+    declare var ShowMessage : (msg :string, diamonds :number)=>void;
 
 
     export class Gameplay extends Phaser.State {
@@ -10,7 +11,7 @@ module KodingSpy {
 
         create() {
 
-            this.lucy = new KodingSpy.Model.Character(8, 9, KodingSpy.Model.Direction.N);
+            this.lucy = new KodingSpy.Model.Character(0, 0, KodingSpy.Model.Direction.N);
             var kodingSpyGame = <KodingSpy.Game> this.game;
             var levelToPlay = kodingSpyGame.currentLevel();
 
@@ -21,6 +22,7 @@ module KodingSpy {
 
             this.characterController = new KodingSpy.Controller.CharacterController(kodingSpyGame);
             this.characterController.create(this.lucy);
+            this.characterController.respawn(this.levelController.spawnPosition);
 
             SkulptAnimator = this.characterController;
 

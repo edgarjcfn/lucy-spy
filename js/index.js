@@ -15,8 +15,16 @@ var AceLoader = function (level) {
   });
 }
 
-var ShowMessage = function (msg, diamonds) {
-  swal({title:msg, imageUrl:'lucy/dev/game/assets/result/resultscreen0'+diamonds+'.png'});
+var ShowMessage = function (message, diamonds) {
+  var msg = {};
+  msg.title = message;
+
+  if (diamonds > -1)
+  {
+    msg.imageUrl = 'lucy/dev/game/assets/result/resultscreen0'+diamonds+'.png';
+  }
+  swal(msg);
+
   $('.icon.custom').css({
       'width': '300px',
       'height': '100px'
