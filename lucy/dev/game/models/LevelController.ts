@@ -29,11 +29,10 @@ module KodingSpy.Controller {
                     var tile = this.map.getTile(x, y, 'Collision', true);
                     if (tile.properties.type) {
                         var tileType = <string> tile.properties.type;
+                        var frames = <number> tile.properties.frames;
                         this.game.add.sprite(tile.worldX, tile.worldY, 'emptyTile');
                         var sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
-                        sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 1, 29, '', 4), 24, true, false);
-                        // sprite.animations.add('python', Phaser.Animation.generateFrameNames('python', 1, 29, '', 4), 24, true, false);
-                        // sprite.animations.add('star', Phaser.Animation.generateFrameNames('star', 1, 29, '', 4), 24, true, false);
+                        sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 0, frames-1, '', 4), 24, true, false);
                         sprite.animations.play(tileType);
                         this.game.collisionController.enableCollider(sprite, tileType);
                         console.log(tile);

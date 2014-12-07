@@ -36,7 +36,7 @@ module KodingSpy {
         }
 
         render() {
-            this.game.debug.bodyInfo(this.characterController.sprite, 32, 320);
+            // this.game.debug.bodyInfo(this.characterController.sprite, 32, 320);
         }
     }
 }
