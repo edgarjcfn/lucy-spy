@@ -26,8 +26,15 @@ var KodingSpy;
         };
         Game.prototype.gotoNextLevel = function () {
             this.currentLevelIndex++;
+            this.startCurrentLevel();
+        };
+        Game.prototype.startCurrentLevel = function () {
             this.state.start('Gameplay', true, false);
             AceLoader(this.currentLevel());
+        };
+        Game.prototype.startLevelFromName = function (level) {
+            this.currentLevelIndex = this.allLevels.indexOf(level);
+            this.startCurrentLevel();
         };
         Game.prototype.currentLevel = function () {
             return this.allLevels[this.currentLevelIndex];

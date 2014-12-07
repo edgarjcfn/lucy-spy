@@ -33,12 +33,7 @@ module KodingSpy.Controller {
             this.sprite.animations.add('burn', Phaser.Animation.generateFrameNames( 'burn',   1, 30, '', 4), 24, false, false);
 
             this.game.collisionController.enableCharacter(this);
-            // this.sprite.body.collideWorldBounds = true;
-            // var collisionGroup = this.game.collisionController.getGroup('character');
-            // this.sprite.body.setCollisionGroup(collisionGroup);
-
             this.updateDirection();
-
 
             this.sndDiamond = this.game.add.audio('diamond', 0.5, false);
             this.sndPython = this.game.add.audio('python', 0.5, false);

@@ -88,6 +88,21 @@ function setButtonState(state) {
   }
 }
 
+function setLevelsDropDown(levels) {
+  var levelsDropDown = $('#levelsDropDown');
+  levelsDropDown.html('');
+  for (var i=0; i < levels.length; i++)
+  {
+    var level = levels[i];
+    levelsDropDown.append('<li><a href="#'+level+'" onClick="onLevelClicked(this);">'+level+'</a></li>');
+  }
+}
+
+function onLevelClicked(level) {
+  var levelName = $(level).html();
+  TheGame.startLevelFromName(levelName);
+}
+
 $(document).ready(function()
 {
   var editor = ace.edit("editor");
@@ -118,4 +133,5 @@ $(document).ready(function()
 
   TheGame = new KodingSpy.Game();
   setButtonState('Run');
+  setLevelsDropDown(TheGame.allLevels);
 });

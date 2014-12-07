@@ -37,8 +37,17 @@ module KodingSpy {
 
         gotoNextLevel() {
             this.currentLevelIndex++;
+            this.startCurrentLevel();
+        }
+
+        startCurrentLevel() {
             this.state.start('Gameplay', true, false);
             AceLoader(this.currentLevel());
+        }
+
+        startLevelFromName(level :string) {
+            this.currentLevelIndex = this.allLevels.indexOf(level);
+            this.startCurrentLevel();
         }
 
         currentLevel() :string {
