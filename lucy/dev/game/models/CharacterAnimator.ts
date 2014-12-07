@@ -22,11 +22,11 @@ module KodingSpy.Controller {
             this.sprite.animations.add('walk1', Phaser.Animation.generateFrameNames('walkE', 1, 16, '', 4), 24, true, false);
             this.sprite.animations.add('walk2', Phaser.Animation.generateFrameNames('walkS', 1, 16, '', 4), 24, true, false);
             this.sprite.animations.add('walk3', Phaser.Animation.generateFrameNames('walkW', 1, 16, '', 4), 24, true, false);
-            this.sprite.animations.add('itemPython', Phaser.Animation.generateFrameNames( 'itemPython',   1, 16, '', 4), 24, true, false);
-            this.sprite.animations.add('itemDiamond', Phaser.Animation.generateFrameNames( 'itemDiamond',   1, 16, '', 4), 24, true, false);
+            this.sprite.animations.add('itemPython', Phaser.Animation.generateFrameNames( 'itemPython',   1, 16, '', 4), 24, false, false);
+            this.sprite.animations.add('itemDiamond', Phaser.Animation.generateFrameNames( 'itemDiamond',   1, 16, '', 4), 24, false, false);
 
-            this.game.collisionController.enableCharacter(this.sprite);
-            this.sprite.body.collideWorldBounds = true;
+            this.game.collisionController.enableCharacter(this);
+            // this.sprite.body.collideWorldBounds = true;
             // var collisionGroup = this.game.collisionController.getGroup('character');
             // this.sprite.body.setCollisionGroup(collisionGroup);
 
@@ -47,10 +47,17 @@ module KodingSpy.Controller {
                 'x':worldPos.x,
                 'y':worldPos.y},
                 delta * 500);
-            moveTween.onComplete.add(next);
+            moveTween.onComplete.add(() => {
+                this.character.position = newPos;
+                var collision = this.game.collisionController.checkCollisions();
+                if (collision) {
+                    this.onCollision(collision, next);
+                }
+                else {
+                    next();
+                }
+                });
             moveTween.start();
-
-            this.character.position = newPos;
         }
 
         rotateTo(direction: KodingSpy.Model.Direction, next: ControllerDelegate) : void {
@@ -67,7 +74,30 @@ module KodingSpy.Controller {
         }
 
         update() {
-            // this.game.debug.body(this.sprite);
+
+        }
+
+        onCollision(colliderName :string, next :ControllerDelegate) {
+            console.log(colliderName);
+            switch (colliderName) {
+                case "diamond":
+                    var diamondAnim = this.sprite.animations.play("itemDiamond");
+                    var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
+                    waitTween.onComplete.add(next);
+                    waitTween.start();
+                    break;
+                case "python":
+                    var pythonAnim = this.sprite.animations.play("itemPython");
+                    var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
+                    waitTween.onComplete.add(next);
+                    waitTween.start();
+                    break;
+                case "laserCannon":
+                case "laserBeamHorizontal":
+                case "laserBeamVertical":
+                    console.log("died!!");
+
+            }
         }
 
     }

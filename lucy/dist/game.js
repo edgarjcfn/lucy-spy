@@ -74,13 +74,13 @@ var KodingSpy;
                 this.sprite.animations.add('walk1', Phaser.Animation.generateFrameNames('walkE', 1, 16, '', 4), 24, true, false);
                 this.sprite.animations.add('walk2', Phaser.Animation.generateFrameNames('walkS', 1, 16, '', 4), 24, true, false);
                 this.sprite.animations.add('walk3', Phaser.Animation.generateFrameNames('walkW', 1, 16, '', 4), 24, true, false);
-                this.sprite.animations.add('itemPython', Phaser.Animation.generateFrameNames('itemPython', 1, 16, '', 4), 24, true, false);
-                this.sprite.animations.add('itemDiamond', Phaser.Animation.generateFrameNames('itemDiamond', 1, 16, '', 4), 24, true, false);
-                this.game.collisionController.enableCharacter(this.sprite);
-                this.sprite.body.collideWorldBounds = true;
+                this.sprite.animations.add('itemPython', Phaser.Animation.generateFrameNames('itemPython', 1, 16, '', 4), 24, false, false);
+                this.sprite.animations.add('itemDiamond', Phaser.Animation.generateFrameNames('itemDiamond', 1, 16, '', 4), 24, false, false);
+                this.game.collisionController.enableCharacter(this);
                 this.updateDirection();
             };
             CharacterController.prototype.moveBy = function (x, y, next) {
+                var _this = this;
                 var currentPos = this.character.position;
                 var newPos = new KodingSpy.Model.TileCoordinate(currentPos.x + x, currentPos.y + y);
                 var worldPos = KodingSpy.Utils.getWorldPosition(newPos.x, newPos.y);
@@ -91,9 +91,17 @@ var KodingSpy;
                     'x': worldPos.x,
                     'y': worldPos.y
                 }, delta * 500);
-                moveTween.onComplete.add(next);
+                moveTween.onComplete.add(function () {
+                    _this.character.position = newPos;
+                    var collision = _this.game.collisionController.checkCollisions();
+                    if (collision) {
+                        _this.onCollision(collision, next);
+                    }
+                    else {
+                        next();
+                    }
+                });
                 moveTween.start();
-                this.character.position = newPos;
             };
             CharacterController.prototype.rotateTo = function (direction, next) {
                 this.updateDirection();
@@ -107,6 +115,27 @@ var KodingSpy;
             };
             CharacterController.prototype.update = function () {
             };
+            CharacterController.prototype.onCollision = function (colliderName, next) {
+                console.log(colliderName);
+                switch (colliderName) {
+                    case "diamond":
+                        var diamondAnim = this.sprite.animations.play("itemDiamond");
+                        var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
+                        waitTween.onComplete.add(next);
+                        waitTween.start();
+                        break;
+                    case "python":
+                        var pythonAnim = this.sprite.animations.play("itemPython");
+                        var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
+                        waitTween.onComplete.add(next);
+                        waitTween.start();
+                        break;
+                    case "laserCannon":
+                    case "laserBeamHorizontal":
+                    case "laserBeamVertical":
+                        console.log("died!!");
+                }
+            };
             return CharacterController;
         })();
         Controller.CharacterController = CharacterController;
@@ -119,17 +148,49 @@ var KodingSpy;
         var CollisionController = (function () {
             function CollisionController(game) {
                 this.game = game;
+                this.colliders = {};
             }
             CollisionController.prototype.startPhysics = function () {
                 this.game.physics.startSystem(Phaser.Physics.ARCADE);
             };
-            CollisionController.prototype.enableCharacter = function (sprite) {
-                this.game.physics.enable(sprite);
-                this.character = sprite;
+            CollisionController.prototype.enableCharacter = function (controller) {
+                var characterSprite = controller.sprite;
+                this.game.physics.enable(characterSprite);
+                this.characterController = controller;
+                characterSprite.body.width = 40;
+                characterSprite.body.height = 40;
+                characterSprite.body.offset = new Phaser.Point(5, 55);
             };
             CollisionController.prototype.enableCollider = function (sprite, name) {
+                this.game.physics.enable(sprite);
+                if (!(this.colliders[name])) {
+                    this.colliders[name] = [];
+                }
+                this.colliders[name].push(sprite);
+            };
+            CollisionController.prototype.checkCollisions = function () {
+                var player = this.characterController.sprite.body;
+                for (var colliderName in this.colliders) {
+                    var colliderArray = this.colliders[colliderName];
+                    for (var i = 0; i < colliderArray.length; i++) {
+                        var collider = colliderArray[i].body;
+                        if (this.game.physics.arcade.intersects(player, collider)) {
+                            return colliderName;
+                        }
+                    }
+                }
+                return null;
             };
             CollisionController.prototype.update = function () {
+                this.game.debug.bodyInfo(this.characterController.sprite, 32, 320);
+                this.game.debug.body(this.characterController.sprite);
+                for (var colliderName in this.colliders) {
+                    var colliderArray = this.colliders[colliderName];
+                    for (var i = 0; i < colliderArray.length; i++) {
+                        var collider = colliderArray[i];
+                        this.game.debug.body(collider);
+                    }
+                }
             };
             return CollisionController;
         })();
@@ -322,10 +383,10 @@ var KodingSpy;
         Gameplay.prototype.preload = function () {
         };
         Gameplay.prototype.update = function () {
-            this.characterController.update();
-            this.game.collisionController.update();
         };
         Gameplay.prototype.render = function () {
+            var kodingSpyGame = this.game;
+            kodingSpyGame.collisionController.update();
         };
         return Gameplay;
     })(Phaser.State);

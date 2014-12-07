@@ -16,8 +16,12 @@ var $builtinmodule = function(name)
     });
 
     mod.moveForward = new Sk.builtin.func(function(x) {
-        var moveCmd = new KodingSpy.Command.MoveCommand(x.v, SkulptAnimator);
-        Sk.commandChain.append(moveCmd, Sk.currLineNo);
+        var amount = x.v || 1;
+        for (var i=0; i < amount; i++)
+        {
+            var moveCmd = new KodingSpy.Command.MoveCommand(1, SkulptAnimator);
+            Sk.commandChain.append(moveCmd, Sk.currLineNo);
+        }
     });
 
     mod.turnLeft = new Sk.builtin.func(function() {

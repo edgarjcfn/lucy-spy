@@ -31,12 +31,13 @@ module KodingSpy {
         }
 
         update() {
-            this.characterController.update();
-            (<KodingSpy.Game> this.game).collisionController.update();
+
+
         }
 
         render() {
-            // this.game.debug.bodyInfo(this.characterController.sprite, 32, 320);
+            var kodingSpyGame = <KodingSpy.Game> this.game;
+            kodingSpyGame.collisionController.update();
         }
     }
 }
