@@ -2,14 +2,15 @@ var SkulptRunning = false;
 var TheGame;
 
 var AceLoader = function (level) {
+  setButtonState('Run');
+  var editor = ace.edit("editor");
+  var AceRange = ace.require('ace/range').Range;
+  editor.setValue('');
   $.ajax({
     url: 'lucy/dev/game/assets/levels/' + level + '.txt',
     success: function(data) {
-      var editor = ace.edit("editor");
-      var AceRange = ace.require('ace/range').Range;
       editor.setValue(data, 1);
       editor.session.addFold("", new AceRange(0,0,1,100));
-      setButtonState('Run');
     }
   });
 }

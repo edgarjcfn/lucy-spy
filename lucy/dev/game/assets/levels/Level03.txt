@@ -1,0 +1,8 @@
+from lucy import turnRight, moveForward, turnLeft;
+
+
+# Now you try!
+# Available commands:
+# moveForward(x)
+# turnRight()
+# turnLeft()
