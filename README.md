@@ -1,4 +1,4 @@
-# Codename: Koding Spy
+# Lucy is a Spy with Diamonds
 
 A puzzle adventure to teach programming
 
