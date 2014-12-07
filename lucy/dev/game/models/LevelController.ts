@@ -17,7 +17,8 @@ module KodingSpy.Controller {
             this.map.addTilesetImage('floor_walls', 'tilemap');
             this.map.addTilesetImage('door', 'doorTilemap');
 
-            this.map.createLayer('Floor');
+            var floor = this.map.createLayer('Floor');
+            console.log(floor);
             var collision = this.map.createLayer('Collision');
 
             this.map.setCollisionByExclusion([], true, 'Collision');
@@ -33,17 +34,24 @@ module KodingSpy.Controller {
                     if (tile.properties.type) {
                         var tileType = <string> tile.properties.type;
                         var frames = <number> tile.properties.frames;
-                        if (tileType != "door") {
-                            this.game.add.sprite(tile.worldX, tile.worldY, 'emptyTile');
+                        if (tileType != "door" && tileType != "wall") {
+                            this.game.add.sprite(tile.worldX, tile.worldY, 'floor');
                         }
                         if (tileType == "spawn") {
                             this.spawnPosition = new KodingSpy.Model.TileCoordinate(x, y);
                         }
                         else {
-                            var sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
-                            sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 0, frames-1, '', 4), 24, true, false);
-                            sprite.animations.play(tileType);
+                            var sprite;
+                            if (tileType == "wall") {
+                                sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'empty');
+                            }
+                            else {
+                                sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
+                                sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 0, frames-1, '', 4), 24, true, false);
+                                sprite.animations.play(tileType);
+                            }
                             this.game.collisionController.enableCollider(sprite, tileType);
+
                         }
                     }
                 }

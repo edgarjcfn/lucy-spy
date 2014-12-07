@@ -66,16 +66,16 @@ module KodingSpy.Controller {
         }
 
         update() {
-            // this.game.debug.bodyInfo(this.characterController.sprite, 32, 320);
-            // this.game.debug.body(this.characterController.sprite);
-            // for (var colliderName in this.colliders) {
-            //     var colliderArray = this.colliders[colliderName];
-            //     for (var i=0; i < colliderArray.length; i++) {
-            //         var collider = colliderArray[i];
-            //         this.game.debug.body(collider);
-            //     }
+            this.game.debug.bodyInfo(this.characterController.sprite, 32, 320);
+            this.game.debug.body(this.characterController.sprite);
+            for (var colliderName in this.colliders) {
+                var colliderArray = this.colliders[colliderName];
+                for (var i=0; i < colliderArray.length; i++) {
+                    var collider = colliderArray[i];
+                    this.game.debug.body(collider);
+                }
 
-            // }
+            }
         }
     }
 }

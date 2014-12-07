@@ -252,6 +252,15 @@ var KodingSpy;
                 return null;
             };
             CollisionController.prototype.update = function () {
+                this.game.debug.bodyInfo(this.characterController.sprite, 32, 320);
+                this.game.debug.body(this.characterController.sprite);
+                for (var colliderName in this.colliders) {
+                    var colliderArray = this.colliders[colliderName];
+                    for (var i = 0; i < colliderArray.length; i++) {
+                        var collider = colliderArray[i];
+                        this.game.debug.body(collider);
+                    }
+                }
             };
             return CollisionController;
         })();
@@ -379,7 +388,8 @@ var KodingSpy;
                 this.map = this.game.add.tilemap(this.levelName);
                 this.map.addTilesetImage('floor_walls', 'tilemap');
                 this.map.addTilesetImage('door', 'doorTilemap');
-                this.map.createLayer('Floor');
+                var floor = this.map.createLayer('Floor');
+                console.log(floor);
                 var collision = this.map.createLayer('Collision');
                 this.map.setCollisionByExclusion([], true, 'Collision');
                 this.buildItems();
@@ -391,16 +401,22 @@ var KodingSpy;
                         if (tile.properties.type) {
                             var tileType = tile.properties.type;
                             var frames = tile.properties.frames;
-                            if (tileType != "door") {
-                                this.game.add.sprite(tile.worldX, tile.worldY, 'emptyTile');
+                            if (tileType != "door" && tileType != "wall") {
+                                this.game.add.sprite(tile.worldX, tile.worldY, 'floor');
                             }
                             if (tileType == "spawn") {
                                 this.spawnPosition = new KodingSpy.Model.TileCoordinate(x, y);
                             }
                             else {
-                                var sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
-                                sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 0, frames - 1, '', 4), 24, true, false);
-                                sprite.animations.play(tileType);
+                                var sprite;
+                                if (tileType == "wall") {
+                                    sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'empty');
+                                }
+                                else {
+                                    sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
+                                    sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 0, frames - 1, '', 4), 24, true, false);
+                                    sprite.animations.play(tileType);
+                                }
                                 this.game.collisionController.enableCollider(sprite, tileType);
                             }
                         }
@@ -477,7 +493,8 @@ var KodingSpy;
             this.load.atlasJSONHash('items', 'lucy/dev/game/assets/items.png', 'lucy/dev/game/assets/items.json');
             this.load.image('tilemap', 'lucy/dev/game/assets/tiles/TileSheet.png');
             this.load.image('doorTilemap', 'lucy/dev/game/assets/tiles/door.png');
-            this.load.image('emptyTile', 'lucy/dev/game/assets/tiles/tileFLOOR.png');
+            this.load.image('floor', 'lucy/dev/game/assets/tiles/tileFLOOR.png');
+            this.load.image('empty', 'lucy/dev/game/assets/tiles/empty.png');
             this.load.atlasJSONHash('lucy', 'lucy/dev/game/assets/char/lucy.png', 'lucy/dev/game/assets/char/lucy.json');
             var myGame = this.game;
             for (var i = 0; i < myGame.allLevels.length; i++) {
