@@ -23,6 +23,10 @@ module KodingSpy {
             this.characterController.create(this.lucy);
 
             SkulptAnimator = this.characterController;
+
+            this.game.sound.pauseAll();
+            var music = this.game.add.audio('bgm', 0.3, true);
+            music.play();
         }
 
         preload() {
@@ -30,7 +34,6 @@ module KodingSpy {
         }
 
         update() {
-
 
         }
 

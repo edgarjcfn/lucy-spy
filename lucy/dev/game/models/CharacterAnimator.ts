@@ -10,6 +10,10 @@ module KodingSpy.Controller {
         sprite: Phaser.Sprite;
         isHoldingKey: Boolean;
 
+        sndDiamond :Phaser.Sound;
+        sndPython :Phaser.Sound;
+        sndDeath :Phaser.Sound;
+
         constructor(game:KodingSpy.Game) {
             this.game = game;
             this.isHoldingKey = false;
@@ -34,6 +38,11 @@ module KodingSpy.Controller {
             // this.sprite.body.setCollisionGroup(collisionGroup);
 
             this.updateDirection();
+
+
+            this.sndDiamond = this.game.add.audio('diamond', 0.5, false);
+            this.sndPython = this.game.add.audio('python', 0.5, false);
+            this.sndDeath = this.game.add.audio('laser', 0.5, false);
         }
 
         moveBy(x :number , y: number, next: ControllerDelegate) : void {
@@ -83,6 +92,7 @@ module KodingSpy.Controller {
         onCollision(data :ColliderData, next :ControllerDelegate) {
             switch (data.name) {
                 case "diamond":
+                    this.sndDiamond.play();
                     this.game.collisionController.disableCollider(data.sprite, data.name);
                     data.sprite.destroy();
                     var diamondAnim = this.sprite.animations.play("itemDiamond");
@@ -92,6 +102,7 @@ module KodingSpy.Controller {
                     break;
                 case "python":
                     this.isHoldingKey = true;
+                    this.sndPython.play();
                     this.game.collisionController.disableCollider(data.sprite, data.name);
                     data.sprite.destroy();
                     var pythonAnim = this.sprite.animations.play("itemPython");
@@ -102,6 +113,7 @@ module KodingSpy.Controller {
                 case "laserCannon":
                 case "laserBeamHorizontal":
                 case "laserBeamVertical":
+                    this.sndDeath.play();
                     var burnanim = this.sprite.animations.play("burn");
                     break;
                 case "door":

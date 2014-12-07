@@ -94,6 +94,9 @@ var KodingSpy;
                 this.sprite.animations.add('burn', Phaser.Animation.generateFrameNames('burn', 1, 30, '', 4), 24, false, false);
                 this.game.collisionController.enableCharacter(this);
                 this.updateDirection();
+                this.sndDiamond = this.game.add.audio('diamond', 0.5, false);
+                this.sndPython = this.game.add.audio('python', 0.5, false);
+                this.sndDeath = this.game.add.audio('laser', 0.5, false);
             };
             CharacterController.prototype.moveBy = function (x, y, next) {
                 var _this = this;
@@ -134,6 +137,7 @@ var KodingSpy;
             CharacterController.prototype.onCollision = function (data, next) {
                 switch (data.name) {
                     case "diamond":
+                        this.sndDiamond.play();
                         this.game.collisionController.disableCollider(data.sprite, data.name);
                         data.sprite.destroy();
                         var diamondAnim = this.sprite.animations.play("itemDiamond");
@@ -143,6 +147,7 @@ var KodingSpy;
                         break;
                     case "python":
                         this.isHoldingKey = true;
+                        this.sndPython.play();
                         this.game.collisionController.disableCollider(data.sprite, data.name);
                         data.sprite.destroy();
                         var pythonAnim = this.sprite.animations.play("itemPython");
@@ -153,6 +158,7 @@ var KodingSpy;
                     case "laserCannon":
                     case "laserBeamHorizontal":
                     case "laserBeamVertical":
+                        this.sndDeath.play();
                         var burnanim = this.sprite.animations.play("burn");
                         break;
                     case "door":
@@ -411,6 +417,9 @@ var KodingSpy;
             this.characterController = new KodingSpy.Controller.CharacterController(kodingSpyGame);
             this.characterController.create(this.lucy);
             SkulptAnimator = this.characterController;
+            this.game.sound.pauseAll();
+            var music = this.game.add.audio('bgm', 0.3, true);
+            music.play();
         };
         Gameplay.prototype.preload = function () {
         };
@@ -442,6 +451,11 @@ var KodingSpy;
             this.load.tilemap('Level01', 'lucy/dev/game/assets/levels/Level01.json', null, Phaser.Tilemap.TILED_JSON);
             this.load.tilemap('Level02', 'lucy/dev/game/assets/levels/Level02.json', null, Phaser.Tilemap.TILED_JSON);
             this.load.tilemap('Level03', 'lucy/dev/game/assets/levels/Level03.json', null, Phaser.Tilemap.TILED_JSON);
+            this.load.audio('bgm', 'lucy/dev/game/assets/sounds/soundtrack.ogg');
+            this.load.audio('python', 'lucy/dev/game/assets/sounds/python.ogg');
+            this.load.audio('diamond', 'lucy/dev/game/assets/sounds/diamond.ogg');
+            this.load.audio('laser', 'lucy/dev/game/assets/sounds/laser.ogg');
+            this.load.audio('scream', 'lucy/dev/game/assets/sounds/scream.ogg');
         };
         Preloader.prototype.create = function () {
             var tween = this.add.tween(this.preloadBar).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
