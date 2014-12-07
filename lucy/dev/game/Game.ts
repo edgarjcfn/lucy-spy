@@ -65,5 +65,9 @@ module KodingSpy {
             return <string> this.allLevels[this.currentLevelIndex];
         }
 
+        setSoundEnabled(enabled) :void {
+            this.sound.pauseAll();
+        }
+
     }
 }

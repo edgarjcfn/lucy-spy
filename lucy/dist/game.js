@@ -47,6 +47,9 @@ var KodingSpy;
         Game.prototype.currentLevel = function () {
             return this.allLevels[this.currentLevelIndex];
         };
+        Game.prototype.setSoundEnabled = function (enabled) {
+            this.sound.pauseAll();
+        };
         return Game;
     })(Phaser.Game);
     KodingSpy.Game = Game;
