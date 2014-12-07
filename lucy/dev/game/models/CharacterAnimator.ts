@@ -8,9 +8,11 @@ module KodingSpy.Controller {
         character: KodingSpy.Model.Character;
         game: KodingSpy.Game;
         sprite: Phaser.Sprite;
+        isHoldingKey: Boolean;
 
         constructor(game:KodingSpy.Game) {
             this.game = game;
+            this.isHoldingKey = false;
         }
 
         create(lucy:KodingSpy.Model.Character) {
@@ -81,6 +83,7 @@ module KodingSpy.Controller {
         onCollision(data :ColliderData, next :ControllerDelegate) {
             switch (data.name) {
                 case "diamond":
+                    this.game.collisionController.disableCollider(data.sprite, data.name);
                     data.sprite.destroy();
                     var diamondAnim = this.sprite.animations.play("itemDiamond");
                     var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
@@ -88,6 +91,8 @@ module KodingSpy.Controller {
                     waitTween.start();
                     break;
                 case "python":
+                    this.isHoldingKey = true;
+                    this.game.collisionController.disableCollider(data.sprite, data.name);
                     data.sprite.destroy();
                     var pythonAnim = this.sprite.animations.play("itemPython");
                     var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
@@ -98,10 +103,12 @@ module KodingSpy.Controller {
                 case "laserBeamHorizontal":
                 case "laserBeamVertical":
                     var burnanim = this.sprite.animations.play("burn");
-                    // var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
-                    // waitTween.onComplete.add(next);
-                    // waitTween.start();
-
+                    break;
+                case "door":
+                    if (this.isHoldingKey) {
+                        this.game.gotoNextLevel();
+                    }
+                    break;
             }
         }
 

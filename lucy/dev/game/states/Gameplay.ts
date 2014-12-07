@@ -10,10 +10,9 @@ module KodingSpy {
 
         create() {
 
-            var levelToPlay = 'Level02';
-
             this.lucy = new KodingSpy.Model.Character(8, 9, KodingSpy.Model.Direction.N);
             var kodingSpyGame = <KodingSpy.Game> this.game;
+            var levelToPlay = kodingSpyGame.currentLevel();
 
             kodingSpyGame.collisionController = new KodingSpy.Controller.CollisionController(kodingSpyGame);
 
@@ -28,6 +27,7 @@ module KodingSpy {
         }
 
         preload() {
+
         }
 
         update() {

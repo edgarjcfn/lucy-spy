@@ -9,6 +9,7 @@ var AceLoader = function (level) {
       var AceRange = ace.require('ace/range').Range;
       editor.setValue(data, 1);
       editor.session.addFold("", new AceRange(0,0,1,100));
+      setButtonState('Run');
     }
   });
 }

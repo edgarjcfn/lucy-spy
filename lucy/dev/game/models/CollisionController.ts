@@ -42,6 +42,12 @@ module KodingSpy.Controller {
             this.colliders[name].push(sprite);
         }
 
+        disableCollider(sprite :Phaser.Sprite, name :string) :void {
+            sprite.body.destroy();
+            var sameTypeColliders = this.colliders[name];
+            sameTypeColliders.splice(sameTypeColliders.indexOf(sprite), 1);
+        }
+
         checkCollisions() :ColliderData{
             var player = this.characterController.sprite.body;
 

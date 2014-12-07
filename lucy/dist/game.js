@@ -10,6 +10,12 @@ var KodingSpy;
         __extends(Game, _super);
         function Game() {
             _super.call(this, 800, 600, Phaser.AUTO, 'gameCanvas', null);
+            this.allLevels = [
+                'Level01',
+                'Level02',
+                'Level03',
+            ];
+            this.currentLevelIndex = 0;
             this.state.add('Boot', KodingSpy.Boot, false);
             this.state.add('Preloader', KodingSpy.Preloader, false);
             this.state.add('Gameplay', KodingSpy.Gameplay, false);
@@ -17,6 +23,13 @@ var KodingSpy;
         Game.prototype.boot = function () {
             _super.prototype.boot.call(this);
             this.state.start('Boot');
+        };
+        Game.prototype.gotoNextLevel = function () {
+            this.currentLevelIndex++;
+            this.state.start('Gameplay');
+        };
+        Game.prototype.currentLevel = function () {
+            return this.allLevels[this.currentLevelIndex];
         };
         return Game;
     })(Phaser.Game);
@@ -65,6 +78,7 @@ var KodingSpy;
         var CharacterController = (function () {
             function CharacterController(game) {
                 this.game = game;
+                this.isHoldingKey = false;
             }
             CharacterController.prototype.create = function (lucy) {
                 this.character = lucy;
@@ -119,6 +133,7 @@ var KodingSpy;
             CharacterController.prototype.onCollision = function (data, next) {
                 switch (data.name) {
                     case "diamond":
+                        this.game.collisionController.disableCollider(data.sprite, data.name);
                         data.sprite.destroy();
                         var diamondAnim = this.sprite.animations.play("itemDiamond");
                         var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
@@ -126,6 +141,8 @@ var KodingSpy;
                         waitTween.start();
                         break;
                     case "python":
+                        this.isHoldingKey = true;
+                        this.game.collisionController.disableCollider(data.sprite, data.name);
                         data.sprite.destroy();
                         var pythonAnim = this.sprite.animations.play("itemPython");
                         var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
@@ -136,6 +153,12 @@ var KodingSpy;
                     case "laserBeamHorizontal":
                     case "laserBeamVertical":
                         var burnanim = this.sprite.animations.play("burn");
+                        break;
+                    case "door":
+                        if (this.isHoldingKey) {
+                            this.game.gotoNextLevel();
+                        }
+                        break;
                 }
             };
             return CharacterController;
@@ -177,6 +200,11 @@ var KodingSpy;
                     this.colliders[name] = [];
                 }
                 this.colliders[name].push(sprite);
+            };
+            CollisionController.prototype.disableCollider = function (sprite, name) {
+                sprite.body.destroy();
+                var sameTypeColliders = this.colliders[name];
+                sameTypeColliders.splice(sameTypeColliders.indexOf(sprite), 1);
             };
             CollisionController.prototype.checkCollisions = function () {
                 var player = this.characterController.sprite.body;
@@ -370,9 +398,9 @@ var KodingSpy;
             _super.apply(this, arguments);
         }
         Gameplay.prototype.create = function () {
-            var levelToPlay = 'Level02';
             this.lucy = new KodingSpy.Model.Character(8, 9, 0 /* N */);
             var kodingSpyGame = this.game;
+            var levelToPlay = kodingSpyGame.currentLevel();
             kodingSpyGame.collisionController = new KodingSpy.Controller.CollisionController(kodingSpyGame);
             this.levelController = new KodingSpy.Controller.LevelController(kodingSpyGame, levelToPlay);
             this.levelController.create();
@@ -409,6 +437,7 @@ var KodingSpy;
             this.load.atlasJSONHash('lucy', 'lucy/dev/game/assets/char/lucy.png', 'lucy/dev/game/assets/char/lucy.json');
             this.load.tilemap('Level01', 'lucy/dev/game/assets/levels/Level01.json', null, Phaser.Tilemap.TILED_JSON);
             this.load.tilemap('Level02', 'lucy/dev/game/assets/levels/Level02.json', null, Phaser.Tilemap.TILED_JSON);
+            this.load.tilemap('Level03', 'lucy/dev/game/assets/levels/Level03.json', null, Phaser.Tilemap.TILED_JSON);
         };
         Preloader.prototype.create = function () {
             var tween = this.add.tween(this.preloadBar).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
