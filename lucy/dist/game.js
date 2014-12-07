@@ -15,7 +15,9 @@ var KodingSpy;
                 'Level02',
                 'Level03',
                 'Level04',
-                'Level05'
+                'Level05',
+                'Level06',
+                'Level07'
             ];
             this.currentLevelIndex = -1;
             this.state.add('Boot', KodingSpy.Boot, false);
