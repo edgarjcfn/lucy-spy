@@ -14,7 +14,8 @@ var KodingSpy;
                 'Level01',
                 'Level02',
                 'Level03',
-                'Level04'
+                'Level04',
+                'Level05'
             ];
             this.currentLevelIndex = -1;
             this.state.add('Boot', KodingSpy.Boot, false);
@@ -26,18 +27,20 @@ var KodingSpy;
             this.state.start('Boot');
         };
         Game.prototype.gotoNextLevel = function () {
-            ShowMessage('Well Done', '3');
             this.currentLevelIndex++;
             this.startCurrentLevel();
         };
         Game.prototype.startCurrentLevel = function () {
             this.state.start('Gameplay', true, false);
-            HideMessage();
             AceLoader(this.currentLevel());
         };
         Game.prototype.startLevelFromName = function (level) {
             this.currentLevelIndex = this.allLevels.indexOf(level);
             this.startCurrentLevel();
+        };
+        Game.prototype.levelCompleted = function (diamonds) {
+            ShowMessage('Well done!', diamonds);
+            this.gotoNextLevel();
         };
         Game.prototype.currentLevel = function () {
             return this.allLevels[this.currentLevelIndex];
@@ -90,6 +93,7 @@ var KodingSpy;
             function CharacterController(game) {
                 this.game = game;
                 this.isHoldingKey = false;
+                this.diamondCount = 0;
             }
             CharacterController.prototype.create = function (lucy) {
                 this.character = lucy;
@@ -147,6 +151,7 @@ var KodingSpy;
             CharacterController.prototype.onCollision = function (data, next) {
                 switch (data.name) {
                     case "diamond":
+                        this.diamondCount++;
                         this.sndDiamond.play();
                         this.game.collisionController.disableCollider(data.sprite, data.name);
                         data.sprite.destroy();
@@ -173,7 +178,7 @@ var KodingSpy;
                         break;
                     case "door":
                         if (this.isHoldingKey) {
-                            this.game.gotoNextLevel();
+                            this.game.levelCompleted(this.diamondCount);
                         }
                         break;
                 }
@@ -382,7 +387,6 @@ var KodingSpy;
                             sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 0, frames - 1, '', 4), 24, true, false);
                             sprite.animations.play(tileType);
                             this.game.collisionController.enableCollider(sprite, tileType);
-                            console.log(tile);
                         }
                     }
                 }

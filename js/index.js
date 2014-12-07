@@ -15,15 +15,18 @@ var AceLoader = function (level) {
   });
 }
 
-var ShowMessage = function (msg, icon) {
-  swal({title:msg, imageUrl:'lucy/dev/game/assets/result/resultscreen03.png'});
+var ShowMessage = function (msg, diamonds) {
+  swal({title:msg, imageUrl:'lucy/dev/game/assets/result/resultscreen0'+diamonds+'.png'});
+  $('.icon.custom').css({
+      'width': '300px',
+      'height': '100px'
+    });
 }
 
 var HideMessage = function () {
   $('.sweet-alert').hide();
   $('.sweet-overlay').hide();
 }
-
 
 function builtinRead(x) {
   if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)

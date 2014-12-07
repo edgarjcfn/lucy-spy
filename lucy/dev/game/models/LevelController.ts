@@ -38,7 +38,6 @@ module KodingSpy.Controller {
                         sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 0, frames-1, '', 4), 24, true, false);
                         sprite.animations.play(tileType);
                         this.game.collisionController.enableCollider(sprite, tileType);
-                        console.log(tile);
                     }
                 }
             }

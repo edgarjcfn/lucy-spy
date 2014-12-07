@@ -14,9 +14,12 @@ module KodingSpy.Controller {
         sndPython :Phaser.Sound;
         sndDeath :Phaser.Sound;
 
+        diamondCount :number;
+
         constructor(game:KodingSpy.Game) {
             this.game = game;
             this.isHoldingKey = false;
+            this.diamondCount = 0;
         }
 
         create(lucy:KodingSpy.Model.Character) {
@@ -87,6 +90,7 @@ module KodingSpy.Controller {
         onCollision(data :ColliderData, next :ControllerDelegate) {
             switch (data.name) {
                 case "diamond":
+                    this.diamondCount++;
                     this.sndDiamond.play();
                     this.game.collisionController.disableCollider(data.sprite, data.name);
                     data.sprite.destroy();
@@ -113,7 +117,7 @@ module KodingSpy.Controller {
                     break;
                 case "door":
                     if (this.isHoldingKey) {
-                        this.game.gotoNextLevel();
+                        this.game.levelCompleted(this.diamondCount);
                     }
                     break;
             }
