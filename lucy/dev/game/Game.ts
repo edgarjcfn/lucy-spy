@@ -2,7 +2,9 @@
 
 module KodingSpy {
 
-    declare var AceLoader : (string)=>void;
+    declare var AceLoader : (level :string)=>void;
+    declare var ShowMessage : (msg :string, type :string)=>void;
+    declare var HideMessage : ()=>void;
 
     export interface ExecutionUpdateDelegate {
         (line: number):void;
@@ -21,6 +23,7 @@ module KodingSpy {
                 'Level01',
                 'Level02',
                 'Level03',
+                'Level04'
             ];
 
             this.currentLevelIndex = -1;
@@ -36,12 +39,14 @@ module KodingSpy {
         }
 
         gotoNextLevel() {
+            ShowMessage('Well Done', '3');
             this.currentLevelIndex++;
             this.startCurrentLevel();
         }
 
         startCurrentLevel() {
             this.state.start('Gameplay', true, false);
+            HideMessage();
             AceLoader(this.currentLevel());
         }
 

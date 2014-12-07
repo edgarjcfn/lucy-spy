@@ -15,6 +15,15 @@ var AceLoader = function (level) {
   });
 }
 
+var ShowMessage = function (msg, icon) {
+  swal({title:msg, imageUrl:'lucy/dev/game/assets/result/resultscreen03.png'});
+}
+
+var HideMessage = function () {
+  $('.sweet-alert').hide();
+  $('.sweet-overlay').hide();
+}
+
 
 function builtinRead(x) {
   if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)

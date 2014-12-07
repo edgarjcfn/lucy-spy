@@ -14,6 +14,7 @@ var KodingSpy;
                 'Level01',
                 'Level02',
                 'Level03',
+                'Level04'
             ];
             this.currentLevelIndex = -1;
             this.state.add('Boot', KodingSpy.Boot, false);
@@ -25,11 +26,13 @@ var KodingSpy;
             this.state.start('Boot');
         };
         Game.prototype.gotoNextLevel = function () {
+            ShowMessage('Well Done', '3');
             this.currentLevelIndex++;
             this.startCurrentLevel();
         };
         Game.prototype.startCurrentLevel = function () {
             this.state.start('Gameplay', true, false);
+            HideMessage();
             AceLoader(this.currentLevel());
         };
         Game.prototype.startLevelFromName = function (level) {
