@@ -4,8 +4,24 @@ from lucy import turnRight, moveForward, turnLeft;
 #   5th Floor   #
 #################
 
-# Watch out for Lasers!!
+# Now this is starting to get
+# repettitive, right?
 
-# Don't let Lucy get hurt.
+# Here's something new:
+# Try running this code
+# and watch the code window
+# as Lucy moves.
 
-moveForward(5)
+# Pay attention to what happens
+# beneath line 22:
+
+moveForward(1)
+turnLeft()
+moveForward(1)
+
+for x in range(2):
+    turnRight()
+    moveForward(2)
+    turnLeft()
+    moveForward(2)
+

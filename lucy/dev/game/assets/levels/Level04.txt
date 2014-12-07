@@ -4,8 +4,9 @@ from lucy import turnRight, moveForward, turnLeft;
 #   4th Floor   #
 #################
 
-# Watch out for Lasers!!
+# Now try this new challenge!
 
-# Don't let Lucy get hurt.
+# On the next floor you'll
+# learn some new commands!
 
-moveForward(5)
+moveForward(9)

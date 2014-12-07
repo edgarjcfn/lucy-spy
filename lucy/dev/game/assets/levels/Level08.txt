@@ -1,11 +1,13 @@
 from lucy import turnRight, moveForward, turnLeft;
 
 #################
-#   8th Floor   #
+#  Final Floor  #
 #################
 
-# Watch out for Lasers!!
+# Thank you for making it this far
+# There is still no tutorial for this level
+# You can try out from scratch, though
+# Have fun!!
 
-# Don't let Lucy get hurt.
-
-moveForward(5)
+# If you finish this level
+# You are AMAZING!!

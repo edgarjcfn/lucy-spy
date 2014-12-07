@@ -102,13 +102,13 @@ function setButtonState(state) {
   if (state == 'Reset') {
     if (runButton.data('state') == 'Run') {
       runButton.attr('class', 'btn btn-danger btn-lg');
-      runButton.html('Reset');
+      runButton.html('Reset!');
       runButton.data('state', 'Reset');
     }
   }
   else if (state == 'Run') {
     runButton.attr('class', 'btn btn-success btn-lg');
-    runButton.html('Run');
+    runButton.html('Run!');
     runButton.data('state', 'Run');
   }
 }

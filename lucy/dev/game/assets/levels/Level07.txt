@@ -4,8 +4,7 @@ from lucy import turnRight, moveForward, turnLeft;
 #   7th Floor   #
 #################
 
-# Watch out for Lasers!!
-
-# Don't let Lucy get hurt.
-
-moveForward(5)
+# Thank you for making it this far
+# There is still no tutorial for this level
+# You can try out from scratch, though
+# Have fun!!
