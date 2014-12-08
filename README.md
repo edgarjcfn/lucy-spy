@@ -21,3 +21,15 @@ Our vision is to continue to improve this project in the upcoming months with th
 ![Koding Hackathon](/images/screenshot02.png?raw=true "Koding Hackathon")
 ![Koding Hackathon](/images/screenshot03.png?raw=true "Koding Hackathon")
 ![Koding Hackathon](/images/screenshot04.png?raw=true "Koding Hackathon")
+
+## Libraries Used
+[Skulpt](http://www.skulpt.org)  - Python interpreter
+[Phaser](http://www.phaser.io) - HTML5 game engine
+[Ace JS](http://www.ace.c9.io) - Code editor
+[Sweet Alert](https://github.com/t4t5/sweetalert) - Nice alerts
+Bootstrap
+jQuery
+
+## Sounds used
+Background soundtrack from http://www.nosoapradio.us/
+Sound Effects from https://www.freesound.org/
