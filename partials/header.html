@@ -1,23 +1,23 @@
-  <div class="navbar navbar-default">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Lucy is a Spy with Diamonds</a>
-    </div>
-    <div class="navbar-collapse collapse navbar-responsive-collapse">
-      <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Levels <b class="caret"></b></a>
-          <ul class="dropdown-menu" id="levelsDropDown">
-            <li><a href="#">Level01</a></li>
-            <!-- <li class="divider"></li> -->
-          </ul>
-        </li>
-        <li><a data-toggle="modal" data-target="#helpModal" href="#">Help</a></li>
-        <li><a href="#" onclick="stopSounds()"><span class="glyphicon glyphicon-volume-off"></span> Stop Sound</a></li>
-      </ul>
-    </div>
+<div class="navbar navbar-default" ng-controller="HeaderController">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">Lucy is a Spy with Diamonds</a>
   </div>
+  <div class="navbar-collapse collapse navbar-responsive-collapse">
+    <ul class="nav navbar-nav">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Levels <b class="caret"></b></a>
+        <ul class="dropdown-menu" id="levelsDropDown">
+          <li><a href="#">Level01</a></li>
+          <!-- <li class="divider"></li> -->
+        </ul>
+      </li>
+      <li><a data-toggle="modal" data-target="#helpModal" href="#">Help</a></li>
+      <li><a href="#" onclick="stopSounds()"><span class="glyphicon glyphicon-volume-off"></span> Stop Sound</a></li>
+    </ul>
+  </div>
+</div>

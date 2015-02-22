@@ -1,4 +1,5 @@
-<div class="row">
+<div ng-controller="GameController">
+  <div class="row">
     <div class="col-lg-12"></div>
   </div>
   <div class="row">
@@ -13,12 +14,13 @@
   <div class="row">
     <div class="col-lg-1"></div>
     <div class="col-lg-4">
-      <div id="editor">
+      <div id="editor" ng-init="initCodeEditor()">
       </div>
       <br/>
-      <button id="runButton" type="button" onclick="onButtonClicked()" data-state='Run' class="btn btn-success btn-lg">Run!</button>
+      <button id="runButton" type="button" ng-click="onButtonClicked()" data-state='Run' class="{{buttonState.class}}">{{buttonState.text}}</button>
     </div>
     <div class="col-lg-7">
-      <div id="gameCanvas" />
+      <div id="gameCanvas" ng-init="initGameCanvas()" />
     </div>
   </div>
+</div>

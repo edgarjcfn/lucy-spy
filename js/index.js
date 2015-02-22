@@ -96,22 +96,22 @@ function updateButtonBehaviour() {
   }
 }
 
-function setButtonState(state) {
-  var runButton = $('#runButton');
+// function setButtonState(state) {
+//   var runButton = $('#runButton');
 
-  if (state == 'Reset') {
-    if (runButton.data('state') == 'Run') {
-      runButton.attr('class', 'btn btn-danger btn-lg');
-      runButton.html('Reset!');
-      runButton.data('state', 'Reset');
-    }
-  }
-  else if (state == 'Run') {
-    runButton.attr('class', 'btn btn-success btn-lg');
-    runButton.html('Run!');
-    runButton.data('state', 'Run');
-  }
-}
+//   if (state == 'Reset') {
+//     if (runButton.data('state') == 'Run') {
+//       runButton.attr('class', 'btn btn-danger btn-lg');
+//       runButton.html('Reset!');
+//       runButton.data('state', 'Reset');
+//     }
+//   }
+//   else if (state == 'Run') {
+//     runButton.attr('class', 'btn btn-success btn-lg');
+//     runButton.html('Run!');
+//     runButton.data('state', 'Run');
+//   }
+// }
 
 function setLevelsDropDown(levels) {
   var levelsDropDown = $('#levelsDropDown');
@@ -130,33 +130,33 @@ function onLevelClicked(level) {
 
 $(document).ready(function()
 {
-  var editor = ace.edit("editor");
-  var langTools = ace.require("ace/ext/language_tools");
+  // var editor = ace.edit("editor");
+  // var langTools = ace.require("ace/ext/language_tools");
 
-  editor.setTheme("ace/theme/monokai");
-  editor.getSession().setMode("ace/mode/python");
-  editor.setFontSize('12pt');
-  editor.setHighlightActiveLine(true);
+  // editor.setTheme("ace/theme/monokai");
+  // editor.getSession().setMode("ace/mode/python");
+  // editor.setFontSize('12pt');
+  // editor.setHighlightActiveLine(true);
 
-  editor.setOptions({
-        enableBasicAutocompletion: true,
-        enableSnippets: true,
-        enableLiveAutocompletion: true
-    });
-  var customCompleter = {
-    getCompletions: function(editor, session, pos, prefix, callback) {
-      if (prefix.length === 0) { callback(null, []); return }
-      callback(null, [
-        {name:"moveForward",value:"moveForward(1)",meta:"Move Forward"},
-        {name:"turnLeft",value:"turnLeft()",meta:"Turn Left"},
-        {name:"turnRight",value:"turnRight()",meta:"Turn Right"},
-        ]);
-    }
-  }
+  // editor.setOptions({
+  //       enableBasicAutocompletion: true,
+  //       enableSnippets: true,
+  //       enableLiveAutocompletion: true
+  //   });
+  // var customCompleter = {
+  //   getCompletions: function(editor, session, pos, prefix, callback) {
+  //     if (prefix.length === 0) { callback(null, []); return }
+  //     callback(null, [
+  //       {name:"moveForward",value:"moveForward(1)",meta:"Move Forward"},
+  //       {name:"turnLeft",value:"turnLeft()",meta:"Turn Left"},
+  //       {name:"turnRight",value:"turnRight()",meta:"Turn Right"},
+  //       ]);
+  //   }
+  // }
 
-  editor.completers = [customCompleter, langTools.snippetCompleter];
+  // editor.completers = [customCompleter, langTools.snippetCompleter];
 
-  TheGame = new KodingSpy.Game();
-  setButtonState('Run');
+  // TheGame = new KodingSpy.Game();
+  // setButtonState('Run');
   setLevelsDropDown(TheGame.allLevels);
 });

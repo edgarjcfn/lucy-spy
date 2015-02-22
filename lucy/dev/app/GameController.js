@@ -1,19 +1,3 @@
-//
-// lucy/dev/app/module.js
-//
-angular.module('lucy', []);
-var app = angular.module('lucy');
-
-//
-// lucy/dev/app/AppController.js
-//
-app.controller('AppController', function($scope) {
-
-});
-
-//
-// lucy/dev/app/GameController.js
-//
 app.controller('GameController', function($scope) {
 
     $scope.buttonState = _runState;
@@ -77,19 +61,5 @@ app.controller('GameController', function($scope) {
     };
 
     init();
-
-});
-
-//
-// lucy/dev/app/HeaderController.js
-//
-app.controller('HeaderController', function($scope) {
-
-});
-
-//
-// lucy/dev/app/HelpController.js
-//
-app.controller('HelpController', function($scope) {
 
 });
