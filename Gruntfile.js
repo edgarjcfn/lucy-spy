@@ -2,21 +2,8 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        ts: {
-            options: {
-
-            },
-            dev: {
-                // the files to concatenate
-                src: [
-                'lucy/dev/game/**/*.ts'
-                ],
-                // the location of the resulting JS file
-                out: 'lucy/dist/game.js'
-            }
-        },
-        watch: {
-            skulpt: {
+        'watch': {
+            lang: {
                 files: ['lucy/dev/lang/*.js'],
                 tasks: ['copy:skulpt'],
                 options: {
@@ -24,31 +11,79 @@ module.exports = function(grunt) {
                 }
             },
 
-            ts: {
+            game: {
                 files: ['lucy/dev/game/**/*.ts'],
-                tasks: ['ts:dev'],
+                tasks: ['ts:game'],
+                options: {
+                    interrupt: true
+                }
+            },
+
+            app: {
+                files: ['lucy/dev/app/**/module.js', 'lucy/dev/app/**/*.js'],
+                tasks: ['concat:app'],
                 options: {
                     interrupt: true
                 }
             }
 
         },
-        copy: {
+
+        //
+        // Typescript task. Compiles changes made to the game code
+        //
+        'ts': {
+            options: {
+
+            },
+            game: {
+                src: ['lucy/dev/game/**/*.ts'],
+                out: 'lucy/dist/game.js'
+            }
+        },
+
+        //
+        // Copy task to copy skulpt changes from dev/ to dist/
+        //
+        'copy': {
             skulpt : {
                 files : [
                     {expand:true, src:['lucy/dev/lang/*.js'], dest:'lucy/dist/', flatten:true}
                 ]
             }
         },
+
+        //
+        // Concat task to join all Angular Modules into one file
+        //
+        'concat': {
+            options: {
+                process: function(src, filepath) {
+                  return '//\n// ' + filepath + '\n//\n' + src;
+                }
+            },
+            app: {
+                src: ['lucy/dev/app/**/module.js', 'lucy/dev/app/**/*.js'],
+                dest: 'lucy/dist/app.js'
+            }
+        },
+
+        //
+        // Starts the HTTP Server for local testing
+        //
         'http-server' : {
             dev : {
                 root: './',
                 port: 8081
             }
         },
-        concurrent : {
+
+        //
+        // Runs tasks concurrently
+        //
+        'concurrent' : {
             dev : {
-                tasks: ['http-server', 'watch:skulpt', 'watch:ts'],
+                tasks: ['http-server', 'watch:lang', 'watch:game', 'watch:app'],
                 options: {
                     logConcurrentOutput:true
                 }
@@ -62,6 +97,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-http-server');
     grunt.loadNpmTasks('grunt-concurrent');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-ts');
 
     grunt.registerTask('dev', ['concurrent:dev'])
