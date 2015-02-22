@@ -28,7 +28,7 @@ module KodingSpy {
 
             this.game.sound.pauseAll();
             var music = this.game.add.audio('bgm', 0.3, true);
-            music.play();
+            // music.play();
         }
 
         preload() {

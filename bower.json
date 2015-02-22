@@ -23,6 +23,7 @@
   ],
   "dependencies": {
     "angular": "1.3.13",
+    "angular-route": "1.3.13",
     "jquery": "~2.1.1",
     "ace-builds": "~1.1.7",
     "skulpt": "skulpt/skulpt-dist#~0.9.7",

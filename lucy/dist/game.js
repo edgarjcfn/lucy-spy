@@ -458,7 +458,6 @@ var KodingSpy;
             SkulptAnimator = this.characterController;
             this.game.sound.pauseAll();
             var music = this.game.add.audio('bgm', 0.3, true);
-            music.play();
         };
         Gameplay.prototype.preload = function () {
         };
