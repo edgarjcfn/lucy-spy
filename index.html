@@ -1,7 +1,8 @@
-<html>
+<html ng-app="lucy">
 <head>
+  <script src="bower_components/angular/angular.min.js" type="text/javascript"></script>
+  <script src="bower_components/angular-route/angular-route.min.js" type="text/javascript"></script>
   <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
-
   <script src="bower_components/skulpt/skulpt.min.js" type="text/javascript"></script>
   <script src="bower_components/skulpt/skulpt-stdlib.js" type="text/javascript"></script>
   <script src="bower_components/ace-builds/src-min/ace.js"></script>
@@ -15,15 +16,15 @@
   <link rel="stylesheet" type="text/css" href="bower_components/bootswatch-dist/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="bower_components/sweetalert/lib/sweet-alert.css" />
 
+  <script src="js/app.js"></script>
   <script src="lucy/dist/game.js"></script>
   <script src="lucy/dist/lucy.lang.js"></script>
 
-
-
 </head>
 
-<body bgcolor="#000">
+<body bgcolor="#000" ng-controller="AppController">
 
+<!-- Header -->
   <div class="navbar navbar-default">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -31,7 +32,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">LUCY is a SPY with DIAMONDS</a>
+      <a class="navbar-brand" href="#">{{ 3 + 5 }}</a>
     </div>
     <div class="navbar-collapse collapse navbar-responsive-collapse">
       <ul class="nav navbar-nav">
@@ -48,6 +49,7 @@
     </div>
   </div>
 
+<!-- Main Content -->
   <div class="row">
     <div class="col-lg-12"></div>
   </div>
@@ -73,40 +75,12 @@
     </div>
   </div>
 
-  <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">Lucy's Help</h4>
-      </div>
-      <div class="modal-body">
-        <h3>Instructions</h3>
-        <p> Type your code on the box to the left and press the "Run" button.
-          Lucy will start doing what you instructed her to do. </p>
-
-        <h3>Commands</h3>
-        <pre> moveForward(x) </pre>
-        <p> This will make Lucy move forward an x amount of tiles. For instance: moveForward(3) will make her walk 3 tiles</p>
-
-        <pre>turnLeft()</pre>
-        <p> This will make Lucy turn 90 degrees to <strong>her</strong> left. You don't need to give in any numbers. Just call this once and Lucy will turn in place without walking any tiles.
-
-        <pre>turnRight()</pre>
-        <p> This will make Lucy turn 90 degrees to <strong>her</strong> right. Just like turnLeft, Lucy will turn in place without walking any tiles.
-
-        <h3>It doesn't work!!</h3>
-        If your code doesn't work at first, try hitting the Reset button, changing your code and executing again. Sometimes things don't work as they are supposed to because this game was developed in under 48h and there are <strong>LOTS</strong> of bugs. But usually refreshing the page does the trick :)
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Let's get coding</button>
-      </div>
-    </div>
-  </div>
+<!-- Help Modal -->
+<div id="helpModal" class="modal fade" >
+  <div ng-include="'partials/dialog_help.html'"></div>
 </div>
 
-
+<!-- "Fork me on Github" Ribbon -->
   <a href="https://github.com/edgarjcfn/koding-spy"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
   <script type="text/javascript" src="js/index.js"></script>

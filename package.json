@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "repository": "https://github.com/edgarjcfn/pylearn/",
   "devDependencies": {
+    "bower": "1.3.5",
     "grunt": "^0.4.5",
     "grunt-concurrent": "^1.0.0",
     "grunt-contrib-copy": "^0.6.0",
