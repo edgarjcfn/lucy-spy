@@ -2,6 +2,9 @@
 
 module KodingSpy {
 
+    declare var Subscribe : (msg :string, handler :(payload:any)=>any)=>void;
+    declare var Dispatch : (msg: string, payload :any)=>void;
+
     declare var AceLoader : (level :string)=>void;
     declare var ShowMessage : (msg :string, diamonds :number)=>void;
     declare var HideMessage : ()=>void;
