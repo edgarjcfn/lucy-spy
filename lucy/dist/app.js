@@ -14,7 +14,7 @@ app.controller('AppController', function($scope) {
 //
 // lucy/dev/app/GameController.js
 //
-app.controller('GameController', function($scope) {
+app.controller('GameController', function($scope, NotificationService) {
 
     $scope.buttonState = _runState;
     $scope.game = null;
@@ -62,7 +62,10 @@ app.controller('GameController', function($scope) {
       }
 
       editor.completers = [customCompleter, langTools.snippetCompleter];
-
+      NotificationService.subscribe('aceDone', function(pl) {
+        alert('aceDone');
+      });
+      NotificationService.dispatch('aceDone');
     };
 
     $scope.initGameCanvas = function() {
@@ -91,5 +94,30 @@ app.controller('HeaderController', function($scope) {
 // lucy/dev/app/HelpController.js
 //
 app.controller('HelpController', function($scope) {
+
+});
+
+//
+// lucy/dev/app/NotificationService.js
+//
+app.factory('NotificationService', function() {
+    var subscribers = {};
+
+    var service = {
+        dispatch : function(msg, payload) {
+            var dispatchTo = subscribers[msg];
+            for (var i = 0; i < dispatchTo.length; i++) {
+                var fn = dispatchTo[i]
+                fn(payload);
+            };
+        },
+
+        subscribe : function(msg, fn) {
+            subscribers[msg] = subscribers[msg] || [];
+            subscribers[msg].push(fn);
+        }
+    }
+
+    return service;
 
 });

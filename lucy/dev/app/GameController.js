@@ -1,4 +1,4 @@
-app.controller('GameController', function($scope) {
+app.controller('GameController', function($scope, NotificationService) {
 
     $scope.buttonState = _runState;
     $scope.game = null;
@@ -46,7 +46,10 @@ app.controller('GameController', function($scope) {
       }
 
       editor.completers = [customCompleter, langTools.snippetCompleter];
-
+      NotificationService.subscribe('aceDone', function(pl) {
+        alert('aceDone');
+      });
+      NotificationService.dispatch('aceDone');
     };
 
     $scope.initGameCanvas = function() {
