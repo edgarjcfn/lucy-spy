@@ -41,60 +41,60 @@ function stopSounds() {
   TheGame.setSoundEnabled(false);
 }
 
-function builtinRead(x) {
-  if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
-    throw "File not found: '" + x + "'";
-  return Sk.builtinFiles["files"][x];
-}
+// function builtinRead(x) {
+//   if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+//     throw "File not found: '" + x + "'";
+//   return Sk.builtinFiles["files"][x];
+// }
 
-function runPython() {
-  var prog = ace.edit("editor").getValue();
+// function runPython() {
+//   var prog = ace.edit("editor").getValue();
 
-  Sk.externalLibraries = {
-    lucy : {
-      path : 'lucy/dist/lucy.lang.js',
-      dependencies : []
-    },
-  };
-  Sk.commandChain = new KodingSpy.Command.CommandQueue(onLineExecuted);
-  Sk.configure({read:builtinRead});
+//   Sk.externalLibraries = {
+//     lucy : {
+//       path : 'lucy/dist/lucy.lang.js',
+//       dependencies : []
+//     },
+//   };
+//   Sk.commandChain = new KodingSpy.Command.CommandQueue(onLineExecuted);
+//   Sk.configure({read:builtinRead});
 
-  try {
-    eval(Sk.importMainWithBody("<stdin>",false,prog));
-    Sk.commandChain.execute();
-  }
-  catch(e) {
-    //console.debug('error', e);
-    SkulptRunning = false;
-    throw e
-  }
-}
+//   try {
+//     eval(Sk.importMainWithBody("<stdin>",false,prog));
+//     Sk.commandChain.execute();
+//   }
+//   catch(e) {
+//     //console.debug('error', e);
+//     SkulptRunning = false;
+//     throw e
+//   }
+// }
 
-function onButtonClicked() {
-  var runButton = $('#runButton');
-  if (runButton.data('state') == 'Run') {
-    runPython();
-  } else if (runButton.data('state') == 'Reset') {
-    TheGame.state.start('Gameplay', true, false);
-    setButtonState('Run');
-  }
+// function onButtonClicked() {
+//   var runButton = $('#runButton');
+//   if (runButton.data('state') == 'Run') {
+//     runPython();
+//   } else if (runButton.data('state') == 'Reset') {
+//     TheGame.state.start('Gameplay', true, false);
+//     setButtonState('Run');
+//   }
 
-}
+// }
 
-function onLineExecuted(lineNumber) {
-  if (lineNumber > 0) {
-    var editor = ace.edit("editor");
-    editor.gotoLine(lineNumber);
-  }
+// function onLineExecuted(lineNumber) {
+//   if (lineNumber > 0) {
+//     var editor = ace.edit("editor");
+//     editor.gotoLine(lineNumber);
+//   }
 
-  updateButtonBehaviour();
-}
+//   updateButtonBehaviour();
+// }
 
-function updateButtonBehaviour() {
-  if (SkulptRunning) {
-    setButtonState('Reset');
-  }
-}
+// function updateButtonBehaviour() {
+//   if (SkulptRunning) {
+//     setButtonState('Reset');
+//   }
+// }
 
 // function setButtonState(state) {
 //   var runButton = $('#runButton');
