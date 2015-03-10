@@ -22,28 +22,19 @@ module KodingSpy {
         subscribe :Subscribe;
         dispatch :Dispatch;
 
-        constructor(subscribe: Subscribe, dispatch :Dispatch) {
+        constructor(subscribe: Subscribe, dispatch :Dispatch, levels :Array<string>) {
             super(800, 600, Phaser.AUTO, 'gameCanvas', null);
 
             this.subscribe = subscribe;
             this.dispatch = dispatch;
-
-            this.allLevels = [
-                'Level01',
-                'Level02',
-                'Level03',
-                'Level04',
-                'Level05',
-                'Level06',
-                'Level07',
-                'Level08'
-            ];
+            this.allLevels = levels;
 
             this.currentLevelIndex = -1;
 
             // Subscribe to Angular Notifications
             this.subscribe('EnableSound', this.setSoundEnabled.bind(this));
             this.subscribe('ResetLevel', this.resetLevel.bind(this));
+            this.subscribe('StartLevelFromName', this.startLevelFromName.bind(this));
 
             // Initialize states
             this.state.add('Boot', Boot, false);

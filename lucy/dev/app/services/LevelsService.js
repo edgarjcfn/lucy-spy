@@ -1,4 +1,4 @@
-app.service('Levels', function() {
+app.service('LevelsService', function() {
     var levels = [
         'Level01',
         'Level02',

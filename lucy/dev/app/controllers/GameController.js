@@ -1,4 +1,4 @@
-app.controller('GameController', function($scope, NotificationService) {
+app.controller('GameController', function($scope, NotificationService, LevelsService) {
 
     $scope.buttonState = null;
     $scope.game = null;
@@ -47,7 +47,8 @@ app.controller('GameController', function($scope, NotificationService) {
     $scope.initGameCanvas = function() {
         var subscribe = NotificationService.subscribe;
         var dispatch = NotificationService.dispatch;
-        $scope.game = new KodingSpy.Game(subscribe, dispatch);
+        var levels = LevelsService.levels;
+        $scope.game = new KodingSpy.Game(subscribe, dispatch, levels);
     }
 
     $scope.onButtonClicked = function() {
