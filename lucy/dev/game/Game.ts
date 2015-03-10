@@ -10,10 +10,6 @@ module KodingSpy {
         (msg: string, payload :any):void;
     }
 
-    // declare var AceLoader : (level :string)=>void;
-    declare var ShowMessage : (msg :string, diamonds :number)=>void;
-    declare var HideMessage : ()=>void;
-
     export interface ExecutionUpdateDelegate {
         (line: number):void;
     }
@@ -71,7 +67,7 @@ module KodingSpy {
         }
 
         levelCompleted(diamonds :number) {
-            ShowMessage('', diamonds);
+            this.dispatch('ShowAlert', {message:'', diamonds:diamonds});
             this.gotoNextLevel();
         }
 

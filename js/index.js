@@ -1,40 +1,40 @@
 var SkulptRunning = false;
 var TheGame;
 
-var AceLoader = function (level) {
-  setButtonState('Run');
-  var editor = ace.edit("editor");
-  var AceRange = ace.require('ace/range').Range;
-  editor.setValue('');
-  $.ajax({
-    url: 'lucy/dev/game/assets/levels/' + level + '.txt',
-    success: function(data) {
-      editor.setValue(data, 1);
-      editor.session.addFold("", new AceRange(0,0,1,100));
-    }
-  });
-}
+// var AceLoader = function (level) {
+//   setButtonState('Run');
+//   var editor = ace.edit("editor");
+//   var AceRange = ace.require('ace/range').Range;
+//   editor.setValue('');
+//   $.ajax({
+//     url: 'lucy/dev/game/assets/levels/' + level + '.txt',
+//     success: function(data) {
+//       editor.setValue(data, 1);
+//       editor.session.addFold("", new AceRange(0,0,1,100));
+//     }
+//   });
+// }
 
-var ShowMessage = function (message, diamonds) {
-  var msg = {};
-  msg.title = message;
+// var ShowMessage = function (message, diamonds) {
+//   var msg = {};
+//   msg.title = message;
 
-  if (diamonds > -1)
-  {
-    msg.imageUrl = 'lucy/dev/game/assets/result/resultscreen0'+diamonds+'.png';
-  }
-  swal(msg);
+//   if (diamonds > -1)
+//   {
+//     msg.imageUrl = 'lucy/dev/game/assets/result/resultscreen0'+diamonds+'.png';
+//   }
+//   swal(msg);
 
-  $('.icon.custom').css({
-      'width': '300px',
-      'height': '100px'
-    });
-}
+//   $('.icon.custom').css({
+//       'width': '300px',
+//       'height': '100px'
+//     });
+// }
 
-var HideMessage = function () {
-  $('.sweet-alert').hide();
-  $('.sweet-overlay').hide();
-}
+// var HideMessage = function () {
+//   $('.sweet-alert').hide();
+//   $('.sweet-overlay').hide();
+// }
 
 function stopSounds() {
   console.log(TheGame);

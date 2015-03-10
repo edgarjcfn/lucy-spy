@@ -44,7 +44,7 @@ var KodingSpy;
             this.startCurrentLevel();
         };
         Game.prototype.levelCompleted = function (diamonds) {
-            ShowMessage('', diamonds);
+            this.dispatch('ShowAlert', { message: '', diamonds: diamonds });
             this.gotoNextLevel();
         };
         Game.prototype.currentLevel = function () {

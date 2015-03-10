@@ -1,22 +1,18 @@
 app.controller('GameController', function($scope, NotificationService) {
 
-    $scope.buttonState = _runState;
+    $scope.buttonState = null;
     $scope.game = null;
 
-    var _runState = {
+    $scope.runState = {
         text:'Run',
         class: 'btn btn-success btn-lg',
-        execute: function() {
-            $scope.buttonState = _resetState;
-        }
+        execute: 'onRunClick'
     }
 
-    var _resetState = {
+    $scope.resetState = {
         text:'Reset',
         class: 'btn btn-danger btn-lg',
-        execute: function() {
-            $scope.buttonState = _runState;
-        }
+        execute: 'onResetClick'
     }
 
     $scope.initCodeEditor = function() {
@@ -55,13 +51,14 @@ app.controller('GameController', function($scope, NotificationService) {
     }
 
     $scope.onButtonClicked = function() {
-        $scope.buttonState.execute();
+        var fnName = $scope.buttonState.execute;
+        var fn = $scope[fnName];
+        fn();
     }
 
     $scope.onLevelStart = function(level) {
         console.log('Loading level code: ' + level);
-        $scope.buttonState = _runState;
-        var editor = ace.edit("editor");
+        var editor = ace.edit('editor');
         var AceRange = ace.require('ace/range').Range;
         editor.setValue('');
         $.ajax({
@@ -69,12 +66,48 @@ app.controller('GameController', function($scope, NotificationService) {
             success: function(data) {
                   editor.setValue(data, 1);
                   editor.session.addFold("", new AceRange(0,0,1,100));
+                  $scope.buttonState = $scope.runState;
+                  $scope.$apply();
                 }
         });
     }
 
+    $scope.showAlert = function (message, diamonds) {
+        var msg = {};
+        msg.title = message;
+
+        if (diamonds > -1) {
+            msg.imageUrl = 'lucy/dev/game/assets/result/resultscreen0'+diamonds+'.png';
+        }
+        swal(msg);
+
+        // Hacking Sweetalert. Refactor this!
+        $('.icon.custom').css({
+          'width': '300px',
+          'height': '100px'
+        });
+    }
+
+    $scope.hideAlert = function () {
+        // Hacking Sweetalert. Refactor this!
+        $('.sweet-alert').hide();
+        $('.sweet-overlay').hide();
+    }
+
+    $scope.onRunClick = function() {
+        console.log('clicked run');
+        $scope.buttonState = $scope.resetState;
+    }
+
+    $scope.onResetClick = function() {
+        console.log('clicked reset')
+        $scope.buttonState = $scope.runState;
+    }
+
     var init = function() {
         NotificationService.subscribe('StartLevel', $scope.onLevelStart);
+        NotificationService.subscribe('ShowMessage', $scope.showAlert);
+        NotificationService.subscribe('HideMessage', $scope.hideAlert);
     };
 
     init();
