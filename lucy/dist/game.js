@@ -8,8 +8,10 @@ var KodingSpy;
 (function (KodingSpy) {
     var Game = (function (_super) {
         __extends(Game, _super);
-        function Game() {
+        function Game(subscribe, dispatch) {
             _super.call(this, 800, 600, Phaser.AUTO, 'gameCanvas', null);
+            this.subscribe = subscribe;
+            this.dispatch = dispatch;
             this.allLevels = [
                 'Level01',
                 'Level02',
@@ -35,7 +37,7 @@ var KodingSpy;
         };
         Game.prototype.startCurrentLevel = function () {
             this.state.start('Gameplay', true, false);
-            AceLoader(this.currentLevel());
+            this.dispatch('StartLevel', this.currentLevel());
         };
         Game.prototype.startLevelFromName = function (level) {
             this.currentLevelIndex = this.allLevels.indexOf(level);
