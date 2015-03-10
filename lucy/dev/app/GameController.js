@@ -96,20 +96,65 @@ app.controller('GameController', function($scope, NotificationService) {
 
     $scope.onRunClick = function() {
         console.log('clicked run');
+        $scope.runCode();
         $scope.buttonState = $scope.resetState;
     }
 
     $scope.onResetClick = function() {
-        console.log('clicked reset')
+        console.log('clicked reset');
+        $scope.game.state.start('Gameplay', true, false);
         $scope.buttonState = $scope.runState;
     }
 
-    var init = function() {
+    //
+    // Start SKULPT
+    //
+    $scope.runCode = function() {
+        var prog = ace.edit("editor").getValue();
+
+        Sk.externalLibraries = {
+            lucy : {
+              path : 'lucy/dist/lucy.lang.js',
+              dependencies : []
+            },
+        };
+        Sk.commandChain = new KodingSpy.Command.CommandQueue($scope.onLineExecuted);
+        Sk.configure({read:$scope.builtinRead});
+
+        try {
+            eval(Sk.importMainWithBody("<stdin>",false,prog));
+            Sk.commandChain.execute();
+        }
+        catch(e) {
+            //console.debug('error', e);
+            SkulptRunning = false;
+            throw e
+        }
+    }
+
+    $scope.onLineExecuted = function(lineNumber) {
+        if (lineNumber > 0) {
+            var editor = ace.edit("editor");
+            editor.gotoLine(lineNumber);
+        }
+    }
+
+    $scope.builtinRed = function(x) {
+        if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined) {
+            throw "File not found: '" + x + "'";
+        }
+        return Sk.builtinFiles["files"][x];
+    }
+    //
+    // End SKULPT
+    //
+
+    $scope.init = function() {
         NotificationService.subscribe('StartLevel', $scope.onLevelStart);
         NotificationService.subscribe('ShowMessage', $scope.showAlert);
         NotificationService.subscribe('HideMessage', $scope.hideAlert);
     };
 
-    init();
+    $scope.init();
 
 });
