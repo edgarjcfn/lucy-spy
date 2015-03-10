@@ -41,6 +41,11 @@ module KodingSpy {
 
             this.currentLevelIndex = -1;
 
+            // Subscribe to Angular Notifications
+            this.subscribe('EnableSound', this.setSoundEnabled.bind(this));
+            this.subscribe('ResetLevel', this.resetLevel.bind(this));
+
+            // Initialize states
             this.state.add('Boot', Boot, false);
             this.state.add('Preloader', Preloader, false);
             this.state.add('Gameplay', Gameplay, false);
@@ -57,6 +62,7 @@ module KodingSpy {
         }
 
         startCurrentLevel() {
+            console.log('startCurrentLevel. state = ' + this.state);
             this.state.start('Gameplay', true, false);
             this.dispatch('StartLevel', this.currentLevel());
         }
@@ -76,7 +82,13 @@ module KodingSpy {
         }
 
         setSoundEnabled(enabled) :void {
+            console.log('enabling sound ' + enabled);
             this.sound.pauseAll();
+        }
+
+        resetLevel() :void {
+            console.log('resetLevel. this = ' + this + ' state = ' + this.state);
+            this.state.start('Gameplay', true, false);
         }
 
     }

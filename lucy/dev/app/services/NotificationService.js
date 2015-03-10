@@ -1,4 +1,4 @@
-app.service('NotificationService', function() {
+app.factory('NotificationService', function() {
     var subscribers = {};
 
     var service = {
