@@ -62,21 +62,35 @@ app.controller('GameController', function($scope, NotificationService) {
       }
 
       editor.completers = [customCompleter, langTools.snippetCompleter];
-      NotificationService.subscribe('aceDone', function(pl) {
-        alert('aceDone');
-      });
-      NotificationService.dispatch('aceDone');
     };
 
     $scope.initGameCanvas = function() {
-        $scope.game = new KodingSpy.Game();
+        var subscribe = NotificationService.subscribe;
+        var dispatch = NotificationService.dispatch;
+        $scope.game = new KodingSpy.Game(subscribe, dispatch);
     }
 
     $scope.onButtonClicked = function() {
         $scope.buttonState.execute();
     }
 
+    $scope.onLevelStart = function(level) {
+        console.log('Loading level code: ' + level);
+        $scope.buttonState = _runState;
+        var editor = ace.edit("editor");
+        var AceRange = ace.require('ace/range').Range;
+        editor.setValue('');
+        $.ajax({
+            url: 'lucy/dev/game/assets/levels/' + level + '.txt',
+            success: function(data) {
+                  editor.setValue(data, 1);
+                  editor.session.addFold("", new AceRange(0,0,1,100));
+                }
+        });
+    }
+
     var init = function() {
+        NotificationService.subscribe('StartLevel', $scope.onLevelStart);
     };
 
     init();

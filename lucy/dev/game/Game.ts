@@ -2,10 +2,15 @@
 
 module KodingSpy {
 
-    declare var Subscribe : (msg :string, handler :(payload:any)=>any)=>void;
-    declare var Dispatch : (msg: string, payload :any)=>void;
+    export interface Subscribe {
+        (msg :string, handler :(payload:any)=>any):void;
+    }
 
-    declare var AceLoader : (level :string)=>void;
+    export interface Dispatch {
+        (msg: string, payload :any):void;
+    }
+
+    // declare var AceLoader : (level :string)=>void;
     declare var ShowMessage : (msg :string, diamonds :number)=>void;
     declare var HideMessage : ()=>void;
 
@@ -16,11 +21,16 @@ module KodingSpy {
     export class Game extends Phaser.Game {
 
         currentLevelIndex :number;
-        collisionController : KodingSpy.Controller.CollisionController;
+        collisionController :KodingSpy.Controller.CollisionController;
         allLevels :Array<string>;
+        subscribe :Subscribe;
+        dispatch :Dispatch;
 
-        constructor() {
+        constructor(subscribe: Subscribe, dispatch :Dispatch) {
             super(800, 600, Phaser.AUTO, 'gameCanvas', null);
+
+            this.subscribe = subscribe;
+            this.dispatch = dispatch;
 
             this.allLevels = [
                 'Level01',
@@ -52,7 +62,7 @@ module KodingSpy {
 
         startCurrentLevel() {
             this.state.start('Gameplay', true, false);
-            AceLoader(this.currentLevel());
+            this.dispatch('StartLevel', this.currentLevel());
         }
 
         startLevelFromName(level :string) {
