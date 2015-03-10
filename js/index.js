@@ -36,10 +36,10 @@ var TheGame;
 //   $('.sweet-overlay').hide();
 // }
 
-function stopSounds() {
-  console.log(TheGame);
-  TheGame.setSoundEnabled(false);
-}
+// function stopSounds() {
+//   console.log(TheGame);
+//   TheGame.setSoundEnabled(false);
+// }
 
 // function builtinRead(x) {
 //   if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)

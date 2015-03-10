@@ -72,6 +72,9 @@ app.controller('GameController', function($scope, NotificationService) {
         });
     }
 
+    //
+    // Start SweetAlert
+    //
     $scope.showAlert = function (message, diamonds) {
         var msg = {};
         msg.title = message;
@@ -94,6 +97,10 @@ app.controller('GameController', function($scope, NotificationService) {
         $('.sweet-overlay').hide();
     }
 
+    //
+    // End SweetAlert
+    //
+
     $scope.onRunClick = function() {
         console.log('clicked run');
         $scope.runCode();
@@ -102,7 +109,7 @@ app.controller('GameController', function($scope, NotificationService) {
 
     $scope.onResetClick = function() {
         console.log('clicked reset');
-        $scope.game.state.start('Gameplay', true, false);
+        NotificationService.dispatch('ResetLevel');
         $scope.buttonState = $scope.runState;
     }
 

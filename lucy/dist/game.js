@@ -23,6 +23,8 @@ var KodingSpy;
                 'Level08'
             ];
             this.currentLevelIndex = -1;
+            this.subscribe('EnableSound', this.setSoundEnabled.bind(this));
+            this.subscribe('ResetLevel', this.resetLevel.bind(this));
             this.state.add('Boot', KodingSpy.Boot, false);
             this.state.add('Preloader', KodingSpy.Preloader, false);
             this.state.add('Gameplay', KodingSpy.Gameplay, false);
@@ -36,6 +38,7 @@ var KodingSpy;
             this.startCurrentLevel();
         };
         Game.prototype.startCurrentLevel = function () {
+            console.log('startCurrentLevel. state = ' + this.state);
             this.state.start('Gameplay', true, false);
             this.dispatch('StartLevel', this.currentLevel());
         };
@@ -51,7 +54,12 @@ var KodingSpy;
             return this.allLevels[this.currentLevelIndex];
         };
         Game.prototype.setSoundEnabled = function (enabled) {
+            console.log('enabling sound ' + enabled);
             this.sound.pauseAll();
+        };
+        Game.prototype.resetLevel = function () {
+            console.log('resetLevel. this = ' + this + ' state = ' + this.state);
+            this.state.start('Gameplay', true, false);
         };
         return Game;
     })(Phaser.Game);

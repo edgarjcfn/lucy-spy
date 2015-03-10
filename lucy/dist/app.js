@@ -5,14 +5,41 @@ angular.module('lucy', []);
 var app = angular.module('lucy');
 
 //
-// lucy/dev/app/AppController.js
+// lucy/dev/app/NotificationService.js
+//
+app.service('NotificationService', function() {
+    var subscribers = {};
+
+    var service = {
+        dispatch : function(msg, payload) {
+            var dispatchTo = subscribers[msg];
+            if (dispatchTo) {
+                for (var i = 0; i < dispatchTo.length; i++) {
+                    var fn = dispatchTo[i]
+                    fn(payload);
+                };
+            }
+        },
+
+        subscribe : function(msg, fn) {
+            subscribers[msg] = subscribers[msg] || [];
+            subscribers[msg].push(fn);
+        }
+    }
+
+    return service;
+
+});
+
+//
+// lucy/dev/app/controllers/AppController.js
 //
 app.controller('AppController', function($scope) {
 
 });
 
 //
-// lucy/dev/app/GameController.js
+// lucy/dev/app/controllers/GameController.js
 //
 app.controller('GameController', function($scope, NotificationService) {
 
@@ -88,6 +115,9 @@ app.controller('GameController', function($scope, NotificationService) {
         });
     }
 
+    //
+    // Start SweetAlert
+    //
     $scope.showAlert = function (message, diamonds) {
         var msg = {};
         msg.title = message;
@@ -110,6 +140,10 @@ app.controller('GameController', function($scope, NotificationService) {
         $('.sweet-overlay').hide();
     }
 
+    //
+    // End SweetAlert
+    //
+
     $scope.onRunClick = function() {
         console.log('clicked run');
         $scope.runCode();
@@ -118,7 +152,7 @@ app.controller('GameController', function($scope, NotificationService) {
 
     $scope.onResetClick = function() {
         console.log('clicked reset');
-        $scope.game.state.start('Gameplay', true, false);
+        NotificationService.dispatch('ResetLevel');
         $scope.buttonState = $scope.runState;
     }
 
@@ -176,21 +210,25 @@ app.controller('GameController', function($scope, NotificationService) {
 });
 
 //
-// lucy/dev/app/HeaderController.js
+// lucy/dev/app/controllers/HeaderController.js
 //
-app.controller('HeaderController', function($scope) {
+app.controller('HeaderController', function($scope, NotificationService) {
+
+    $scope.muteSounds = function() {
+        NotificationService.dispatch('EnableSound', false);
+    }
 
 });
 
 //
-// lucy/dev/app/HelpController.js
+// lucy/dev/app/controllers/HelpController.js
 //
 app.controller('HelpController', function($scope) {
 
 });
 
 //
-// lucy/dev/app/NotificationService.js
+// lucy/dev/app/services/NotificationService.js
 //
 app.factory('NotificationService', function() {
     var subscribers = {};
