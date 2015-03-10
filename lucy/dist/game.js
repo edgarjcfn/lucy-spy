@@ -8,23 +8,15 @@ var KodingSpy;
 (function (KodingSpy) {
     var Game = (function (_super) {
         __extends(Game, _super);
-        function Game(subscribe, dispatch) {
+        function Game(subscribe, dispatch, levels) {
             _super.call(this, 800, 600, Phaser.AUTO, 'gameCanvas', null);
             this.subscribe = subscribe;
             this.dispatch = dispatch;
-            this.allLevels = [
-                'Level01',
-                'Level02',
-                'Level03',
-                'Level04',
-                'Level05',
-                'Level06',
-                'Level07',
-                'Level08'
-            ];
+            this.allLevels = levels;
             this.currentLevelIndex = -1;
             this.subscribe('EnableSound', this.setSoundEnabled.bind(this));
             this.subscribe('ResetLevel', this.resetLevel.bind(this));
+            this.subscribe('StartLevelFromName', this.startLevelFromName.bind(this));
             this.state.add('Boot', KodingSpy.Boot, false);
             this.state.add('Preloader', KodingSpy.Preloader, false);
             this.state.add('Gameplay', KodingSpy.Gameplay, false);

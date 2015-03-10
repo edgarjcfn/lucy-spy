@@ -5,33 +5,6 @@ angular.module('lucy', []);
 var app = angular.module('lucy');
 
 //
-// lucy/dev/app/NotificationService.js
-//
-app.service('NotificationService', function() {
-    var subscribers = {};
-
-    var service = {
-        dispatch : function(msg, payload) {
-            var dispatchTo = subscribers[msg];
-            if (dispatchTo) {
-                for (var i = 0; i < dispatchTo.length; i++) {
-                    var fn = dispatchTo[i]
-                    fn(payload);
-                };
-            }
-        },
-
-        subscribe : function(msg, fn) {
-            subscribers[msg] = subscribers[msg] || [];
-            subscribers[msg].push(fn);
-        }
-    }
-
-    return service;
-
-});
-
-//
 // lucy/dev/app/controllers/AppController.js
 //
 app.controller('AppController', function($scope) {
@@ -41,7 +14,7 @@ app.controller('AppController', function($scope) {
 //
 // lucy/dev/app/controllers/GameController.js
 //
-app.controller('GameController', function($scope, NotificationService) {
+app.controller('GameController', function($scope, NotificationService, LevelsService) {
 
     $scope.buttonState = null;
     $scope.game = null;
@@ -90,7 +63,8 @@ app.controller('GameController', function($scope, NotificationService) {
     $scope.initGameCanvas = function() {
         var subscribe = NotificationService.subscribe;
         var dispatch = NotificationService.dispatch;
-        $scope.game = new KodingSpy.Game(subscribe, dispatch);
+        var levels = LevelsService.levels;
+        $scope.game = new KodingSpy.Game(subscribe, dispatch, levels);
     }
 
     $scope.onButtonClicked = function() {
@@ -212,10 +186,16 @@ app.controller('GameController', function($scope, NotificationService) {
 //
 // lucy/dev/app/controllers/HeaderController.js
 //
-app.controller('HeaderController', function($scope, NotificationService) {
+app.controller('HeaderController', function($scope, NotificationService, LevelsService) {
 
     $scope.muteSounds = function() {
         NotificationService.dispatch('EnableSound', false);
+    }
+
+    $scope.allLevelNames = LevelsService.levels;
+
+    $scope.onLevelSelected = function(level) {
+        NotificationService.dispatch('StartLevelFromName', level);
     }
 
 });
@@ -225,6 +205,24 @@ app.controller('HeaderController', function($scope, NotificationService) {
 //
 app.controller('HelpController', function($scope) {
 
+});
+
+//
+// lucy/dev/app/services/LevelsService.js
+//
+app.service('LevelsService', function() {
+    var levels = [
+        'Level01',
+        'Level02',
+        'Level03',
+        'Level04',
+        'Level05',
+        'Level06',
+        'Level07',
+        'Level08'
+    ];
+
+    return {levels:levels};
 });
 
 //
