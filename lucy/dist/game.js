@@ -30,7 +30,7 @@ var KodingSpy;
             this.startCurrentLevel();
         };
         Game.prototype.startCurrentLevel = function () {
-            console.log('startCurrentLevel. state = ' + this.state);
+            console.log('Starting level ' + this.currentLevel());
             this.state.start('Gameplay', true, false);
             this.dispatch('StartLevel', this.currentLevel());
         };
@@ -46,11 +46,9 @@ var KodingSpy;
             return this.allLevels[this.currentLevelIndex];
         };
         Game.prototype.setSoundEnabled = function (enabled) {
-            console.log('enabling sound ' + enabled);
             this.sound.pauseAll();
         };
         Game.prototype.resetLevel = function () {
-            console.log('resetLevel. this = ' + this + ' state = ' + this.state);
             this.state.start('Gameplay', true, false);
         };
         return Game;
@@ -288,13 +286,11 @@ var KodingSpy;
             };
             CommandQueue.prototype.execute = function () {
                 if (this._currentIndex < this.commands.length) {
-                    SkulptRunning = true;
                     var executionListItem = this.commands[this._currentIndex];
                     this.onExecute(executionListItem.lineNumber);
                     executionListItem.command.execute();
                 }
                 else {
-                    SkulptRunning = false;
                     console.log('Command Queue finished');
                     this.onExecute(-1);
                 }
@@ -383,7 +379,6 @@ var KodingSpy;
                 this.map.addTilesetImage('floor_walls', 'tilemap');
                 this.map.addTilesetImage('door', 'doorTilemap');
                 var floor = this.map.createLayer('Floor');
-                console.log(floor);
                 var collision = this.map.createLayer('Collision');
                 this.map.setCollisionByExclusion([], true, 'Collision');
                 this.buildItems();

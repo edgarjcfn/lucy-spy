@@ -18,7 +18,6 @@ module KodingSpy.Controller {
             this.map.addTilesetImage('door', 'doorTilemap');
 
             var floor = this.map.createLayer('Floor');
-            console.log(floor);
             var collision = this.map.createLayer('Collision');
 
             this.map.setCollisionByExclusion([], true, 'Collision');

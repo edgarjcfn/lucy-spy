@@ -10,10 +10,6 @@ module KodingSpy {
         (msg: string, payload :any):void;
     }
 
-    export interface ExecutionUpdateDelegate {
-        (line: number):void;
-    }
-
     export class Game extends Phaser.Game {
 
         currentLevelIndex :number;
@@ -53,7 +49,8 @@ module KodingSpy {
         }
 
         startCurrentLevel() {
-            console.log('startCurrentLevel. state = ' + this.state);
+            console.log('Starting level ' + this.currentLevel());
+
             this.state.start('Gameplay', true, false);
             this.dispatch('StartLevel', this.currentLevel());
         }
@@ -73,12 +70,11 @@ module KodingSpy {
         }
 
         setSoundEnabled(enabled) :void {
-            console.log('enabling sound ' + enabled);
+            // TODO: Refactor sound to SoundController
             this.sound.pauseAll();
         }
 
         resetLevel() :void {
-            console.log('resetLevel. this = ' + this + ' state = ' + this.state);
             this.state.start('Gameplay', true, false);
         }
 
