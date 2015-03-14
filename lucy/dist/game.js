@@ -8,8 +8,8 @@ var KodingSpy;
 (function (KodingSpy) {
     var Game = (function (_super) {
         __extends(Game, _super);
-        function Game(subscribe, dispatch, levels) {
-            _super.call(this, 800, 600, Phaser.AUTO, 'gameCanvas', null);
+        function Game(container, subscribe, dispatch, levels) {
+            _super.call(this, 800, 600, Phaser.AUTO, container, null);
             this.subscribe = subscribe;
             this.dispatch = dispatch;
             this.allLevels = levels;

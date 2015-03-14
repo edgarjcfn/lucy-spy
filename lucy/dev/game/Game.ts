@@ -18,8 +18,8 @@ module KodingSpy {
         subscribe :Subscribe;
         dispatch :Dispatch;
 
-        constructor(subscribe: Subscribe, dispatch :Dispatch, levels :Array<string>) {
-            super(800, 600, Phaser.AUTO, 'gameCanvas', null);
+        constructor(container :string, subscribe: Subscribe, dispatch :Dispatch, levels :Array<string>) {
+            super(800, 600, Phaser.AUTO, container, null);
 
             this.subscribe = subscribe;
             this.dispatch = dispatch;
