@@ -5,6 +5,7 @@ app.controller('GameController', function($scope, NotificationService, LevelsSer
     $scope.commandQueue = null;
     $scope.editor = null;
     $scope.interpreter = null;
+    $scope.notifications = null;
 
     $scope.runState = {
         text:'Run',
@@ -48,8 +49,8 @@ app.controller('GameController', function($scope, NotificationService, LevelsSer
     };
 
     $scope.initGameCanvas = function() {
-        var subscribe = NotificationService.subscribe;
-        var dispatch = NotificationService.dispatch;
+        var subscribe = $scope.notifications.subscribe;
+        var dispatch = $scope.notifications.dispatch;
         var levels = LevelsService.levels;
         $scope.game = new KodingSpy.Game(subscribe, dispatch, levels);
     }
@@ -79,14 +80,14 @@ app.controller('GameController', function($scope, NotificationService, LevelsSer
     //
     // Start SweetAlert
     //
-    $scope.showAlert = function (message, diamonds) {
-        var msg = {};
-        msg.title = message;
+    $scope.showAlert = function (payload) {
+        var alert = {};
+        alert.title = payload.message;
 
-        if (diamonds > -1) {
-            msg.imageUrl = 'lucy/dev/game/assets/result/resultscreen0'+diamonds+'.png';
+        if (payload.diamonds) {
+            alert.imageUrl = 'lucy/dev/game/assets/result/resultscreen0'+payload.diamonds+'.png';
         }
-        swal(msg);
+        swal(alert);
 
         // Hacking Sweetalert. Refactor this!
         $('.icon.custom').css({
@@ -121,18 +122,23 @@ app.controller('GameController', function($scope, NotificationService, LevelsSer
     }
 
     $scope.onResetClick = function() {
-        NotificationService.dispatch('ResetLevel');
+        $scope.notifications.dispatch('ResetLevel');
         $scope.buttonState = $scope.runState;
     }
 
     $scope.init = function() {
-        NotificationService.subscribe('StartLevel', $scope.onLevelStart);
-        NotificationService.subscribe('ShowMessage', $scope.showAlert);
-        NotificationService.subscribe('HideMessage', $scope.hideAlert);
+        // Notifications
+        $scope.notifications = NotificationService;
+        $scope.notifications.subscribe('StartLevel', $scope.onLevelStart);
+        $scope.notifications.subscribe('ShowAlert', $scope.showAlert);
+        $scope.notifications.subscribe('HideAlert', $scope.hideAlert);
+
+        // Code interpreter
         var lineCallback = $scope.onLineExecuted.bind($scope);
         $scope.commandQueue = new KodingSpy.Command.CommandQueue(lineCallback);
         $scope.interpreter = SkulptService;
         $scope.interpreter.initialize($scope.commandQueue);
+
     };
 
     $scope.init();
