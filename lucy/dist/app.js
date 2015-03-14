@@ -14,7 +14,12 @@ app.controller('AppController', function($scope) {
 //
 // lucy/dev/app/controllers/GameController.js
 //
-app.controller('GameController', function($scope, NotificationService, LevelsService, SkulptService, AceService) {
+app.controller('GameController',
+    function($scope,
+             NotificationService,
+             LevelsService,
+             SkulptService,
+             AceService) {
 
     $scope.buttonState = null;
     $scope.game = null;
@@ -48,34 +53,6 @@ app.controller('GameController', function($scope, NotificationService, LevelsSer
             $scope.$apply();
         });
     }
-
-    //
-    // Start SweetAlert
-    //
-    $scope.showAlert = function (payload) {
-        var alert = {};
-        alert.title = payload.message;
-
-        if (payload.diamonds) {
-            alert.imageUrl = 'lucy/dev/game/assets/result/resultscreen0'+payload.diamonds+'.png';
-        }
-        swal(alert);
-
-        // Hacking Sweetalert. Refactor this!
-        $('.icon.custom').css({
-          'width': '300px',
-          'height': '100px'
-        });
-    }
-
-    $scope.hideAlert = function () {
-        // Hacking Sweetalert. Refactor this!
-        $('.sweet-alert').hide();
-        $('.sweet-overlay').hide();
-    }
-    //
-    // End SweetAlert
-    //
 
     $scope.runCode = function() {
         var code = $scope.codeEditor.content();
@@ -114,8 +91,6 @@ app.controller('GameController', function($scope, NotificationService, LevelsSer
         // Notifications
         $scope.notifications = NotificationService;
         $scope.notifications.subscribe('StartLevel', $scope.onLevelStart);
-        $scope.notifications.subscribe('ShowAlert', $scope.showAlert);
-        $scope.notifications.subscribe('HideAlert', $scope.hideAlert);
 
         // Code interpreter
         var lineCallback = $scope.onLineExecuted.bind($scope);
@@ -149,8 +124,45 @@ app.controller('HeaderController', function($scope, NotificationService, LevelsS
 //
 // lucy/dev/app/controllers/HelpController.js
 //
-app.controller('HelpController', function($scope) {
+app.controller('HelpController',
+    function($scope,
+             NotificationService) {
 
+    // TODO: Refactor hacking of Swal
+    // TODO: Bring help modal to this controller
+    // TODO: Enable help modal to show tutorial texts
+
+    $scope.notifications = null;
+
+    $scope.showAlert = function (payload) {
+        var alert = {};
+        alert.title = payload.message;
+
+        if (payload.diamonds) {
+            alert.imageUrl = 'lucy/dev/game/assets/result/resultscreen0'+payload.diamonds+'.png';
+        }
+        swal(alert);
+
+        // Hacking Sweetalert. Refactor this!
+        $('.icon.custom').css({
+          'width': '300px',
+          'height': '100px'
+        });
+    }
+
+    $scope.hideAlert = function () {
+        // Hacking Sweetalert. Refactor this!
+        $('.sweet-alert').hide();
+        $('.sweet-overlay').hide();
+    }
+
+    $scope.init = function() {
+        $scope.notifications = NotificationService;
+        $scope.notifications.subscribe('ShowAlert', $scope.showAlert);
+        $scope.notifications.subscribe('HideAlert', $scope.hideAlert);
+    }
+
+    $scope.init();
 });
 
 //
