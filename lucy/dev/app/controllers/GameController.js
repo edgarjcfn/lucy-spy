@@ -1,4 +1,4 @@
-app.controller('GameController', function($scope, NotificationService, LevelsService, SkulptService) {
+app.controller('GameController', function($scope, NotificationService, LevelsService, SkulptService, AceService) {
 
     $scope.buttonState = null;
     $scope.game = null;
@@ -6,6 +6,7 @@ app.controller('GameController', function($scope, NotificationService, LevelsSer
     $scope.editor = null;
     $scope.interpreter = null;
     $scope.notifications = null;
+    $scope.codeEditor = null;
 
     $scope.runState = {
         text:'Run',
@@ -19,42 +20,6 @@ app.controller('GameController', function($scope, NotificationService, LevelsSer
         execute: 'onResetClick'
     }
 
-    $scope.initCodeEditor = function() {
-
-        $scope.editor = ace.edit("editor");
-        var langTools = ace.require("ace/ext/language_tools");
-
-        $scope.editor.setTheme("ace/theme/monokai");
-        $scope.editor.getSession().setMode("ace/mode/python");
-        $scope.editor.setFontSize('12pt');
-        $scope.editor.setHighlightActiveLine(true);
-
-        $scope.editor.setOptions({
-            enableBasicAutocompletion: true,
-            enableSnippets: true,
-            enableLiveAutocompletion: true
-        });
-        var customCompleter = {
-            getCompletions: function(editor, session, pos, prefix, callback) {
-              if (prefix.length === 0) { callback(null, []); return }
-              callback(null, [
-                {name:"moveForward",value:"moveForward(1)",meta:"Move Forward"},
-                {name:"turnLeft",value:"turnLeft()",meta:"Turn Left"},
-                {name:"turnRight",value:"turnRight()",meta:"Turn Right"},
-                ]);
-          }
-      }
-
-      $scope.editor.completers = [customCompleter, langTools.snippetCompleter];
-    };
-
-    $scope.initGameCanvas = function() {
-        var subscribe = $scope.notifications.subscribe;
-        var dispatch = $scope.notifications.dispatch;
-        var levels = LevelsService.levels;
-        $scope.game = new KodingSpy.Game(subscribe, dispatch, levels);
-    }
-
     $scope.onButtonClicked = function() {
         var fnName = $scope.buttonState.execute;
         var fn = $scope[fnName];
@@ -62,18 +27,9 @@ app.controller('GameController', function($scope, NotificationService, LevelsSer
     }
 
     $scope.onLevelStart = function(level) {
-        console.log('Loading level code: ' + level);
-        var editor = ace.edit('editor');
-        var AceRange = ace.require('ace/range').Range;
-        editor.setValue('');
-        $.ajax({
-            url: 'lucy/dev/game/assets/levels/' + level + '.txt',
-            success: function(data) {
-                  editor.setValue(data, 1);
-                  editor.session.addFold("", new AceRange(0,0,1,100));
-                  $scope.buttonState = $scope.runState;
-                  $scope.$apply();
-                }
+        $scope.codeEditor.loadLevelCode(level, function() {
+            $scope.buttonState = $scope.runState;
+            $scope.$apply();
         });
     }
 
@@ -106,13 +62,13 @@ app.controller('GameController', function($scope, NotificationService, LevelsSer
     //
 
     $scope.runCode = function() {
-        var code = $scope.editor.getValue();
+        var code = $scope.codeEditor.content();
         $scope.interpreter.runCode(code);
     }
 
     $scope.onLineExecuted = function(lineNumber) {
         if (lineNumber > 0) {
-           $scope.editor.gotoLine(lineNumber);
+           $scope.codeEditor.highlight(lineNumber);
         }
     }
 
@@ -124,6 +80,18 @@ app.controller('GameController', function($scope, NotificationService, LevelsSer
     $scope.onResetClick = function() {
         $scope.notifications.dispatch('ResetLevel');
         $scope.buttonState = $scope.runState;
+    }
+
+    $scope.initCodeEditor = function() {
+        $scope.codeEditor = AceService;
+        $scope.codeEditor.initialize('editor');
+    };
+
+    $scope.initGameCanvas = function() {
+        var subscribe = $scope.notifications.subscribe;
+        var dispatch = $scope.notifications.dispatch;
+        var levels = LevelsService.levels;
+        $scope.game = new KodingSpy.Game(subscribe, dispatch, levels);
     }
 
     $scope.init = function() {
