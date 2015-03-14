@@ -1,7 +1,10 @@
-app.controller('GameController', function($scope, NotificationService, LevelsService) {
+app.controller('GameController', function($scope, NotificationService, LevelsService, SkulptService) {
 
     $scope.buttonState = null;
     $scope.game = null;
+    $scope.commandQueue = null;
+    $scope.editor = null;
+    $scope.interpreter = null;
 
     $scope.runState = {
         text:'Run',
@@ -17,15 +20,15 @@ app.controller('GameController', function($scope, NotificationService, LevelsSer
 
     $scope.initCodeEditor = function() {
 
-        var editor = ace.edit("editor");
+        $scope.editor = ace.edit("editor");
         var langTools = ace.require("ace/ext/language_tools");
 
-        editor.setTheme("ace/theme/monokai");
-        editor.getSession().setMode("ace/mode/python");
-        editor.setFontSize('12pt');
-        editor.setHighlightActiveLine(true);
+        $scope.editor.setTheme("ace/theme/monokai");
+        $scope.editor.getSession().setMode("ace/mode/python");
+        $scope.editor.setFontSize('12pt');
+        $scope.editor.setHighlightActiveLine(true);
 
-        editor.setOptions({
+        $scope.editor.setOptions({
             enableBasicAutocompletion: true,
             enableSnippets: true,
             enableLiveAutocompletion: true
@@ -41,7 +44,7 @@ app.controller('GameController', function($scope, NotificationService, LevelsSer
           }
       }
 
-      editor.completers = [customCompleter, langTools.snippetCompleter];
+      $scope.editor.completers = [customCompleter, langTools.snippetCompleter];
     };
 
     $scope.initGameCanvas = function() {
@@ -97,70 +100,39 @@ app.controller('GameController', function($scope, NotificationService, LevelsSer
         $('.sweet-alert').hide();
         $('.sweet-overlay').hide();
     }
-
     //
     // End SweetAlert
     //
 
+    $scope.runCode = function() {
+        var code = $scope.editor.getValue();
+        $scope.interpreter.runCode(code);
+    }
+
+    $scope.onLineExecuted = function(lineNumber) {
+        if (lineNumber > 0) {
+           $scope.editor.gotoLine(lineNumber);
+        }
+    }
+
     $scope.onRunClick = function() {
-        console.log('clicked run');
         $scope.runCode();
         $scope.buttonState = $scope.resetState;
     }
 
     $scope.onResetClick = function() {
-        console.log('clicked reset');
         NotificationService.dispatch('ResetLevel');
         $scope.buttonState = $scope.runState;
     }
-
-    //
-    // Start SKULPT
-    //
-    $scope.runCode = function() {
-        var prog = ace.edit("editor").getValue();
-
-        Sk.externalLibraries = {
-            lucy : {
-              path : 'lucy/dist/lucy.lang.js',
-              dependencies : []
-            },
-        };
-        Sk.commandChain = new KodingSpy.Command.CommandQueue($scope.onLineExecuted);
-        Sk.configure({read:$scope.builtinRead});
-
-        try {
-            eval(Sk.importMainWithBody("<stdin>",false,prog));
-            Sk.commandChain.execute();
-        }
-        catch(e) {
-            //console.debug('error', e);
-            SkulptRunning = false;
-            throw e
-        }
-    }
-
-    $scope.onLineExecuted = function(lineNumber) {
-        if (lineNumber > 0) {
-            var editor = ace.edit("editor");
-            editor.gotoLine(lineNumber);
-        }
-    }
-
-    $scope.builtinRed = function(x) {
-        if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined) {
-            throw "File not found: '" + x + "'";
-        }
-        return Sk.builtinFiles["files"][x];
-    }
-    //
-    // End SKULPT
-    //
 
     $scope.init = function() {
         NotificationService.subscribe('StartLevel', $scope.onLevelStart);
         NotificationService.subscribe('ShowMessage', $scope.showAlert);
         NotificationService.subscribe('HideMessage', $scope.hideAlert);
+        var lineCallback = $scope.onLineExecuted.bind($scope);
+        $scope.commandQueue = new KodingSpy.Command.CommandQueue(lineCallback);
+        $scope.interpreter = SkulptService;
+        $scope.interpreter.initialize($scope.commandQueue);
     };
 
     $scope.init();
