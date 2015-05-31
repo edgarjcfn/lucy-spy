@@ -12,5 +12,9 @@
     "grunt-contrib-concat": "^0.5.1",
     "grunt-ts": "1.12.1",
     "typescript": "1.1.0-1"
+  },
+  "dependencies": {
+    "grunt-marked": "^0.1.1",
+    "marked": "^0.3.3"
   }
 }
