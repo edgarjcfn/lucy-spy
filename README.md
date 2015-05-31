@@ -2,6 +2,8 @@
 
 A puzzle adventure to teach programming
 
+[![Banner](/images/banner.jpg?raw=true "Banner")](#)
+
 ## What is this?
 
 This game was originally made for a hackathon held by [Koding](http://koding.com) in 2014...
@@ -39,9 +41,8 @@ If you like this project and would like to contribute somehow, here are some way
  - [Sweet Alert](https://github.com/t4t5/sweetalert) - Nice alerts
  - AngularJS
  - Bootstrap
- - jQuery
 
- Additional open-source libraries and their versions are listed on `package.json` and `bower.json`
+Additional open-source libraries and their versions are listed on `package.json` and `bower.json`
 
 ## Sounds used
  - Background soundtrack from http://www.nosoapradio.us/
