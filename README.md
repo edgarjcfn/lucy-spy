@@ -23,13 +23,25 @@ Levels of pure puzzle-packed fun await the player who has to help Lucy escape by
 Our mission with this game is to break the barrier of entrance into the world of programming for young people. We strongly believe that coding should be learned very early. We also strived to make a strong female lead character in an attempt to inspire more girls to try their hand at programming, since we know there's a huge gender gap in this industry.
 
 
+## Contributing
+
+If you like this project and would like to contribute somehow, here are some ways:
+
+ - Check out our [Patreon Page](http://patreon.com/bugudu) where you can give us a $1 tip to continue working here
+ - Check out the code yourself and submit pull requests
+ - Visit the Issues page here on github and report bugs or issues
+ - [Get in touch via e-mail](mailto:lucy@coderstand.io) if you have questions, suggestions, anything!
+
 ## Libraries Used
  - [Skulpt](http://www.skulpt.org)  - Python interpreter
  - [Phaser](http://www.phaser.io) - HTML5 game engine
  - [Ace JS](http://www.ace.c9.io) - Code editor
  - [Sweet Alert](https://github.com/t4t5/sweetalert) - Nice alerts
+ - AngularJS
  - Bootstrap
  - jQuery
+
+ Additional open-source libraries and their versions are listed on `package.json` and `bower.json`
 
 ## Sounds used
  - Background soundtrack from http://www.nosoapradio.us/
