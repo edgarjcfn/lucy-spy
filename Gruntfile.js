@@ -1,3 +1,7 @@
+var fs = require('fs');
+var marked = require('marked');
+var path = require('path');
+
 module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
@@ -101,4 +105,15 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-ts');
 
     grunt.registerTask('dev', ['concurrent:dev'])
+
+    grunt.registerTask('md', 'Parse markdown files', function() {
+        var files = fs.readdirSync('./lucy/dev/game/assets/levels/');
+        for (var file in files) {
+            if (path.extname(files[file]) === '.md') {
+                grunt.log.writeln(file);        
+            }
+        }
+        
+        grunt.log.writeln('finished')
+    });
 };
