@@ -27,6 +27,7 @@ var KodingSpy;
             this.state.start('Boot');
         };
         Game.prototype.gotoNextLevel = function () {
+            console.debug('snl');
             this.currentLevelIndex++;
             this.startCurrentLevel();
         };

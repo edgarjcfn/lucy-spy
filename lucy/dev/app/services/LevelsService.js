@@ -1,8 +1,8 @@
 app.service('LevelsService', function() {
     var levels = [
         'Level 01',
-        // 'Level02',
-        // 'Level03',
+        'Level 02',
+        'Level 03',
         // 'Level04',
         // 'Level05',
         // 'Level06',

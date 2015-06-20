@@ -17,7 +17,9 @@ app.controller('HelpController',
         if (payload.diamonds) {
             alert.imageUrl = 'lucy/dev/game/assets/result/resultscreen0'+payload.diamonds+'.png';
         }
-        swal(alert);
+        swal(alert, function() {
+             $scope.notifications.dispatch('SuccessAlertClosed');
+        });
 
         // Hacking Sweetalert. Refactor this!
         $('.icon.custom').css({

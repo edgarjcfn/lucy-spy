@@ -1,0 +1,11 @@
+from lucy import turnRight, moveForward, turnLeft;
+
+moveForward(4)
+# turnLeft()
+# moveForward(2)
+# turnRight()
+# moveForward(3)
+# turnRight()
+# moveForward(2)
+# turnLeft()
+# moveForward(2)

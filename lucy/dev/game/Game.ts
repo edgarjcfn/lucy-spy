@@ -45,6 +45,7 @@ module KodingSpy {
         }
 
         gotoNextLevel() {
+            console.debug('snl');
             this.currentLevelIndex++;
             this.startCurrentLevel();
         }

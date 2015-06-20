@@ -142,7 +142,9 @@ app.controller('HelpController',
         if (payload.diamonds) {
             alert.imageUrl = 'lucy/dev/game/assets/result/resultscreen0'+payload.diamonds+'.png';
         }
-        swal(alert);
+        swal(alert, function() {
+             $scope.notifications.dispatch('SuccessAlertClosed');
+        });
 
         // Hacking Sweetalert. Refactor this!
         $('.icon.custom').css({
@@ -239,8 +241,8 @@ app.service('AceService', function() {
 app.service('LevelsService', function() {
     var levels = [
         'Level 01',
-        // 'Level02',
-        // 'Level03',
+        'Level 02',
+        'Level 03',
         // 'Level04',
         // 'Level05',
         // 'Level06',
