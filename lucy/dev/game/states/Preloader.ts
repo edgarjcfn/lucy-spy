@@ -33,6 +33,9 @@ module KodingSpy {
             this.load.audio('diamond', 'lucy/dev/game/assets/sounds/diamond.ogg');
             this.load.audio('laser', 'lucy/dev/game/assets/sounds/laser.ogg');
             this.load.audio('scream', 'lucy/dev/game/assets/sounds/scream.ogg');
+
+            // UI
+            this.load.image('speech', 'lucy/dev/game/assets/char/speechBubble.png');
         }
 
         create() {

@@ -14,6 +14,7 @@ module KodingSpy {
 
         currentLevelIndex :number;
         collisionController :KodingSpy.Controller.CollisionController;
+        uiController: KodingSpy.Controller.UIController;
         allLevels :Array<string>;
         subscribe :Subscribe;
         dispatch :Dispatch;
@@ -24,6 +25,9 @@ module KodingSpy {
             this.subscribe = subscribe;
             this.dispatch = dispatch;
             this.allLevels = levels;
+
+            this.collisionController = new KodingSpy.Controller.CollisionController(this);
+            this.uiController = new KodingSpy.Controller.UIController(this);
 
             this.currentLevelIndex = -1;
 

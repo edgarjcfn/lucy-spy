@@ -7,6 +7,7 @@ module KodingSpy {
     export class Gameplay extends Phaser.State {
         characterController : KodingSpy.Controller.CharacterController;
         levelController : KodingSpy.Controller.LevelController;
+        uiController : KodingSpy.Controller.UIController;
         lucy : KodingSpy.Model.Character;
 
         create() {
@@ -14,8 +15,6 @@ module KodingSpy {
             this.lucy = new KodingSpy.Model.Character(0, 0, KodingSpy.Model.Direction.N);
             var kodingSpyGame = <KodingSpy.Game> this.game;
             var levelToPlay = kodingSpyGame.currentLevel();
-
-            kodingSpyGame.collisionController = new KodingSpy.Controller.CollisionController(kodingSpyGame);
 
             this.levelController = new KodingSpy.Controller.LevelController(kodingSpyGame, levelToPlay);
             this.levelController.create();

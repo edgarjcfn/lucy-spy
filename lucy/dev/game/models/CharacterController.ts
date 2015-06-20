@@ -77,6 +77,11 @@ module KodingSpy.Controller {
             waitTween.start();
         }
 
+        speak(text :String, next: ControllerDelegate) : void {
+
+            this.game.uiController.showSpeechDialog('lucy', text, next);
+        }
+
         updateDirection() {
             var animationName = 'walk' + this.character.direction;
             this.sprite.animations.stop(animationName, true);

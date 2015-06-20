@@ -84,4 +84,22 @@ module KodingSpy.Command {
         }
     }
 
+    //
+    // Speak
+    //
+    export class SpeakCommand implements ICommand {
+        next: KodingSpy.Controller.ControllerDelegate;
+        controller: KodingSpy.Controller.CharacterController;
+        content: String;
+
+        constructor(content: String, controller: KodingSpy.Controller.CharacterController) {
+            this.controller = controller;
+            this.content = content;
+        }
+
+        execute():void {
+            this.controller.speak(this.content, this.next);
+        }
+    }
+
 }

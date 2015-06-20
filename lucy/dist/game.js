@@ -13,6 +13,8 @@ var KodingSpy;
             this.subscribe = subscribe;
             this.dispatch = dispatch;
             this.allLevels = levels;
+            this.collisionController = new KodingSpy.Controller.CollisionController(this);
+            this.uiController = new KodingSpy.Controller.UIController(this);
             this.currentLevelIndex = -1;
             this.subscribe('EnableSound', this.setSoundEnabled.bind(this));
             this.subscribe('ResetLevel', this.resetLevel.bind(this));
@@ -148,6 +150,9 @@ var KodingSpy;
                 var waitTween = this.game.add.tween(this.sprite).to({}, 500);
                 waitTween.onComplete.add(next);
                 waitTween.start();
+            };
+            CharacterController.prototype.speak = function (text, next) {
+                this.game.uiController.showSpeechDialog('lucy', text, next);
             };
             CharacterController.prototype.updateDirection = function () {
                 var animationName = 'walk' + this.character.direction;
@@ -363,6 +368,17 @@ var KodingSpy;
             return TurnRightCommand;
         })();
         Command.TurnRightCommand = TurnRightCommand;
+        var SpeakCommand = (function () {
+            function SpeakCommand(content, controller) {
+                this.controller = controller;
+                this.content = content;
+            }
+            SpeakCommand.prototype.execute = function () {
+                this.controller.speak(this.content, this.next);
+            };
+            return SpeakCommand;
+        })();
+        Command.SpeakCommand = SpeakCommand;
     })(Command = KodingSpy.Command || (KodingSpy.Command = {}));
 })(KodingSpy || (KodingSpy = {}));
 var KodingSpy;
@@ -420,6 +436,23 @@ var KodingSpy;
 })(KodingSpy || (KodingSpy = {}));
 var KodingSpy;
 (function (KodingSpy) {
+    var Controller;
+    (function (Controller) {
+        var UIController = (function () {
+            function UIController(game) {
+                this.game = game;
+            }
+            UIController.prototype.showSpeechDialog = function (character, content, next) {
+                this.speechDialog = this.game.add.sprite(200, 200, 'speech');
+                console.debug('speaking:' + content);
+            };
+            return UIController;
+        })();
+        Controller.UIController = UIController;
+    })(Controller = KodingSpy.Controller || (KodingSpy.Controller = {}));
+})(KodingSpy || (KodingSpy = {}));
+var KodingSpy;
+(function (KodingSpy) {
     var Boot = (function (_super) {
         __extends(Boot, _super);
         function Boot() {
@@ -447,7 +480,6 @@ var KodingSpy;
             this.lucy = new KodingSpy.Model.Character(0, 0, 0 /* N */);
             var kodingSpyGame = this.game;
             var levelToPlay = kodingSpyGame.currentLevel();
-            kodingSpyGame.collisionController = new KodingSpy.Controller.CollisionController(kodingSpyGame);
             this.levelController = new KodingSpy.Controller.LevelController(kodingSpyGame, levelToPlay);
             this.levelController.create();
             this.characterController = new KodingSpy.Controller.CharacterController(kodingSpyGame);
@@ -495,6 +527,7 @@ var KodingSpy;
             this.load.audio('diamond', 'lucy/dev/game/assets/sounds/diamond.ogg');
             this.load.audio('laser', 'lucy/dev/game/assets/sounds/laser.ogg');
             this.load.audio('scream', 'lucy/dev/game/assets/sounds/scream.ogg');
+            this.load.image('speech', 'lucy/dev/game/assets/char/speechBubble.png');
         };
         Preloader.prototype.create = function () {
             var tween = this.add.tween(this.preloadBar).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
