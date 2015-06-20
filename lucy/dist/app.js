@@ -125,13 +125,15 @@ app.controller('HeaderController', function($scope, NotificationService, LevelsS
 //
 app.controller('HelpController',
     function($scope,
+             $http,
              NotificationService) {
 
     // TODO: Refactor hacking of Swal
-    // TODO: Bring help modal to this controller
     // TODO: Enable help modal to show tutorial texts
 
     $scope.notifications = null;
+    $scope.levelHelp = null;
+    $scope.levelName = null;
 
     $scope.showAlert = function (payload) {
         var alert = {};
@@ -155,10 +157,16 @@ app.controller('HelpController',
         $('.sweet-overlay').hide();
     }
 
+    $scope.loadHelp = function(levelName) {
+        $scope.levelHelp = 'lucy/dev/game/assets/levels/'+levelName+'.html'
+        $scope.levelName = levelName;
+    }
+
     $scope.init = function() {
         $scope.notifications = NotificationService;
         $scope.notifications.subscribe('ShowAlert', $scope.showAlert);
         $scope.notifications.subscribe('HideAlert', $scope.hideAlert);
+        $scope.notifications.subscribe('StartLevel', $scope.loadHelp);
     }
 
     $scope.init();

@@ -17,3 +17,7 @@
     margin:0 0 0 0;
     font-size: 24pt;
 }
+
+.modal-body.tutorial strong{
+    font-size:120%;
+}
