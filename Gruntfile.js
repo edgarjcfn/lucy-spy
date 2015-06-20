@@ -32,7 +32,7 @@ module.exports = function(grunt) {
             },
 
             md: {
-                files: ['lucy/dev/game/assets/levels/*.md'],
+                files: ['lucy/dev/game/assets/levels/**/*.md'],
                 tasks: ['md'],
                 options: {
                     interrupt: true
@@ -115,19 +115,34 @@ module.exports = function(grunt) {
     grunt.registerTask('dev', ['concurrent:dev'])
 
     grunt.registerTask('md', 'Parse markdown files', function() {
+        function getDirectories(srcpath) {
+          return fs.readdirSync(srcpath).filter(function(file) {
+            return fs.statSync(path.join(srcpath, file)).isDirectory();
+          });
+        }
+
+        function writeParsedHtml(dir, filename) {
+            grunt.log.writeln('Reading: ' + filename);
+            var mdString = fs.readFileSync(dir+filename, 'utf8');
+            var htmlString = marked(mdString);
+            var baseName = path.basename(filename, '.md'); // filename without ext
+            var newfile = dir+baseName+'.html'
+            fs.writeFileSync(newfile, htmlString);
+            grunt.log.writeln('Finished writing :' + newfile);
+        }
+
+
         var levelsDir = './lucy/dev/game/assets/levels/';
-        var files = fs.readdirSync(levelsDir);
-        for (var file in files) {
-            if (path.extname(files[file]) === '.md') {
-                var filename = files[file];
-                grunt.log.writeln('Reading: ' + filename);
-                var mdString = fs.readFileSync(levelsDir+filename, 'utf8');
-                var htmlString = marked(mdString);
-                var baseName = path.basename(filename, '.md'); // filename without ext
-                var newfile = levelsDir+baseName+'.html'
-                fs.writeFileSync(newfile, htmlString);
-                grunt.log.writeln('Finished writing :' + newfile);
-            }
+        var folders = getDirectories(levelsDir);
+        for (var folder in folders) {
+            var fullpath = levelsDir + folders[folder] + '/';
+            var files = fs.readdirSync(fullpath);
+            for (var file in files) {
+                if (path.extname(files[file]) === '.md') {
+                    var filename = files[file];
+                    writeParsedHtml(fullpath, filename);
+                }
+           }
         }
 
         grunt.log.writeln('finished')

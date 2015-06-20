@@ -1,0 +1,5 @@
+from lucy import turnRight, moveForward, turnLeft;
+
+# Use this window to type your code 
+# Type moveForward(7) on the line below 
+# and then hit "Run"
