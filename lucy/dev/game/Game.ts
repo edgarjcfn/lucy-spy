@@ -31,6 +31,7 @@ module KodingSpy {
             this.subscribe('EnableSound', this.setSoundEnabled.bind(this));
             this.subscribe('ResetLevel', this.resetLevel.bind(this));
             this.subscribe('StartLevelFromName', this.startLevelFromName.bind(this));
+            this.subscribe('SuccessAlertClosed', this.gotoNextLevel.bind(this));
 
             // Initialize states
             this.state.add('Boot', Boot, false);
@@ -62,7 +63,6 @@ module KodingSpy {
 
         levelCompleted(diamonds :number) {
             this.dispatch('ShowAlert', {message:'', diamonds:diamonds});
-            this.gotoNextLevel();
         }
 
         currentLevel() :string {

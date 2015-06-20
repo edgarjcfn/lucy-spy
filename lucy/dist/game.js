@@ -17,6 +17,7 @@ var KodingSpy;
             this.subscribe('EnableSound', this.setSoundEnabled.bind(this));
             this.subscribe('ResetLevel', this.resetLevel.bind(this));
             this.subscribe('StartLevelFromName', this.startLevelFromName.bind(this));
+            this.subscribe('SuccessAlertClosed', this.gotoNextLevel.bind(this));
             this.state.add('Boot', KodingSpy.Boot, false);
             this.state.add('Preloader', KodingSpy.Preloader, false);
             this.state.add('Gameplay', KodingSpy.Gameplay, false);
@@ -40,7 +41,6 @@ var KodingSpy;
         };
         Game.prototype.levelCompleted = function (diamonds) {
             this.dispatch('ShowAlert', { message: '', diamonds: diamonds });
-            this.gotoNextLevel();
         };
         Game.prototype.currentLevel = function () {
             return this.allLevels[this.currentLevelIndex];

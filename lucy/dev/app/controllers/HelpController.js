@@ -35,6 +35,7 @@ app.controller('HelpController',
     $scope.loadHelp = function(levelName) {
         $scope.levelHelp = 'lucy/dev/game/assets/levels/'+levelName+'.html'
         $scope.levelName = levelName;
+        $('#helpModal').modal('show');
     }
 
     $scope.init = function() {

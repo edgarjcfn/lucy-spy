@@ -1,19 +1,5 @@
 from lucy import turnRight, moveForward, turnLeft;
 
-#################
-#   2nd Floor   #
-#################
-
-# Lucy can only escape each floor
-# after collecting the GREEN KEY.
-# Collecting all the DIAMONDS is optional
-# but will give you more points!
-
-# Have you noticed that Lucy ignores
-# lines that start with the # symbol?
-# Try it out below. Execute the code once
-# And then remove the # from the lines!
-
 moveForward(4)
 # turnLeft()
 # moveForward(2)

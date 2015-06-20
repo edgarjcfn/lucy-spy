@@ -3,11 +3,9 @@
 
 The **World Thieves Federation (W.T.F.)** has stolen a huge amount of diamonds!
 
-Agent Lucy works for the **Organization of Marvelous Girls (O.M.G.)** and has defeated the Thieves in their own headquarters!
+Agent Lucy works for the **Organization of Marvelous Girls (O.M.G.)** and has to defeat the thieves and recover the diamonds.
 
-Now she needs to escape their HQ while recovering the stolen diamonds!
-
-###Help her recover the Diamonds
+###Help her recover the Diamonds!
 
 On the code window type 
 
