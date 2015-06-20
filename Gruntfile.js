@@ -29,6 +29,14 @@ module.exports = function(grunt) {
                 options: {
                     interrupt: true
                 }
+            },
+
+            md: {
+                files: ['lucy/dev/game/assets/levels/*.md'],
+                tasks: ['md'],
+                options: {
+                    interrupt: true
+                }
             }
 
         },
@@ -107,13 +115,21 @@ module.exports = function(grunt) {
     grunt.registerTask('dev', ['concurrent:dev'])
 
     grunt.registerTask('md', 'Parse markdown files', function() {
-        var files = fs.readdirSync('./lucy/dev/game/assets/levels/');
+        var levelsDir = './lucy/dev/game/assets/levels/';
+        var files = fs.readdirSync(levelsDir);
         for (var file in files) {
             if (path.extname(files[file]) === '.md') {
-                grunt.log.writeln(file);        
+                var filename = files[file];
+                grunt.log.writeln('Reading: ' + filename);
+                var mdString = fs.readFileSync(levelsDir+filename, 'utf8');
+                var htmlString = marked(mdString);
+                var baseName = path.basename(filename, '.md'); // filename without ext
+                var newfile = levelsDir+baseName+'.html'
+                fs.writeFileSync(newfile, htmlString);
+                grunt.log.writeln('Finished writing :' + newfile);
             }
         }
-        
+
         grunt.log.writeln('finished')
     });
 };
