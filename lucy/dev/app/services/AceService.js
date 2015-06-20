@@ -43,7 +43,7 @@ app.service('AceService', function() {
         var AceRange = ace.require('ace/range').Range;
         editor.setValue('');
         $.ajax({
-            url: 'lucy/dev/game/assets/levels/' + levelName + '.txt',
+            url: 'lucy/dev/game/assets/levels/' + levelName + '/code.txt',
             success: function(data) {
                   editor.setValue(data, 1);
                   editor.session.addFold("", new AceRange(0,0,1,100));

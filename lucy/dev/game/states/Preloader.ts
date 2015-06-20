@@ -24,7 +24,7 @@ module KodingSpy {
             var myGame = <KodingSpy.Game> this.game;
             for (var i=0; i < myGame.allLevels.length; i++) {
                 var level = myGame.allLevels[i];
-                this.load.tilemap(level, 'lucy/dev/game/assets/levels/'+level+'.json', null, Phaser.Tilemap.TILED_JSON);
+                this.load.tilemap(level, 'lucy/dev/game/assets/levels/'+level+'/map.json', null, Phaser.Tilemap.TILED_JSON);
             }
 
             // Sounds

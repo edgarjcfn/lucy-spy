@@ -487,7 +487,7 @@ var KodingSpy;
             var myGame = this.game;
             for (var i = 0; i < myGame.allLevels.length; i++) {
                 var level = myGame.allLevels[i];
-                this.load.tilemap(level, 'lucy/dev/game/assets/levels/' + level + '.json', null, Phaser.Tilemap.TILED_JSON);
+                this.load.tilemap(level, 'lucy/dev/game/assets/levels/' + level + '/map.json', null, Phaser.Tilemap.TILED_JSON);
             }
             this.load.audio('bgm', 'lucy/dev/game/assets/sounds/soundtrack.ogg');
             this.load.audio('python', 'lucy/dev/game/assets/sounds/python.ogg');
