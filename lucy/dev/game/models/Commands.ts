@@ -90,9 +90,9 @@ module KodingSpy.Command {
     export class SpeakCommand implements ICommand {
         next: KodingSpy.Controller.ControllerDelegate;
         controller: KodingSpy.Controller.CharacterController;
-        content: String;
+        content: string;
 
-        constructor(content: String, controller: KodingSpy.Controller.CharacterController) {
+        constructor(content: string, controller: KodingSpy.Controller.CharacterController) {
             this.controller = controller;
             this.content = content;
         }

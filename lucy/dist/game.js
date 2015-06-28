@@ -443,8 +443,10 @@ var KodingSpy;
                 this.game = game;
             }
             UIController.prototype.showSpeechDialog = function (character, content, next) {
-                this.speechDialog = this.game.add.sprite(200, 200, 'speech');
-                console.debug('speaking:' + content);
+                this.speechDialog = this.game.add.sprite(122, 450, 'speech');
+                var style = { font: "20px Arial", fill: "#ffffff", align: "left", wordWrap: true, wordWrapWidth: 450 };
+                var text = this.game.add.text(450, 500, content.substr(0, 40), style);
+                text.anchor.set(0.5, 0.5);
             };
             return UIController;
         })();

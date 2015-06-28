@@ -1,5 +1,6 @@
-from lucy import turnRight, moveForward, turnLeft;
+from lucy import turnRight, moveForward, turnLeft, speak;
 
 # Use this window to type your code 
 # Type moveForward(7) on the line below 
 # and then hit "Run"
+speak('Hello1 Hello2 Hello3 Hello4 Hello5 Hello6 Hello7 Hello8')

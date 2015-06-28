@@ -77,7 +77,7 @@ module KodingSpy.Controller {
             waitTween.start();
         }
 
-        speak(text :String, next: ControllerDelegate) : void {
+        speak(text :string, next: ControllerDelegate) : void {
 
             this.game.uiController.showSpeechDialog('lucy', text, next);
         }
