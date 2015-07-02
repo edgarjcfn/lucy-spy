@@ -29,7 +29,6 @@ var KodingSpy;
             this.state.start('Boot');
         };
         Game.prototype.gotoNextLevel = function () {
-            console.debug('snl');
             this.currentLevelIndex++;
             this.startCurrentLevel();
         };
@@ -369,9 +368,9 @@ var KodingSpy;
         })();
         Command.TurnRightCommand = TurnRightCommand;
         var SpeakCommand = (function () {
-            function SpeakCommand(content, controller) {
+            function SpeakCommand(say, controller) {
                 this.controller = controller;
-                this.content = content;
+                this.content = say;
             }
             SpeakCommand.prototype.execute = function () {
                 this.controller.speak(this.content, this.next);
@@ -444,9 +443,23 @@ var KodingSpy;
             }
             UIController.prototype.showSpeechDialog = function (character, content, next) {
                 this.speechDialog = this.game.add.sprite(122, 450, 'speech');
-                var style = { font: "20px Arial", fill: "#ffffff", align: "left", wordWrap: true, wordWrapWidth: 450 };
-                var text = this.game.add.text(450, 500, content.substr(0, 40), style);
-                text.anchor.set(0.5, 0.5);
+                var style = {
+                    font: "20px Arial",
+                    fill: "#ffffff",
+                    align: "left",
+                    wordWrap: true,
+                    wordWrapWidth: 400
+                };
+                this.text = this.game.add.text(475, 500, content, style);
+                this.text.anchor.set(0.5, 0.5);
+                var onTimerFinished = function () {
+                    this.speechDialog.destroy(true);
+                    this.text.destroy(true);
+                    next();
+                };
+                var waitTween = this.game.add.tween(this.speechDialog).to({}, 500);
+                waitTween.onComplete.add(onTimerFinished.bind(this));
+                waitTween.start();
             };
             return UIController;
         })();

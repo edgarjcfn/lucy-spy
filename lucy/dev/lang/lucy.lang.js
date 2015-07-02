@@ -35,7 +35,7 @@ var $builtinmodule = function(name)
     });
 
     mod.speak = new Sk.builtin.func(function(content) {
-        var say = content.v || 1;        
+        var say = content.v || '';     
         var speakCmd = new KodingSpy.Command.SpeakCommand(say, SkulptAnimator);
         Sk.commandChain.append(speakCmd, Sk.currLineNo);        
     });

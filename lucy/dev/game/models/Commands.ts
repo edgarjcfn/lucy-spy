@@ -1,9 +1,10 @@
 import CharacterAnimator = KodingSpy.Interfaces.ICharacterController;
+import ControllerDelegate =KodingSpy.Controller.ControllerDelegate;
 
 module KodingSpy.Command {
 
     export interface ICommand {
-        next: KodingSpy.Controller.ControllerDelegate;
+        next: ControllerDelegate;
         execute():void;
     }
 
@@ -11,7 +12,7 @@ module KodingSpy.Command {
     // Move
     //
     export class MoveCommand implements ICommand {
-        next: KodingSpy.Controller.ControllerDelegate;
+        next: ControllerDelegate;
         amount: number;
         animator: CharacterAnimator;
 
@@ -47,7 +48,7 @@ module KodingSpy.Command {
     // Turn Left
     //
     export class TurnLeftCommand implements ICommand {
-        next: KodingSpy.Controller.ControllerDelegate;
+        next: ControllerDelegate;
         animator: CharacterAnimator;
 
         constructor(controller: CharacterAnimator) {
@@ -69,7 +70,7 @@ module KodingSpy.Command {
     // Turn Right
     //
     export class TurnRightCommand implements ICommand {
-        next: KodingSpy.Controller.ControllerDelegate;
+        next: ControllerDelegate;
         animator: CharacterAnimator;
 
         constructor(controller: CharacterAnimator) {
@@ -88,16 +89,16 @@ module KodingSpy.Command {
     // Speak
     //
     export class SpeakCommand implements ICommand {
-        next: KodingSpy.Controller.ControllerDelegate;
-        controller: KodingSpy.Controller.CharacterController;
+        next: ControllerDelegate;
+        controller: CharacterAnimator;
         content: string;
 
-        constructor(content: string, controller: KodingSpy.Controller.CharacterController) {
+        constructor(say: string, controller: CharacterAnimator) {
             this.controller = controller;
-            this.content = content;
+            this.content = say;
         }
 
-        execute():void {
+        execute(): void {
             this.controller.speak(this.content, this.next);
         }
     }
