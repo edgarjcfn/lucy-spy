@@ -4,3 +4,4 @@ bower_components/
 *.map
 *.tmp.txt
 *.tscache
+*.DS_Store
