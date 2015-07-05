@@ -11,13 +11,13 @@ module KodingSpy.Controller {
         }
 
         showSpeechDialog(character: string, content :string, next :ControllerDelegate) {
-            this.speechDialog = this.game.add.sprite(122, 450, 'speech'); 
-            var style =  { 
-                font: "20px Arial", 
-                fill: "#ffffff", 
-                align: "left", 
-                wordWrap: true, 
-                wordWrapWidth: 400  
+            this.speechDialog = this.game.add.sprite(122, 450, 'speech');
+            var style =  {
+                font: "20px Arial",
+                fill: "#ffffff",
+                align: "left",
+                wordWrap: true,
+                wordWrapWidth: 400
             };
             this.text = this.game.add.text(475, 500, content, style);
             this.text.anchor.set(0.5, 0.5)
@@ -31,7 +31,7 @@ module KodingSpy.Controller {
             var waitTween = this.game.add.tween(this.speechDialog).to({}, 500);
             waitTween.onComplete.add(onTimerFinished.bind(this));
             waitTween.start();
-            
+
         }
 
     }

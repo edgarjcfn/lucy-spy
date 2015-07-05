@@ -55,8 +55,10 @@ module KodingSpy.Controller {
                 var colliderArray = this.colliders[colliderName];
                 for (var i=0; i < colliderArray.length; i++) {
                     var collider = colliderArray[i].body;
-                    if (this.game.physics.arcade.intersects(player, collider)) {
-                        return new ColliderData(colliderName, colliderArray[i]);
+                    if (collider && collider.position) {
+                        if (this.game.physics.arcade.intersects(player, collider)) {
+                            return new ColliderData(colliderName, colliderArray[i]);
+                        }
                     }
                 }
 
