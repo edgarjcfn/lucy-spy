@@ -59,42 +59,6 @@ var KodingSpy;
 })(KodingSpy || (KodingSpy = {}));
 var KodingSpy;
 (function (KodingSpy) {
-    var Model;
-    (function (Model) {
-        (function (Direction) {
-            Direction[Direction["N"] = 0] = "N";
-            Direction[Direction["E"] = 1] = "E";
-            Direction[Direction["S"] = 2] = "S";
-            Direction[Direction["W"] = 3] = "W";
-        })(Model.Direction || (Model.Direction = {}));
-        var Direction = Model.Direction;
-        var TileCoordinate = (function () {
-            function TileCoordinate(x, y) {
-                this.x = x;
-                this.y = y;
-            }
-            return TileCoordinate;
-        })();
-        Model.TileCoordinate = TileCoordinate;
-        var Character = (function () {
-            function Character(x, y, direction) {
-                this.position = new TileCoordinate(x, y);
-                this.direction = direction;
-            }
-            Character.prototype.moveBy = function (x, y) {
-                this.position.x += x;
-                this.position.y += y;
-            };
-            Character.prototype.moveTo = function (coord) {
-                this.position = coord;
-            };
-            return Character;
-        })();
-        Model.Character = Character;
-    })(Model = KodingSpy.Model || (KodingSpy.Model = {}));
-})(KodingSpy || (KodingSpy = {}));
-var KodingSpy;
-(function (KodingSpy) {
     var Controller;
     (function (Controller) {
         var CharacterController = (function () {
@@ -268,6 +232,128 @@ var KodingSpy;
 })(KodingSpy || (KodingSpy = {}));
 var KodingSpy;
 (function (KodingSpy) {
+    var Controller;
+    (function (Controller) {
+        var LevelController = (function () {
+            function LevelController(game, levelName) {
+                this.game = game;
+                this.levelName = levelName;
+                this.spawnPosition = new KodingSpy.Model.TileCoordinate(8, 9);
+            }
+            LevelController.prototype.create = function () {
+                this.map = this.game.add.tilemap(this.levelName);
+                this.map.addTilesetImage('floor_walls', 'tilemap');
+                this.map.addTilesetImage('door', 'doorTilemap');
+                var floor = this.map.createLayer('Floor');
+                var collision = this.map.createLayer('Collision');
+                this.map.setCollisionByExclusion([], true, 'Collision');
+                this.buildItems();
+            };
+            LevelController.prototype.buildItems = function () {
+                for (var y = 0; y < 12; y++) {
+                    for (var x = 0; x < 16; x++) {
+                        var tile = this.map.getTile(x, y, 'Collision', true);
+                        if (tile.properties.type) {
+                            var tileType = tile.properties.type;
+                            var frames = tile.properties.frames;
+                            if (tileType != "door" && tileType != "wall") {
+                                this.game.add.sprite(tile.worldX, tile.worldY, 'floor');
+                            }
+                            if (tileType == "spawn") {
+                                this.spawnPosition = new KodingSpy.Model.TileCoordinate(x, y);
+                            }
+                            else {
+                                var sprite;
+                                if (tileType == "wall") {
+                                    sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'empty');
+                                }
+                                else {
+                                    sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
+                                    sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 0, frames - 1, '', 4), 24, true, false);
+                                    sprite.animations.play(tileType);
+                                }
+                                this.game.collisionController.enableCollider(sprite, tileType);
+                            }
+                        }
+                    }
+                }
+            };
+            return LevelController;
+        })();
+        Controller.LevelController = LevelController;
+    })(Controller = KodingSpy.Controller || (KodingSpy.Controller = {}));
+})(KodingSpy || (KodingSpy = {}));
+var KodingSpy;
+(function (KodingSpy) {
+    var Controller;
+    (function (Controller) {
+        var UIController = (function () {
+            function UIController(game) {
+                this.game = game;
+            }
+            UIController.prototype.showSpeechDialog = function (character, content, next) {
+                this.speechDialog = this.game.add.sprite(122, 450, 'speech');
+                var style = {
+                    font: "20px Arial",
+                    fill: "#ffffff",
+                    align: "left",
+                    wordWrap: true,
+                    wordWrapWidth: 400
+                };
+                this.text = this.game.add.text(475, 500, content, style);
+                this.text.anchor.set(0.5, 0.5);
+                var onTimerFinished = function () {
+                    this.speechDialog.destroy(true);
+                    this.text.destroy(true);
+                    next();
+                };
+                var waitTween = this.game.add.tween(this.speechDialog).to({}, 500);
+                waitTween.onComplete.add(onTimerFinished.bind(this));
+                waitTween.start();
+            };
+            return UIController;
+        })();
+        Controller.UIController = UIController;
+    })(Controller = KodingSpy.Controller || (KodingSpy.Controller = {}));
+})(KodingSpy || (KodingSpy = {}));
+var KodingSpy;
+(function (KodingSpy) {
+    var Model;
+    (function (Model) {
+        (function (Direction) {
+            Direction[Direction["N"] = 0] = "N";
+            Direction[Direction["E"] = 1] = "E";
+            Direction[Direction["S"] = 2] = "S";
+            Direction[Direction["W"] = 3] = "W";
+        })(Model.Direction || (Model.Direction = {}));
+        var Direction = Model.Direction;
+        var TileCoordinate = (function () {
+            function TileCoordinate(x, y) {
+                this.x = x;
+                this.y = y;
+            }
+            return TileCoordinate;
+        })();
+        Model.TileCoordinate = TileCoordinate;
+        var Character = (function () {
+            function Character(x, y, direction) {
+                this.position = new TileCoordinate(x, y);
+                this.direction = direction;
+            }
+            Character.prototype.moveBy = function (x, y) {
+                this.position.x += x;
+                this.position.y += y;
+            };
+            Character.prototype.moveTo = function (coord) {
+                this.position = coord;
+            };
+            return Character;
+        })();
+        Model.Character = Character;
+    })(Model = KodingSpy.Model || (KodingSpy.Model = {}));
+})(KodingSpy || (KodingSpy = {}));
+var KodingSpy;
+(function (KodingSpy) {
     var Command;
     (function (Command) {
         var ExecutionListItem = (function () {
@@ -384,89 +470,15 @@ var KodingSpy;
 })(KodingSpy || (KodingSpy = {}));
 var KodingSpy;
 (function (KodingSpy) {
-    var Controller;
-    (function (Controller) {
-        var LevelController = (function () {
-            function LevelController(game, levelName) {
-                this.game = game;
-                this.levelName = levelName;
-                this.spawnPosition = new KodingSpy.Model.TileCoordinate(8, 9);
+    var Model;
+    (function (Model) {
+        var Tiles = (function () {
+            function Tiles() {
             }
-            LevelController.prototype.create = function () {
-                this.map = this.game.add.tilemap(this.levelName);
-                this.map.addTilesetImage('floor_walls', 'tilemap');
-                this.map.addTilesetImage('door', 'doorTilemap');
-                var floor = this.map.createLayer('Floor');
-                var collision = this.map.createLayer('Collision');
-                this.map.setCollisionByExclusion([], true, 'Collision');
-                this.buildItems();
-            };
-            LevelController.prototype.buildItems = function () {
-                for (var y = 0; y < 12; y++) {
-                    for (var x = 0; x < 16; x++) {
-                        var tile = this.map.getTile(x, y, 'Collision', true);
-                        if (tile.properties.type) {
-                            var tileType = tile.properties.type;
-                            var frames = tile.properties.frames;
-                            if (tileType != "door" && tileType != "wall") {
-                                this.game.add.sprite(tile.worldX, tile.worldY, 'floor');
-                            }
-                            if (tileType == "spawn") {
-                                this.spawnPosition = new KodingSpy.Model.TileCoordinate(x, y);
-                            }
-                            else {
-                                var sprite;
-                                if (tileType == "wall") {
-                                    sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'empty');
-                                }
-                                else {
-                                    sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
-                                    sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 0, frames - 1, '', 4), 24, true, false);
-                                    sprite.animations.play(tileType);
-                                }
-                                this.game.collisionController.enableCollider(sprite, tileType);
-                            }
-                        }
-                    }
-                }
-            };
-            return LevelController;
+            return Tiles;
         })();
-        Controller.LevelController = LevelController;
-    })(Controller = KodingSpy.Controller || (KodingSpy.Controller = {}));
-})(KodingSpy || (KodingSpy = {}));
-var KodingSpy;
-(function (KodingSpy) {
-    var Controller;
-    (function (Controller) {
-        var UIController = (function () {
-            function UIController(game) {
-                this.game = game;
-            }
-            UIController.prototype.showSpeechDialog = function (character, content, next) {
-                this.speechDialog = this.game.add.sprite(122, 450, 'speech');
-                var style = {
-                    font: "20px Arial",
-                    fill: "#ffffff",
-                    align: "left",
-                    wordWrap: true,
-                    wordWrapWidth: 400
-                };
-                this.text = this.game.add.text(475, 500, content, style);
-                this.text.anchor.set(0.5, 0.5);
-                var onTimerFinished = function () {
-                    this.speechDialog.destroy(true);
-                    this.text.destroy(true);
-                    next();
-                };
-                var waitTween = this.game.add.tween(this.speechDialog).to({}, 500);
-                waitTween.onComplete.add(onTimerFinished.bind(this));
-                waitTween.start();
-            };
-            return UIController;
-        })();
-        Controller.UIController = UIController;
-    })(Controller = KodingSpy.Controller || (KodingSpy.Controller = {}));
+        Model.Tiles = Tiles;
+    })(Model = KodingSpy.Model || (KodingSpy.Model = {}));
 })(KodingSpy || (KodingSpy = {}));
 var KodingSpy;
 (function (KodingSpy) {
