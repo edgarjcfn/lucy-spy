@@ -1,11 +1,11 @@
 import CharacterAnimator = KodingSpy.Interfaces.ICharacterController;
-import ControllerDelegate =KodingSpy.Controller.ControllerDelegate;
+import ControllerDelegate = KodingSpy.Controller.ControllerDelegate;
 
 module KodingSpy.Command {
 
     export interface ICommand {
         next: ControllerDelegate;
-        execute():void;
+        execute(): void;
     }
 
     //
@@ -21,22 +21,22 @@ module KodingSpy.Command {
             this.animator = controller;
         }
 
-        execute():void {
+        execute(): void {
             var character = this.animator.character;
 
             switch (character.direction) {
-                case (KodingSpy.Model.Direction.N) :
+                case (KodingSpy.Model.Direction.N):
                     this.animator.moveBy(0, -(this.amount), this.next);
-                break;
-                case (KodingSpy.Model.Direction.S) :
+                    break;
+                case (KodingSpy.Model.Direction.S):
                     this.animator.moveBy(0, (this.amount), this.next);
-                break;
-                case (KodingSpy.Model.Direction.E) :
+                    break;
+                case (KodingSpy.Model.Direction.E):
                     this.animator.moveBy((this.amount), 0, this.next);
-                break;
-                case (KodingSpy.Model.Direction.W) :
+                    break;
+                case (KodingSpy.Model.Direction.W):
                     this.animator.moveBy(-(this.amount), 0, this.next);
-                break;
+                    break;
                 default:
                     console.log('Invalid direction');
                     break;
@@ -55,10 +55,9 @@ module KodingSpy.Command {
             this.animator = controller;
         }
 
-        execute():void {
-            var newDirection = this.animator.character.direction-1;
-            if (newDirection < 0)
-            {
+        execute(): void {
+            var newDirection = this.animator.character.direction - 1;
+            if (newDirection < 0) {
                 newDirection = 3;
             }
             this.animator.character.direction = newDirection;
@@ -77,8 +76,8 @@ module KodingSpy.Command {
             this.animator = controller;
         }
 
-        execute():void {
-            var newDirection = (this.animator.character.direction+1) % 4;
+        execute(): void {
+            var newDirection = (this.animator.character.direction + 1) % 4;
             this.animator.character.direction = newDirection;
             this.animator.rotateTo(newDirection, this.next);
 

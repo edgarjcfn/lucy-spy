@@ -234,11 +234,13 @@ var KodingSpy;
 (function (KodingSpy) {
     var Controller;
     (function (Controller) {
+        var TileCoordinate = KodingSpy.Model.TileCoordinate;
+        var TileSet = KodingSpy.Model.Tiles;
         var LevelController = (function () {
             function LevelController(game, levelName) {
                 this.game = game;
                 this.levelName = levelName;
-                this.spawnPosition = new KodingSpy.Model.TileCoordinate(8, 9);
+                this.spawnPosition = new TileCoordinate(8, 9);
             }
             LevelController.prototype.create = function () {
                 this.map = this.game.add.tilemap(this.levelName);
@@ -250,17 +252,17 @@ var KodingSpy;
                 this.buildItems();
             };
             LevelController.prototype.buildItems = function () {
+                var itemSet = new TileSet().items;
                 for (var y = 0; y < 12; y++) {
                     for (var x = 0; x < 16; x++) {
                         var tile = this.map.getTile(x, y, 'Collision', true);
                         if (tile.properties.type) {
                             var tileType = tile.properties.type;
-                            var frames = tile.properties.frames;
                             if (tileType != "door" && tileType != "wall") {
                                 this.game.add.sprite(tile.worldX, tile.worldY, 'floor');
                             }
                             if (tileType == "spawn") {
-                                this.spawnPosition = new KodingSpy.Model.TileCoordinate(x, y);
+                                this.spawnPosition = new TileCoordinate(x, y);
                             }
                             else {
                                 var sprite;
@@ -269,10 +271,13 @@ var KodingSpy;
                                 }
                                 else {
                                     sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
-                                    sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 0, frames - 1, '', 4), 24, true, false);
-                                    sprite.animations.play(tileType);
+                                    var itemData = itemSet[tileType];
+                                    sprite.animations.add(itemData.name, Phaser.Animation.generateFrameNames(itemData.name, 0, itemData.frames - 1, '', 4), 24, true, false);
+                                    sprite.animations.play(itemData.name);
                                 }
-                                this.game.collisionController.enableCollider(sprite, tileType);
+                                if (itemData.collidable) {
+                                    this.game.collisionController.enableCollider(sprite, tileType);
+                                }
                             }
                         }
                     }
@@ -472,8 +477,27 @@ var KodingSpy;
 (function (KodingSpy) {
     var Model;
     (function (Model) {
+        var TileData = (function () {
+            function TileData(name, frames, collidable) {
+                this.name = name;
+                this.frames = frames;
+                this.collidable = collidable;
+            }
+            return TileData;
+        })();
+        Model.TileData = TileData;
         var Tiles = (function () {
             function Tiles() {
+                var tiles = {};
+                tiles['box'] = new TileData('box', 1, true);
+                tiles['boxLeft'] = new TileData('boxLeft', 40, true);
+                tiles['boxRight'] = new TileData('boxRight', 40, true);
+                tiles['diamond'] = new TileData('diamond', 30, true);
+                tiles['door'] = new TileData('door', 1, true);
+                tiles['laserH'] = new TileData('laserBeamHorizontal', 14, true);
+                tiles['laserV'] = new TileData('laserBeamVertical', 14, true);
+                tiles['key'] = new TileData('python', 30, true);
+                this.items = tiles;
             }
             return Tiles;
         })();

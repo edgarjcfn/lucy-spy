@@ -1,15 +1,19 @@
 module KodingSpy.Controller {
+    import LucyGame = KodingSpy.Game;
+    import TileCoordinate = KodingSpy.Model.TileCoordinate;
+    import TileSet = KodingSpy.Model.Tiles;
+
     export class LevelController {
 
-        game :KodingSpy.Game;
-        levelName :string;
-        map :Phaser.Tilemap;
-        spawnPosition: KodingSpy.Model.TileCoordinate;
+        game: LucyGame;
+        levelName: string;
+        map: Phaser.Tilemap;
+        spawnPosition: TileCoordinate;
 
-        constructor(game: KodingSpy.Game, levelName :string) {
+        constructor(game: LucyGame, levelName: string) {
             this.game = game;
             this.levelName = levelName;
-            this.spawnPosition = new KodingSpy.Model.TileCoordinate(8, 9);
+            this.spawnPosition = new TileCoordinate(8, 9);
         }
 
         create() {
@@ -25,19 +29,19 @@ module KodingSpy.Controller {
             this.buildItems();
         }
 
-        buildItems() :void {
+        buildItems(): void {
+            var itemSet = new TileSet().items;
 
-            for (var y=0; y<12; y++) {
-                for (var x=0; x<16; x++) {
+            for (var y = 0; y < 12; y++) {
+                for (var x = 0; x < 16; x++) {
                     var tile = this.map.getTile(x, y, 'Collision', true);
                     if (tile.properties.type) {
                         var tileType = <string> tile.properties.type;
-                        var frames = <number> tile.properties.frames;
                         if (tileType != "door" && tileType != "wall") {
                             this.game.add.sprite(tile.worldX, tile.worldY, 'floor');
                         }
                         if (tileType == "spawn") {
-                            this.spawnPosition = new KodingSpy.Model.TileCoordinate(x, y);
+                            this.spawnPosition = new TileCoordinate(x, y);
                         }
                         else {
                             var sprite;
@@ -46,11 +50,14 @@ module KodingSpy.Controller {
                             }
                             else {
                                 sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
-                                sprite.animations.add(tileType, Phaser.Animation.generateFrameNames(tileType, 0, frames-1, '', 4), 24, true, false);
-                                sprite.animations.play(tileType);
-                            }
-                            this.game.collisionController.enableCollider(sprite, tileType);
+                                var itemData = itemSet[tileType];
 
+                                sprite.animations.add(itemData.name, Phaser.Animation.generateFrameNames(itemData.name, 0, itemData.frames - 1, '', 4), 24, true, false);
+                                sprite.animations.play(itemData.name);
+                            }
+                            if (itemData.collidable) {
+                                this.game.collisionController.enableCollider(sprite, tileType);
+                            }
                         }
                     }
                 }

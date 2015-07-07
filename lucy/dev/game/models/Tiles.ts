@@ -1,5 +1,32 @@
 module KodingSpy.Model {
-    export class Tiles {
+	export class TileData {
+		name: string;
+		frames: number;
+		collidable: boolean;
 
+		constructor(name: string, frames: number, collidable: boolean) {
+			this.name = name;
+			this.frames = frames;
+			this.collidable = collidable;
+		}
+	}
+
+    export class Tiles {
+		items: { [id: string]: TileData }
+
+		constructor() {
+			var tiles: { [id: string]: TileData } = {};
+
+			tiles['box'] = new TileData('box', 1, true);
+			tiles['boxLeft'] = new TileData('boxLeft', 40, true);
+			tiles['boxRight'] = new TileData('boxRight', 40, true);
+			tiles['diamond'] = new TileData('diamond', 30, true);
+			tiles['door'] = new TileData('door', 1, true);
+			tiles['laserH'] = new TileData('laserBeamHorizontal', 14, true);
+			tiles['laserV'] = new TileData('laserBeamVertical', 14, true);
+			tiles['key'] = new TileData('python', 30, true);
+			
+			this.items = tiles;
+		}
     }
 }

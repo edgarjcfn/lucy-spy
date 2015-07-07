@@ -35,7 +35,7 @@ module KodingSpy.Command {
             this._currentIndex++;
             this.execute();
         }
-
+        
         execute() : void {
             if (this._currentIndex < this.commands.length)
             {
