@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="12" tilewidth="50" tileheight="50">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="12" tilewidth="50" tileheight="50" nextobjectid="1">
  <tileset firstgid="1" name="floor_walls" tilewidth="50" tileheight="50" spacing="1">
   <image source="../../tiles/TileSheet.png" width="152" height="203"/>
   <tile id="1">
@@ -10,11 +10,6 @@
   <tile id="2">
    <properties>
     <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="3">
-   <properties>
-    <property name="type" value="diamond"/>
    </properties>
   </tile>
   <tile id="4">
@@ -53,32 +48,32 @@
   <image source="../../tiles/collisions.png" width="101" height="152"/>
   <tile id="0">
    <properties>
-    <property name="frames" value="1"/>
-    <property name="type" value="laserCannon"/>
+    <property name="type" value="cannon"/>
    </properties>
   </tile>
   <tile id="1">
    <properties>
-    <property name="frames" value="29"/>
-    <property name="type" value="python"/>
+    <property name="type" value="key"/>
    </properties>
   </tile>
   <tile id="2">
    <properties>
-    <property name="frames" value="29"/>
     <property name="type" value="diamond"/>
    </properties>
   </tile>
   <tile id="3">
    <properties>
-    <property name="frames" value="1"/>
-    <property name="type" value="laserBeamHorizontal"/>
+    <property name="type" value="laserH"/>
    </properties>
   </tile>
   <tile id="4">
    <properties>
-    <property name="frames" value="1"/>
-    <property name="type" value="laserBeamVertical"/>
+    <property name="type" value="laserV"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="type" value="spawn"/>
    </properties>
   </tile>
  </tileset>
@@ -457,7 +452,7 @@
    <tile gid="6"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="18"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="9"/>

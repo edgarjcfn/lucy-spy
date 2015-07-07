@@ -1,19 +1,18 @@
+import LucyGame = KodingSpy.Game;
+
 module KodingSpy.Controller {
-    import LucyGame = KodingSpy.Game;
-    import TileCoordinate = KodingSpy.Model.TileCoordinate;
-    import TileSet = KodingSpy.Model.Tiles;
 
     export class LevelController {
 
         game: LucyGame;
         levelName: string;
         map: Phaser.Tilemap;
-        spawnPosition: TileCoordinate;
+        spawnPosition: KodingSpy.Model.TileCoordinate;
 
         constructor(game: LucyGame, levelName: string) {
             this.game = game;
             this.levelName = levelName;
-            this.spawnPosition = new TileCoordinate(8, 9);
+            this.spawnPosition = new KodingSpy.Model.TileCoordinate(8, 9);
         }
 
         create() {
@@ -30,7 +29,7 @@ module KodingSpy.Controller {
         }
 
         buildItems(): void {
-            var itemSet = new TileSet().items;
+            var itemSet = new KodingSpy.Model.Tiles().items;
 
             for (var y = 0; y < 12; y++) {
                 for (var x = 0; x < 16; x++) {
@@ -41,12 +40,14 @@ module KodingSpy.Controller {
                             this.game.add.sprite(tile.worldX, tile.worldY, 'floor');
                         }
                         if (tileType == "spawn") {
-                            this.spawnPosition = new TileCoordinate(x, y);
+                            this.spawnPosition = new KodingSpy.Model.TileCoordinate(x, y);
                         }
                         else {
                             var sprite;
+                            var shouldCollide = false;
                             if (tileType == "wall") {
                                 sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'empty');
+                                shouldCollide = true;
                             }
                             else {
                                 sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
@@ -54,8 +55,9 @@ module KodingSpy.Controller {
 
                                 sprite.animations.add(itemData.name, Phaser.Animation.generateFrameNames(itemData.name, 0, itemData.frames - 1, '', 4), 24, true, false);
                                 sprite.animations.play(itemData.name);
+                                shouldCollide = itemData.collidable;
                             }
-                            if (itemData.collidable) {
+                            if (shouldCollide) {
                                 this.game.collisionController.enableCollider(sprite, tileType);
                             }
                         }

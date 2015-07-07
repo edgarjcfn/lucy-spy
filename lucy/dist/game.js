@@ -230,17 +230,16 @@ var KodingSpy;
         Controller.CollisionController = CollisionController;
     })(Controller = KodingSpy.Controller || (KodingSpy.Controller = {}));
 })(KodingSpy || (KodingSpy = {}));
+var LucyGame = KodingSpy.Game;
 var KodingSpy;
 (function (KodingSpy) {
     var Controller;
     (function (Controller) {
-        var TileCoordinate = KodingSpy.Model.TileCoordinate;
-        var TileSet = KodingSpy.Model.Tiles;
         var LevelController = (function () {
             function LevelController(game, levelName) {
                 this.game = game;
                 this.levelName = levelName;
-                this.spawnPosition = new TileCoordinate(8, 9);
+                this.spawnPosition = new KodingSpy.Model.TileCoordinate(8, 9);
             }
             LevelController.prototype.create = function () {
                 this.map = this.game.add.tilemap(this.levelName);
@@ -252,7 +251,7 @@ var KodingSpy;
                 this.buildItems();
             };
             LevelController.prototype.buildItems = function () {
-                var itemSet = new TileSet().items;
+                var itemSet = new KodingSpy.Model.Tiles().items;
                 for (var y = 0; y < 12; y++) {
                     for (var x = 0; x < 16; x++) {
                         var tile = this.map.getTile(x, y, 'Collision', true);
@@ -262,20 +261,23 @@ var KodingSpy;
                                 this.game.add.sprite(tile.worldX, tile.worldY, 'floor');
                             }
                             if (tileType == "spawn") {
-                                this.spawnPosition = new TileCoordinate(x, y);
+                                this.spawnPosition = new KodingSpy.Model.TileCoordinate(x, y);
                             }
                             else {
                                 var sprite;
+                                var shouldCollide = false;
                                 if (tileType == "wall") {
                                     sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'empty');
+                                    shouldCollide = true;
                                 }
                                 else {
                                     sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
                                     var itemData = itemSet[tileType];
                                     sprite.animations.add(itemData.name, Phaser.Animation.generateFrameNames(itemData.name, 0, itemData.frames - 1, '', 4), 24, true, false);
                                     sprite.animations.play(itemData.name);
+                                    shouldCollide = itemData.collidable;
                                 }
-                                if (itemData.collidable) {
+                                if (shouldCollide) {
                                     this.game.collisionController.enableCollider(sprite, tileType);
                                 }
                             }
@@ -497,6 +499,7 @@ var KodingSpy;
                 tiles['laserH'] = new TileData('laserBeamHorizontal', 14, true);
                 tiles['laserV'] = new TileData('laserBeamVertical', 14, true);
                 tiles['key'] = new TileData('python', 30, true);
+                tiles['cannon'] = new TileData('cannon', 1, true);
                 this.items = tiles;
             }
             return Tiles;

@@ -25,6 +25,7 @@ module KodingSpy.Model {
 			tiles['laserH'] = new TileData('laserBeamHorizontal', 14, true);
 			tiles['laserV'] = new TileData('laserBeamVertical', 14, true);
 			tiles['key'] = new TileData('python', 30, true);
+			tiles['cannon'] = new TileData('cannon', 1, true);
 			
 			this.items = tiles;
 		}
