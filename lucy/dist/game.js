@@ -135,24 +135,18 @@ var KodingSpy;
                         this.sndDiamond.play();
                         this.game.collisionController.disableCollider(data.sprite, data.name);
                         data.sprite.destroy();
-                        var diamondAnim = this.sprite.animations.play("itemDiamond");
-                        var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
-                        waitTween.onComplete.add(next);
-                        waitTween.start();
+                        next();
                         break;
-                    case "python":
+                    case "key":
                         this.isHoldingKey = true;
                         this.sndPython.play();
                         this.game.collisionController.disableCollider(data.sprite, data.name);
                         data.sprite.destroy();
-                        var pythonAnim = this.sprite.animations.play("itemPython");
-                        var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
-                        waitTween.onComplete.add(next);
-                        waitTween.start();
+                        next();
                         break;
-                    case "laserCannon":
-                    case "laserBeamHorizontal":
-                    case "laserBeamVertical":
+                    case "cannon":
+                    case "laserH":
+                    case "laserV":
                         this.sndDeath.play();
                         var burnanim = this.sprite.animations.play("burn");
                         break;
@@ -265,19 +259,15 @@ var KodingSpy;
                             }
                             else {
                                 var sprite;
-                                var shouldCollide = false;
                                 if (tileType == "wall") {
                                     sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'empty');
-                                    shouldCollide = true;
+                                    this.game.collisionController.enableCollider(sprite, tileType);
                                 }
                                 else {
                                     sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
                                     var itemData = itemSet[tileType];
                                     sprite.animations.add(itemData.name, Phaser.Animation.generateFrameNames(itemData.name, 0, itemData.frames - 1, '', 4), 24, true, false);
                                     sprite.animations.play(itemData.name);
-                                    shouldCollide = itemData.collidable;
-                                }
-                                if (shouldCollide) {
                                     this.game.collisionController.enableCollider(sprite, tileType);
                                 }
                             }

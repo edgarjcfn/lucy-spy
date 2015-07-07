@@ -44,10 +44,9 @@ module KodingSpy.Controller {
                         }
                         else {
                             var sprite;
-                            var shouldCollide = false;
                             if (tileType == "wall") {
                                 sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'empty');
-                                shouldCollide = true;
+                                this.game.collisionController.enableCollider(sprite, tileType);
                             }
                             else {
                                 sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
@@ -55,11 +54,9 @@ module KodingSpy.Controller {
 
                                 sprite.animations.add(itemData.name, Phaser.Animation.generateFrameNames(itemData.name, 0, itemData.frames - 1, '', 4), 24, true, false);
                                 sprite.animations.play(itemData.name);
-                                shouldCollide = itemData.collidable;
-                            }
-                            if (shouldCollide) {
                                 this.game.collisionController.enableCollider(sprite, tileType);
                             }
+
                         }
                     }
                 }
