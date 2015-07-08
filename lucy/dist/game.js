@@ -75,13 +75,13 @@ var KodingSpy;
                 this.sprite.animations.add('walk1', Phaser.Animation.generateFrameNames('walkW', 1, 16, '', 4), 24, true, false);
                 this.sprite.animations.add('walk2', Phaser.Animation.generateFrameNames('walkS', 1, 16, '', 4), 24, true, false);
                 this.sprite.animations.add('walk3', Phaser.Animation.generateFrameNames('walkE', 1, 16, '', 4), 24, true, false);
-                this.sprite.animations.add('itemPython', Phaser.Animation.generateFrameNames('itemPython', 1, 16, '', 4), 24, false, false);
+                this.sprite.animations.add('itemKey', Phaser.Animation.generateFrameNames('itemKey', 1, 16, '', 4), 24, false, false);
                 this.sprite.animations.add('itemDiamond', Phaser.Animation.generateFrameNames('itemDiamond', 1, 16, '', 4), 24, false, false);
                 this.sprite.animations.add('burn', Phaser.Animation.generateFrameNames('burn', 1, 30, '', 4), 24, false, false);
                 this.game.collisionController.enableCharacter(this);
                 this.updateDirection();
                 this.sndDiamond = this.game.add.audio('diamond', 0.5, false);
-                this.sndPython = this.game.add.audio('python', 0.5, false);
+                this.sndKey = this.game.add.audio('key', 0.5, false);
                 this.sndDeath = this.game.add.audio('laser', 0.5, false);
             };
             CharacterController.prototype.moveBy = function (x, y, next) {
@@ -135,14 +135,20 @@ var KodingSpy;
                         this.sndDiamond.play();
                         this.game.collisionController.disableCollider(data.sprite, data.name);
                         data.sprite.destroy();
-                        next();
+                        var diamondAnim = this.sprite.animations.play("itemDiamond");
+                        var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
+                        waitTween.onComplete.add(next);
+                        waitTween.start();
                         break;
                     case "key":
                         this.isHoldingKey = true;
-                        this.sndPython.play();
+                        this.sndKey.play();
                         this.game.collisionController.disableCollider(data.sprite, data.name);
                         data.sprite.destroy();
-                        next();
+                        var keyAnim = this.sprite.animations.play("itemKey");
+                        var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
+                        waitTween.onComplete.add(next);
+                        waitTween.start();
                         break;
                     case "cannon":
                     case "laserH":
@@ -569,7 +575,7 @@ var KodingSpy;
                 this.load.tilemap(level, 'lucy/dev/game/assets/levels/' + level + '/map.json', null, Phaser.Tilemap.TILED_JSON);
             }
             this.load.audio('bgm', 'lucy/dev/game/assets/sounds/soundtrack.ogg');
-            this.load.audio('python', 'lucy/dev/game/assets/sounds/python.ogg');
+            this.load.audio('key', 'lucy/dev/game/assets/sounds/python.ogg');
             this.load.audio('diamond', 'lucy/dev/game/assets/sounds/diamond.ogg');
             this.load.audio('laser', 'lucy/dev/game/assets/sounds/laser.ogg');
             this.load.audio('scream', 'lucy/dev/game/assets/sounds/scream.ogg');

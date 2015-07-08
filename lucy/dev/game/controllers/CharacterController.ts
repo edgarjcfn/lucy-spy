@@ -11,7 +11,7 @@ module KodingSpy.Controller {
         isHoldingKey: Boolean;
 
         sndDiamond: Phaser.Sound;
-        sndPython: Phaser.Sound;
+        sndKey: Phaser.Sound;
         sndDeath: Phaser.Sound;
 
         diamondCount: number;
@@ -31,7 +31,7 @@ module KodingSpy.Controller {
             this.sprite.animations.add('walk1', Phaser.Animation.generateFrameNames('walkW', 1, 16, '', 4), 24, true, false);
             this.sprite.animations.add('walk2', Phaser.Animation.generateFrameNames('walkS', 1, 16, '', 4), 24, true, false);
             this.sprite.animations.add('walk3', Phaser.Animation.generateFrameNames('walkE', 1, 16, '', 4), 24, true, false);
-            this.sprite.animations.add('itemPython', Phaser.Animation.generateFrameNames('itemPython', 1, 16, '', 4), 24, false, false);
+            this.sprite.animations.add('itemKey', Phaser.Animation.generateFrameNames('itemKey', 1, 16, '', 4), 24, false, false);
             this.sprite.animations.add('itemDiamond', Phaser.Animation.generateFrameNames('itemDiamond', 1, 16, '', 4), 24, false, false);
             this.sprite.animations.add('burn', Phaser.Animation.generateFrameNames('burn', 1, 30, '', 4), 24, false, false);
 
@@ -39,7 +39,7 @@ module KodingSpy.Controller {
             this.updateDirection();
 
             this.sndDiamond = this.game.add.audio('diamond', 0.5, false);
-            this.sndPython = this.game.add.audio('python', 0.5, false);
+            this.sndKey = this.game.add.audio('key', 0.5, false);
             this.sndDeath = this.game.add.audio('laser', 0.5, false);
         }
 
@@ -108,22 +108,20 @@ module KodingSpy.Controller {
                     this.sndDiamond.play();
                     this.game.collisionController.disableCollider(data.sprite, data.name);
                     data.sprite.destroy();
-                    // var diamondAnim = this.sprite.animations.play("itemDiamond");
-                    // var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
-                    // waitTween.onComplete.add(next);
-                    // waitTween.start();
-                    next();
+                    var diamondAnim = this.sprite.animations.play("itemDiamond");
+                    var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
+                    waitTween.onComplete.add(next);
+                    waitTween.start();
                     break;
                 case "key":
                     this.isHoldingKey = true;
-                    this.sndPython.play();
+                    this.sndKey.play();
                     this.game.collisionController.disableCollider(data.sprite, data.name);
                     data.sprite.destroy();
-                    // var pythonAnim = this.sprite.animations.play("itemKey");
-                    // var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
-                    // waitTween.onComplete.add(next);
-                    // waitTween.start();
-                    next();
+                    var keyAnim = this.sprite.animations.play("itemKey");
+                    var waitTween = this.game.add.tween(this.sprite).to({}, 1000);
+                    waitTween.onComplete.add(next);
+                    waitTween.start();
                     break;
                 case "cannon":
                 case "laserH":

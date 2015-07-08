@@ -29,7 +29,7 @@ module KodingSpy {
 
             // Sounds
             this.load.audio('bgm', 'lucy/dev/game/assets/sounds/soundtrack.ogg');
-            this.load.audio('python', 'lucy/dev/game/assets/sounds/python.ogg');
+            this.load.audio('key', 'lucy/dev/game/assets/sounds/python.ogg');
             this.load.audio('diamond', 'lucy/dev/game/assets/sounds/diamond.ogg');
             this.load.audio('laser', 'lucy/dev/game/assets/sounds/laser.ogg');
             this.load.audio('scream', 'lucy/dev/game/assets/sounds/scream.ogg');
