@@ -22,7 +22,6 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":1,
  "orientation":"orthogonal",
  "properties":
     {
@@ -139,9 +138,12 @@
          "tileheight":50,
          "tileproperties":
             {
+             "0":
+                {
+                 "type":"doorTop"
+                },
              "1":
                 {
-                 "frames":"1",
                  "type":"door"
                 }
             },

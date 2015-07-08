@@ -1,8 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="12" tilewidth="50" tileheight="50" nextobjectid="1">
- <tileset firstgid="1" source="../Tilesets/door.tsx"/>
- <tileset firstgid="3" source="../Tilesets/collisions.tsx"/>
- <tileset firstgid="9" source="../Tilesets/terrain.tsx"/>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="12" tilewidth="50" tileheight="50">
+ <tileset firstgid="1" name="door" tilewidth="50" tileheight="50" spacing="1">
+  <image source="../../tiles/door.png" width="50" height="101"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="doorTop"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="type" value="door"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="3" name="collisions" tilewidth="50" tileheight="50" spacing="1">
+  <image source="../../tiles/collisions.png" width="101" height="152"/>
+  <tile id="0">
+   <properties>
+    <property name="type" value="cannon"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="type" value="key"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="type" value="diamond"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="type" value="laserH"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="type" value="laserV"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="type" value="spawn"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="9" name="floor_walls" tilewidth="50" tileheight="50" spacing="1">
+  <image source="../../tiles/TileSheet.png" width="152" height="203"/>
+  <tile id="1">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="frames" value="1"/>
+    <property name="type" value="door"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="Floor" width="16" height="12">
   <data>
    <tile gid="0"/>

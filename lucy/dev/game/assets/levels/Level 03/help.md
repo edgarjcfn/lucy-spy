@@ -1,9 +1,9 @@
 # Code Comments
 ***
 
-Lucy can only escape each floor after collecting the !["Green Key"](/lucy/dev/game/assets/tiles/tileITEM.png) GREEN KEY.
+Lucy can only escape each floor after collecting the !["Floor Key"](/lucy/dev/game/assets/tiles/tileKey.png) FLOOR KEY.
 
-Collecting all the !["Green Key"](/lucy/dev/game/assets/tiles/tileDIAMOND.png) DIAMONDS is **optional** but will give you more points!
+Collecting all the !["Diamond"](/lucy/dev/game/assets/tiles/tileDIAMOND.png) DIAMONDS is **optional** but will give you more points!
 
 Have you noticed that Lucy ignores lines that start with the `#` symbol?
 

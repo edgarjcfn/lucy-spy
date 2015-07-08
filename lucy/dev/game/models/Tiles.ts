@@ -26,7 +26,10 @@ module KodingSpy.Model {
 			tiles['laserV'] = new TileData('laserBeamVertical', 14, true);
 			tiles['key'] = new TileData('python', 30, true);
 			tiles['cannon'] = new TileData('cannon', 1, true);
-			
+            tiles['buttonOn'] = new TileData('buttonUp', 1, true);
+            tiles['buttonOff'] = new TileData('buttonDown', 1, true);
+            tiles['doorTop'] = new TileData('doorTop', 1, true);
+
 			this.items = tiles;
 		}
     }

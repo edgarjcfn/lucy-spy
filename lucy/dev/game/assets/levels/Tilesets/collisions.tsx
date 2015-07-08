@@ -28,7 +28,7 @@
  </tile>
  <tile id="5">
   <properties>
-   <property name="type" value="lucy"/>
+   <property name="type" value="spawn"/>
   </properties>
  </tile>
 </tileset>

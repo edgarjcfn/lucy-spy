@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="12" tilewidth="50" tileheight="50" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="12" tilewidth="50" tileheight="50">
  <tileset firstgid="1" source="../Tilesets/terrain.tsx"/>
  <tileset firstgid="13" source="../Tilesets/collisions.tsx"/>
  <tileset firstgid="19" source="../Tilesets/door.tsx"/>

@@ -1,11 +1,9 @@
-from lucy import turnRight, moveForward, turnLeft;
+from lucy import turnRight, moveForward, turnLeft, speak;
 
-moveForward(4)
-# turnLeft()
-# moveForward(2)
-# turnRight()
-# moveForward(3)
-# turnRight()
-# moveForward(2)
-# turnLeft()
-# moveForward(2)
+# Try deleting the # symbol from the lines below
+
+moveForward(2)
+#turnLeft()
+#moveForward(2)
+#turnRight()
+
