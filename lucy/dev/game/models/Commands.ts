@@ -102,4 +102,26 @@ module KodingSpy.Command {
         }
     }
 
+    //
+    // Open Box 
+    // 
+    export class OpenCommand implements ICommand {
+        next: ControllerDelegate;
+        controller: CharacterAnimator;
+        direction: string;
+
+        constructor(controller: CharacterAnimator) {
+            this.controller = controller;
+            var directions = ['left','right']
+            var random = Math.floor(Math.random() * 10)
+            this.direction = directions[random % 2];
+        }
+
+        execute():void {
+            this.controller.open(this.direction, this.next);
+        }
+
+
+    }
+
 }

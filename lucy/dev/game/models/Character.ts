@@ -1,16 +1,4 @@
 module KodingSpy.Model {
-    export enum Direction {N, E, S, W}
-
-    export class TileCoordinate {
-        x: number;
-        y: number;
-
-        constructor (x :number, y :number) {
-            this.x = x;
-            this.y = y;
-        }
-    }
-
     export class Character {
 
         position: TileCoordinate;

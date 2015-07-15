@@ -52,12 +52,13 @@ module KodingSpy.Controller {
                                 sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
                                 var itemData = itemSet[tileType];
 
-                                console.log(tileType)
-                                console.log(itemData);
-
                                 sprite.animations.add(itemData.name, Phaser.Animation.generateFrameNames(itemData.name, 0, itemData.frames - 1, '', 4), 24, true, false);
                                 sprite.animations.play(itemData.name);
                                 this.game.collisionController.enableCollider(sprite, tileType);
+
+                                if (tileType == "box") {
+                                    this.game.boxController.addBox(new KodingSpy.Model.TileCoordinate(x, y));
+                                }
                             }
 
                         }

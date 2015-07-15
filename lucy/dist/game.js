@@ -15,6 +15,7 @@ var KodingSpy;
             this.allLevels = levels;
             this.collisionController = new KodingSpy.Controller.CollisionController(this);
             this.uiController = new KodingSpy.Controller.UIController(this);
+            this.boxController = new KodingSpy.Controller.BoxController(this);
             this.currentLevelIndex = -1;
             this.subscribe('EnableSound', this.setSoundEnabled.bind(this));
             this.subscribe('ResetLevel', this.resetLevel.bind(this));
@@ -56,6 +57,36 @@ var KodingSpy;
         return Game;
     })(Phaser.Game);
     KodingSpy.Game = Game;
+})(KodingSpy || (KodingSpy = {}));
+var KodingSpy;
+(function (KodingSpy) {
+    var Controller;
+    (function (Controller) {
+        var BoxController = (function () {
+            function BoxController(game) {
+                this.game = game;
+                this.boxes = [];
+            }
+            BoxController.prototype.addBox = function (coords) {
+                this.boxes.push(coords);
+            };
+            BoxController.prototype.locateBoxAround = function (coord) {
+                for (var i = 0; i < this.boxes.length; i++) {
+                    var box = this.boxes[i];
+                    if (box.isNeighbour(coord)) {
+                        return box;
+                    }
+                }
+                return null;
+            };
+            BoxController.prototype.openBox = function (coord, direction, next) {
+                console.log('found box is: ' + coord);
+                console.log('direction is: ' + direction);
+            };
+            return BoxController;
+        })();
+        Controller.BoxController = BoxController;
+    })(Controller = KodingSpy.Controller || (KodingSpy.Controller = {}));
 })(KodingSpy || (KodingSpy = {}));
 var KodingSpy;
 (function (KodingSpy) {
@@ -116,6 +147,10 @@ var KodingSpy;
             };
             CharacterController.prototype.speak = function (text, next) {
                 this.game.uiController.showSpeechDialog('lucy', text, next);
+            };
+            CharacterController.prototype.open = function (direction, next) {
+                var boxCoord = this.game.boxController.locateBoxAround(this.character.position);
+                this.game.boxController.openBox(boxCoord, direction, next);
             };
             CharacterController.prototype.updateDirection = function () {
                 var animationName = 'walk' + this.character.direction;
@@ -272,11 +307,12 @@ var KodingSpy;
                                 else {
                                     sprite = this.game.add.sprite(tile.worldX, tile.worldY, 'items');
                                     var itemData = itemSet[tileType];
-                                    console.log(tileType);
-                                    console.log(itemData);
                                     sprite.animations.add(itemData.name, Phaser.Animation.generateFrameNames(itemData.name, 0, itemData.frames - 1, '', 4), 24, true, false);
                                     sprite.animations.play(itemData.name);
                                     this.game.collisionController.enableCollider(sprite, tileType);
+                                    if (tileType == "box") {
+                                        this.game.boxController.addBox(new KodingSpy.Model.TileCoordinate(x, y));
+                                    }
                                 }
                             }
                         }
@@ -325,24 +361,9 @@ var KodingSpy;
 (function (KodingSpy) {
     var Model;
     (function (Model) {
-        (function (Direction) {
-            Direction[Direction["N"] = 0] = "N";
-            Direction[Direction["E"] = 1] = "E";
-            Direction[Direction["S"] = 2] = "S";
-            Direction[Direction["W"] = 3] = "W";
-        })(Model.Direction || (Model.Direction = {}));
-        var Direction = Model.Direction;
-        var TileCoordinate = (function () {
-            function TileCoordinate(x, y) {
-                this.x = x;
-                this.y = y;
-            }
-            return TileCoordinate;
-        })();
-        Model.TileCoordinate = TileCoordinate;
         var Character = (function () {
             function Character(x, y, direction) {
-                this.position = new TileCoordinate(x, y);
+                this.position = new Model.TileCoordinate(x, y);
                 this.direction = direction;
             }
             Character.prototype.moveBy = function (x, y) {
@@ -471,7 +492,56 @@ var KodingSpy;
             return SpeakCommand;
         })();
         Command.SpeakCommand = SpeakCommand;
+        var OpenCommand = (function () {
+            function OpenCommand(controller) {
+                this.controller = controller;
+                var directions = ['left', 'right'];
+                var random = Math.floor(Math.random() * 10);
+                this.direction = directions[random % 2];
+            }
+            OpenCommand.prototype.execute = function () {
+                this.controller.open(this.direction, this.next);
+            };
+            return OpenCommand;
+        })();
+        Command.OpenCommand = OpenCommand;
     })(Command = KodingSpy.Command || (KodingSpy.Command = {}));
+})(KodingSpy || (KodingSpy = {}));
+var KodingSpy;
+(function (KodingSpy) {
+    var Model;
+    (function (Model) {
+        (function (Direction) {
+            Direction[Direction["N"] = 0] = "N";
+            Direction[Direction["E"] = 1] = "E";
+            Direction[Direction["S"] = 2] = "S";
+            Direction[Direction["W"] = 3] = "W";
+        })(Model.Direction || (Model.Direction = {}));
+        var Direction = Model.Direction;
+    })(Model = KodingSpy.Model || (KodingSpy.Model = {}));
+})(KodingSpy || (KodingSpy = {}));
+var KodingSpy;
+(function (KodingSpy) {
+    var Model;
+    (function (Model) {
+        var TileCoordinate = (function () {
+            function TileCoordinate(x, y) {
+                this.x = x;
+                this.y = y;
+            }
+            TileCoordinate.prototype.isNeighbour = function (coord) {
+                console.log('comparing ' + this.x + ',' + this.y);
+                console.log('with' + coord.x + ',' + coord.y);
+                var dX = coord.x - this.x;
+                var dY = coord.y - this.y;
+                var isSameLine = ((Math.abs(dX) == 1) && (dY == 0));
+                var isSameColumn = ((Math.abs(dY) == 1) && (dX == 0));
+                return isSameLine || isSameColumn;
+            };
+            return TileCoordinate;
+        })();
+        Model.TileCoordinate = TileCoordinate;
+    })(Model = KodingSpy.Model || (KodingSpy.Model = {}));
 })(KodingSpy || (KodingSpy = {}));
 var KodingSpy;
 (function (KodingSpy) {

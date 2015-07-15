@@ -26,6 +26,7 @@ module KodingSpy.Controller {
             this.character = lucy;
             var lucyPosition = KodingSpy.Utils.getWorldPosition(this.character.position.x, this.character.position.y);
             this.sprite = this.game.add.sprite(lucyPosition.x, lucyPosition.y, 'lucy');
+            // this.sprite.anchor.set(0.5, )
 
             this.sprite.animations.add('walk0', Phaser.Animation.generateFrameNames('walkN', 1, 16, '', 4), 24, true, false);
             this.sprite.animations.add('walk1', Phaser.Animation.generateFrameNames('walkE', 1, 16, '', 4), 24, true, false);
@@ -81,6 +82,11 @@ module KodingSpy.Controller {
         speak(text: string, next: ControllerDelegate): void {
 
             this.game.uiController.showSpeechDialog('lucy', text, next);
+        }
+
+        open(direction: string, next:ControllerDelegate):void {
+            var boxCoord = this.game.boxController.locateBoxAround(this.character.position);
+            this.game.boxController.openBox(boxCoord, direction, next);
         }
 
         updateDirection() {
