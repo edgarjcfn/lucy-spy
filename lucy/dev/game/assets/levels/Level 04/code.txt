@@ -1,0 +1,9 @@
+from lucy import turnRight, moveForward, turnLeft, speak;
+
+# Try deleting the # symbol from the lines below
+
+moveForward(2)
+#turnLeft()
+#moveForward(2)
+#turnRight()
+

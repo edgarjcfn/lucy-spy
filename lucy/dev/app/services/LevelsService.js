@@ -3,7 +3,7 @@ app.service('LevelsService', function() {
         'Level 01',
         'Level 02',
         'Level 03',
-        // 'Level04',
+        'Level 04',
         // 'Level05',
         // 'Level06',
         // 'Level07',
