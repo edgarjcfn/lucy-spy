@@ -1,17 +1,20 @@
 {
-  "name": "pylearn",
-  "version": "0.0.1",
-  "repository": "https://github.com/edgarjcfn/pylearn/",
+  "name": "lucy-spy",
+  "version": "1.0.0",
+  "repository": {
+      "type": "github",
+      "url": "https://github.com/edgarjcfn/lucy-spy"
+  },
   "devDependencies": {
-    "bower": "1.3.5",
-    "grunt": "^0.4.5",
-    "grunt-concurrent": "^1.0.0",
-    "grunt-contrib-copy": "^0.6.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-http-server": "^1.0.0",
-    "grunt-contrib-concat": "^0.5.1",
-    "grunt-ts": "1.12.1",
-    "typescript": "1.1.0-1",
-    "marked": "^0.3.3"
+    "bower": "1.6.5",
+    "grunt": "0.4.5",
+    "grunt-concurrent": "2.1.0",
+    "grunt-contrib-copy": "0.8.2",
+    "grunt-contrib-watch": "0.6.1",
+    "grunt-http-server": "1.13.0",
+    "grunt-contrib-concat": "0.5.1",
+    "grunt-ts": "5.2.0",
+    "typescript": "1.6.2",
+    "marked": "0.3.5"
   }
 }

@@ -49,8 +49,8 @@ module.exports = function(grunt) {
 
             },
             game: {
-                src: ['lucy/dev/game/**/*.ts'],
-                out: 'lucy/dist/game.js'
+                src: ['./lucy/dev/game/**/*.ts'],
+                outDir: './lucy/dev/game/_compiled/'
             }
         },
 
@@ -77,6 +77,10 @@ module.exports = function(grunt) {
             app: {
                 src: ['lucy/dev/app/**/module.js', 'lucy/dev/app/**/*.js'],
                 dest: 'lucy/dist/app.js'
+            },
+            game: {
+                src: ['lucy/dev/game/**/*.js'],
+                dest: 'lucy/dist/game.js'
             }
         },
 

@@ -1,7 +1,0 @@
-from lucy import turnRight, moveForward, turnLeft;
-
-# This time you'll have to use 
-# turnLeft() and turnRight()
-# in addition to moveForward(x)
-
-

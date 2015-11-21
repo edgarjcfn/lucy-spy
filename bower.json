@@ -1,11 +1,11 @@
 {
-  "name": "koding-game-starterkit",
+  "name": "lucy-spy",
   "version": "1.0.0",
-  "homepage": "https://github.com/edgarjcfn/koding-game-starterkit",
+  "homepage": "https://github.com/edgarjcfn/lucy-spy",
   "authors": [
     "edgarjcfn <edgar.figueiredo@gmail.com>"
   ],
-  "description": "A starter kit for a python-based browser game",
+  "description": "A game that teaches programming",
   "keywords": [
     "game",
     "python",
@@ -27,8 +27,7 @@
     "jquery": "~2.1.1",
     "ace-builds": "~1.1.7",
     "skulpt": "skulpt/skulpt-dist#~0.9.7",
-    "phaser": "2.1.1",
-    "phaser-plugin-isometric": "lewster32/phaser-plugin-isometric",
+    "phaser": "2.4.4",
     "bootstrap": "3.3.1",
     "bootswatch-dist": "3.3.0-slate",
     "sweetalert": "~0.3.2"

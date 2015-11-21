@@ -1,5 +1,0 @@
-from lucy import turnRight, moveForward, turnLeft, speak;
-
-# Use this window to type your code 
-# Type moveForward(8) on the line below 
-# and then hit "Run"
