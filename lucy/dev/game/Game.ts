@@ -1,6 +1,7 @@
 ///ts:ref=<phaser.d.ts>
 /// No file or directory matched name "<phaser.d.ts>" ///ts:ref:generated
 
+
 import CollisionController = require("controllers/CollisionController");
 import Subscribe = require("delegates/Subscribe");
 import Dispatch = require("delegates/Dispatch");
@@ -9,6 +10,8 @@ import UIController = require("controllers/UIController");
 import BootState = require("states/Boot");
 import PreloaderState = require("states/Preloader");
 import GameplayState = require("states/Gameplay");
+import CommandQueue = require("commands/CommandQueue");
+import ActionNumber = require("delegates/ActionNumber");
 
 class Game extends Phaser.Game {
 
@@ -19,8 +22,10 @@ class Game extends Phaser.Game {
     allLevels: Array<string>;
     subscribe: Subscribe;
     dispatch: Dispatch;
+    commandQueue: CommandQueue;
+    onLineExecuted: ActionNumber;
 
-    constructor(container :string, subscribe: Subscribe, dispatch :Dispatch, levels :Array<string>) {
+    constructor(container :string, subscribe: Subscribe, dispatch :Dispatch, levels :Array<string>, onLineExecuted:ActionNumber) {
         super(800, 600, Phaser.AUTO, container, null);
 
         this.subscribe = subscribe;
@@ -57,6 +62,11 @@ class Game extends Phaser.Game {
     startCurrentLevel() {
         console.log('Starting level ' + this.currentLevel());
 
+        // if (this.commandQueue != null && this.commandQueue.isRunning)
+        // {
+        //     this.commandQueue.kill();
+        // }    
+        this.commandQueue = new CommandQueue(this.onLineExecuted);    
         this.state.start('Gameplay', true, false);
         this.dispatch('StartLevel', this.currentLevel());
     }

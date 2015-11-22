@@ -25,7 +25,7 @@ class Gameplay extends Phaser.State {
         this.characterController.respawn(this.levelController.spawnPosition);
 
         theGame.characterController = this.characterController;
-
+        
         this.game.sound.pauseAll();
         var music = this.game.add.audio('bgm', 0.3, true);
         // music.play();

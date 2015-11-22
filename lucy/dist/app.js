@@ -83,22 +83,18 @@ app.controller('GameController',
         // Subscribe to notifications
         $scope.notifications.subscribe('StartLevel', $scope.onLevelStart);
 
-        // Initialize Python Interpreter
-        var lineCallback = $scope.onLineExecuted.bind($scope);
-        console.log(LucyGame);
-        console.log(LucyGame.CommandQueue);
-        var commandQueue = new LucyGame.CommandQueue(lineCallback);
-        $scope.interpreter.initialize(commandQueue);
-
-        // Initialize code window
-        $scope.codeEditor.initialize('editor');
-
         // Initialize game
         var subscribe = $scope.notifications.subscribe;
         var dispatch = $scope.notifications.dispatch;
         var levels = LevelsService.levels;
-        $scope.game = new LucyGame.Game('gameCanvas', subscribe, dispatch, levels);
+        var lineCallback = $scope.onLineExecuted.bind($scope);
+        $scope.game = new Game('gameCanvas', subscribe, dispatch, levels, lineCallback);
+        
+        // Initialize Python Interpreter
+        $scope.interpreter.initialize($scope.game.commandQueue);
 
+        // Initialize code window
+        $scope.codeEditor.initialize('editor');
     };
 
     $scope.init();
