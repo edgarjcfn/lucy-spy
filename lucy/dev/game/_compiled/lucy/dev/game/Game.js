@@ -1,3 +1,5 @@
+///ts:ref=<phaser.d.ts>
+/// No file or directory matched name "<phaser.d.ts>" ///ts:ref:generated
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

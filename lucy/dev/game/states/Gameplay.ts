@@ -1,46 +1,47 @@
-module KodingSpy {
-    declare var SkulptAnimator : KodingSpy.Interfaces.ICharacterController;
-    declare var SkulptQueue : KodingSpy.Command.CommandQueue;
-    declare var ShowMessage : (msg :string, diamonds :number)=>void;
+import Game = require("Game");
+import CharacterController = require("controllers/CharacterController");
+import LevelController = require("controllers/LevelController");
+import UIController = require("controllers/UIController");
+import Character = require("models/Character");
+import Direction = require("models/Direction");
 
+class Gameplay extends Phaser.State {
+    characterController: CharacterController;
+    levelController: LevelController;
+    uiController: UIController;
+    lucy: Character;
 
-    export class Gameplay extends Phaser.State {
-        characterController : KodingSpy.Controller.CharacterController;
-        levelController : KodingSpy.Controller.LevelController;
-        uiController : KodingSpy.Controller.UIController;
-        lucy : KodingSpy.Model.Character;
+    create() {
 
-        create() {
+        this.lucy = new Character(0, 0, Direction.N);
+        var theGame = <Game>this.game;
+        var levelToPlay = theGame.currentLevel();
 
-            this.lucy = new KodingSpy.Model.Character(0, 0, KodingSpy.Model.Direction.N);
-            var kodingSpyGame = <KodingSpy.Game> this.game;
-            var levelToPlay = kodingSpyGame.currentLevel();
+        this.levelController = new LevelController(theGame, levelToPlay);
+        this.levelController.create();
 
-            this.levelController = new KodingSpy.Controller.LevelController(kodingSpyGame, levelToPlay);
-            this.levelController.create();
+        this.characterController = new CharacterController(theGame);
+        this.characterController.create(this.lucy);
+        this.characterController.respawn(this.levelController.spawnPosition);
 
-            this.characterController = new KodingSpy.Controller.CharacterController(kodingSpyGame);
-            this.characterController.create(this.lucy);
-            this.characterController.respawn(this.levelController.spawnPosition);
+        theGame.characterController = this.characterController;
 
-            SkulptAnimator = this.characterController;
+        this.game.sound.pauseAll();
+        var music = this.game.add.audio('bgm', 0.3, true);
+        // music.play();
+    }
 
-            this.game.sound.pauseAll();
-            var music = this.game.add.audio('bgm', 0.3, true);
-            // music.play();
-        }
+    preload() {
 
-        preload() {
+    }
 
-        }
+    update() {
 
-        update() {
+    }
 
-        }
-
-        render() {
-            var kodingSpyGame = <KodingSpy.Game> this.game;
-            kodingSpyGame.collisionController.update();
-        }
+    render() {
+        var kodingSpyGame = <Game>this.game;
+        kodingSpyGame.collisionController.update();
     }
 }
+

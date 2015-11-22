@@ -49,7 +49,7 @@ module.exports = function(grunt) {
                 'module': 'amd'
             },
             game: {
-                src: ['./lucy/dev/game/**/*.ts'],
+                src: ['./bower_components/phaser/typescript/phaser.d.ts', './lucy/dev/game/**/*.ts'],
                 outDir: './lucy/dev/game/_compiled/'
             }
         },

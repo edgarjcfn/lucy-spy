@@ -6,6 +6,7 @@ import Direction = require("models/Direction");
 import TileCoordinate = require("models/TileCoordinate");
 import Utils = require("util/Utils");
 import Game = require("Game");
+import ColliderData = require("models/ColliderData");
 
 class CharacterController implements ICharacterController {
     character: Character;
@@ -19,7 +20,7 @@ class CharacterController implements ICharacterController {
 
     diamondCount: number;
 
-    constructor(game: LucyGame.Game) {
+    constructor(game: Game) {
         this.game = game;
         this.isHoldingKey = false;
         this.diamondCount = 0;
@@ -142,3 +143,4 @@ class CharacterController implements ICharacterController {
 
 }
 
+export = CharacterController;
