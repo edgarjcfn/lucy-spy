@@ -69,7 +69,9 @@ app.controller('GameController',
 
         // Initialize Python Interpreter
         var lineCallback = $scope.onLineExecuted.bind($scope);
-        var commandQueue = new KodingSpy.Command.CommandQueue(lineCallback);
+        console.log(LucyGame);
+        console.log(LucyGame.CommandQueue);
+        var commandQueue = new LucyGame.CommandQueue(lineCallback);
         $scope.interpreter.initialize(commandQueue);
 
         // Initialize code window
@@ -79,7 +81,7 @@ app.controller('GameController',
         var subscribe = $scope.notifications.subscribe;
         var dispatch = $scope.notifications.dispatch;
         var levels = LevelsService.levels;
-        $scope.game = new KodingSpy.Game('gameCanvas', subscribe, dispatch, levels);
+        $scope.game = new LucyGame.Game('gameCanvas', subscribe, dispatch, levels);
 
     };
 

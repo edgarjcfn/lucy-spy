@@ -17,7 +17,7 @@ module.exports = function(grunt) {
 
             game: {
                 files: ['lucy/dev/game/**/*.ts'],
-                tasks: ['ts:game'],
+                tasks: ['ts:game', 'concat:game'],
                 options: {
                     interrupt: true
                 }
@@ -46,7 +46,7 @@ module.exports = function(grunt) {
         //
         'ts': {
             options: {
-
+                'module': 'amd'
             },
             game: {
                 src: ['./lucy/dev/game/**/*.ts'],

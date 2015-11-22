@@ -1,84 +1,80 @@
-module LucySpy {
+import CollisionController = require("controllers/CollisionController");
+import Subscribe = require("delegates/Subscribe");
+import Dispatch = require("delegates/Dispatch");
 
-    export interface Subscribe {
-        (msg :string, handler :(payload:any)=>any):void;
-    }
+class Game extends Phaser.Game {
 
-    export interface Dispatch {
-        (msg: string, payload :any):void;
-    }
+    currentLevelIndex: number;
+    collisionController: CollisionController;
+    // uiController: KodingSpy.Controller.UIController;
+    allLevels: Array<string>;
+    subscribe: Subscribe;
+    dispatch: Dispatch;
 
-    export class Game {// extends Phaser.Game {
+    // constructor(container :string, subscribe: Subscribe, dispatch :Dispatch, levels :Array<string>) {
+    //     super(800, 600, Phaser.AUTO, container, null);
 
-        currentLevelIndex :number;
-        // collisionController :KodingSpy.Controller.CollisionController;
-        // uiController: KodingSpy.Controller.UIController;
-        allLevels :Array<string>;
-        subscribe :Subscribe;
-        dispatch :Dispatch;
+    //     this.subscribe = subscribe;
+    //     this.dispatch = dispatch;
+    //     this.allLevels = levels;
 
-        // constructor(container :string, subscribe: Subscribe, dispatch :Dispatch, levels :Array<string>) {
-        //     super(800, 600, Phaser.AUTO, container, null);
+    //     this.collisionController = new KodingSpy.Controller.CollisionController(this);
+    //     this.uiController = new KodingSpy.Controller.UIController(this);
 
-        //     this.subscribe = subscribe;
-        //     this.dispatch = dispatch;
-        //     this.allLevels = levels;
+    //     this.currentLevelIndex = -1;
 
-        //     this.collisionController = new KodingSpy.Controller.CollisionController(this);
-        //     this.uiController = new KodingSpy.Controller.UIController(this);
+    //     // Subscribe to Angular Notifications
+    //     this.subscribe('EnableSound', this.setSoundEnabled.bind(this));
+    //     this.subscribe('ResetLevel', this.resetLevel.bind(this));
+    //     this.subscribe('StartLevelFromName', this.startLevelFromName.bind(this));
+    //     this.subscribe('SuccessAlertClosed', this.gotoNextLevel.bind(this));
 
-        //     this.currentLevelIndex = -1;
+    //     // Initialize states
+    //     this.state.add('Boot', Boot, false);
+    //     this.state.add('Preloader', Preloader, false);
+    //     this.state.add('Gameplay', Gameplay, false);
+    // }
 
-        //     // Subscribe to Angular Notifications
-        //     this.subscribe('EnableSound', this.setSoundEnabled.bind(this));
-        //     this.subscribe('ResetLevel', this.resetLevel.bind(this));
-        //     this.subscribe('StartLevelFromName', this.startLevelFromName.bind(this));
-        //     this.subscribe('SuccessAlertClosed', this.gotoNextLevel.bind(this));
+    // boot() {
+    //     super.boot();
+    //     this.state.start('Boot');
+    // }
 
-        //     // Initialize states
-        //     this.state.add('Boot', Boot, false);
-        //     this.state.add('Preloader', Preloader, false);
-        //     this.state.add('Gameplay', Gameplay, false);
-        // }
+    // gotoNextLevel() {
+    //     this.currentLevelIndex++;
+    //     this.startCurrentLevel();
+    // }
 
-        // boot() {
-        //     super.boot();
-        //     this.state.start('Boot');
-        // }
+    // startCurrentLevel() {
+    //     console.log('Starting level ' + this.currentLevel());
 
-        // gotoNextLevel() {
-        //     this.currentLevelIndex++;
-        //     this.startCurrentLevel();
-        // }
+    //     this.state.start('Gameplay', true, false);
+    //     this.dispatch('StartLevel', this.currentLevel());
+    // }
 
-        // startCurrentLevel() {
-        //     console.log('Starting level ' + this.currentLevel());
+    // startLevelFromName(level :string) {
+    //     this.currentLevelIndex = this.allLevels.indexOf(level);
+    //     this.startCurrentLevel();
+    // }
 
-        //     this.state.start('Gameplay', true, false);
-        //     this.dispatch('StartLevel', this.currentLevel());
-        // }
+    // levelCompleted(diamonds :number) {
+    //     this.dispatch('ShowAlert', {message:'', diamonds:diamonds});
+    // }
 
-        // startLevelFromName(level :string) {
-        //     this.currentLevelIndex = this.allLevels.indexOf(level);
-        //     this.startCurrentLevel();
-        // }
+    // currentLevel() :string {
+    //     return <string> this.allLevels[this.currentLevelIndex];
+    // }
 
-        // levelCompleted(diamonds :number) {
-        //     this.dispatch('ShowAlert', {message:'', diamonds:diamonds});
-        // }
+    // setSoundEnabled(enabled) :void {
+    //     // TODO: Refactor sound to SoundController
+    //     this.sound.pauseAll();
+    // }
 
-        // currentLevel() :string {
-        //     return <string> this.allLevels[this.currentLevelIndex];
-        // }
+    // resetLevel() :void {
+    //     this.state.start('Gameplay', true, false);
+    // }
 
-        // setSoundEnabled(enabled) :void {
-        //     // TODO: Refactor sound to SoundController
-        //     this.sound.pauseAll();
-        // }
-
-        // resetLevel() :void {
-        //     this.state.start('Gameplay', true, false);
-        // }
-
-    }
 }
+
+
+export = Game;

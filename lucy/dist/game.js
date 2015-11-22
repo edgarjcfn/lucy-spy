@@ -1,29 +1,39 @@
 //
-// lucy/dev/game/_compiled/Character.js
+// lucy/dev/game/_compiled/CommandQueue.js
 //
-var LucySpy;
-(function (LucySpy) {
-    var Models;
-    (function (Models) {
-        var Character = (function () {
-            function Character() {
-            }
-            return Character;
-        })();
-        Models.Character = Character;
-    })(Models = LucySpy.Models || (LucySpy.Models = {}));
-})(LucySpy || (LucySpy = {}));
-//# sourceMappingURL=Character.js.map
+// import Character = require("models/Character");
+var LucyGame;
+(function (LucyGame) {
+    var CommandQueue = (function () {
+        function CommandQueue() {
+        }
+        return CommandQueue;
+    })();
+    LucyGame.CommandQueue = CommandQueue;
+})(LucyGame || (LucyGame = {}));
+//# sourceMappingURL=CommandQueue.js.map
 //
 // lucy/dev/game/_compiled/Game.js
 //
-var LucySpy;
-(function (LucySpy) {
+var LucyGame;
+(function (LucyGame) {
     var Game = (function () {
         function Game() {
         }
         return Game;
     })();
-    LucySpy.Game = Game;
-})(LucySpy || (LucySpy = {}));
+    LucyGame.Game = Game;
+})(LucyGame || (LucyGame = {}));
 //# sourceMappingURL=Game.js.map
+//
+// lucy/dev/game/_compiled/models/Character.js
+//
+define(["require", "exports"], function (require, exports) {
+    var Character = (function () {
+        function Character() {
+        }
+        return Character;
+    })();
+    return Character;
+});
+//# sourceMappingURL=Character.js.map
